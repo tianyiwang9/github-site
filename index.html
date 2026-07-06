@@ -1,142 +1,182 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>个人主页 | GitHub Pages</title>
+    <title>Tianyi Wang's website</title>
     <meta
       name="description"
-      content="一个简洁、响应式的个人 GitHub Pages 网站模板。"
+      content="Tianyi Wang's academic website."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="#home">你的名字</a>
-      <nav class="nav" aria-label="主导航">
-        <a href="#about">关于</a>
-        <a href="#projects">项目</a>
-        <a href="#writing">文章</a>
-        <a href="#contact">联系</a>
+      <a class="brand" href="#home">Tianyi Wang's website</a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#about-me">About Me</a>
+        <a href="#publications">Publications</a>
+        <a href="#notes">Notes</a>
+        <a href="#resources">Resources</a>
       </nav>
     </header>
 
     <main id="home">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="eyebrow">Developer · Creator · Learner</p>
-          <h1 id="hero-title">你好，我是你的名字。</h1>
-          <p class="lede">
-            我在这里记录项目、想法和学习过程。这个网站可以作为你的 GitHub
-            个人主页，用来展示作品集、博客入口、简历和联系方式。
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#projects">查看项目</a>
-            <a class="button secondary" href="#contact">联系我</a>
-          </div>
-        </div>
-        <div class="profile-panel" aria-label="个人简介摘要">
-          <div class="avatar" aria-hidden="true">你</div>
-          <dl>
-            <div>
-              <dt>位置</dt>
-              <dd>城市 / 国家</dd>
-            </div>
-            <div>
-              <dt>方向</dt>
-              <dd>软件开发、数据、AI、写作</dd>
-            </div>
-            <div>
-              <dt>正在做</dt>
-              <dd>把想法变成可用的小工具</dd>
-            </div>
-          </dl>
-        </div>
+      <section class="intro">
+        <h1>Tianyi Wang</h1>
+        <p class="quote">"We must know, we will know"--David Hilbert</p>
       </section>
 
-      <section id="about" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">About</p>
-          <h2>关于我</h2>
-        </div>
-        <p class="section-text">
-          在这里写一段你自己的介绍：你关注什么领域、喜欢解决什么问题、最近在学习什么。
-          保持自然就好，个人网站不必像正式简历一样紧绷。
+      <section id="about-me" class="section">
+        <h2>About Me</h2>
+        <p>
+          I am a graduate student in mathematics at the University of
+          Pennsylvania, since fall 2024.
+        </p>
+        <p>
+          My main research interest is complex (algebraic) geometry. However,
+          I'm interested in a broad range of mathematical areas related to
+          differential geometry, topology, and mathematical physics.
+        </p>
+        <p>
+          Feel free to contact me via my school email:
+          <a href="mailto:tywang9@sas.upenn.edu">tywang9@sas.upenn.edu</a>
+        </p>
+
+        <h3>Which Springer GTM would I be?</h3>
+        <p>I am Robin Hartshorne's Algebraic geometry :(</p>
+        <p>
+          Which Springer GTM would you be? Try out the
+          <a href="https://math.jhu.edu/~savitt/GTM.html" target="_blank" rel="noreferrer">Springer GTM Test</a>!
         </p>
       </section>
 
-      <section id="projects" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Projects</p>
-          <h2>精选项目</h2>
-        </div>
-        <div class="project-grid">
-          <article class="project-card">
-            <p class="tag">Web App</p>
-            <h3>项目名称一</h3>
-            <p>
-              用一句话说明它解决了什么问题，再补充你用到的技术栈和最满意的设计点。
-            </p>
-            <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-          </article>
-          <article class="project-card">
-            <p class="tag">Research</p>
-            <h3>项目名称二</h3>
-            <p>
-              可以放课程项目、数据分析、开源贡献，或者任何能体现你能力和兴趣的作品。
-            </p>
-            <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-          </article>
-          <article class="project-card">
-            <p class="tag">Tool</p>
-            <h3>项目名称三</h3>
-            <p>
-              如果项目还没有完整发布，也可以写成实验记录，展示你的思路和迭代过程。
-            </p>
-            <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-          </article>
-        </div>
+      <section id="publications" class="section">
+        <h2>Publications</h2>
+        <p>
+          Here is my
+          <a href="https://scholar.google.co.uk/citations?hl=en&user=84svzwEAAAAJ&view_op=list_works&gmla=AFix5MYh0iCfLg8Pz-vdYxTahmrRDMb_1uaSt-c655uAK-3VF21x9kU-ruagz3Qpng_AXaycxEXUGRQoW6rIzkxbvWcRbX8q6XTKzQ" target="_blank" rel="noreferrer">Google Scholar page</a>.
+          It contains exactly the same information as follows.
+        </p>
+
+        <h3>Research Papers:</h3>
+        <ul class="publication-list">
+          <li>
+            T. Wang, "On the Nonprojectedness of Supermoduli with
+            Neveu-Schwarz and Ramond Punctures".
+            <a href="https://arxiv.org/abs/2512.15727" target="_blank" rel="noreferrer">arxiv.org/abs/2512.15727</a>
+          </li>
+          <li>
+            Z. Avetisyan, A. Baruer, B. Buran, J. Morentin, T. Wang,
+            "Invariant Geometric Structures on Complex Almost Abelian Lie
+            Groups".
+            <a href="https://arxiv.org/abs/2308.09203" target="_blank" rel="noreferrer">arxiv.org/abs/2308.09203</a>
+          </li>
+          <li>
+            D. Hua, F. Manin, T. Queer, T. Wang, "Local Behavior of the Eden
+            Model on Graphs and Tessellations of Manifolds", Journal of Applied
+            and Computational Topology (2023).
+            <a href="https://doi.org/10.1007/s41468-023-00153-6" target="_blank" rel="noreferrer">https://doi.org/10.1007/s41468-023-00153-6</a>
+          </li>
+        </ul>
+
+        <h3>Expository Writting:</h3>
+        <p>
+          My
+          <a href="https://drive.google.com/file/d/1Pi1656WNAoaz1kFE442OzOb8KSbhVOpn/view?usp=sharing" target="_blank" rel="noreferrer">master thesis</a>
+          (Title: "The Atiyah-Singer Index Theorem for Dirac Operators: A
+          Supergeometry and Functional Integral Perspective").
+        </p>
       </section>
 
-      <section id="writing" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Writing</p>
-          <h2>最近文章</h2>
-        </div>
-        <div class="writing-list">
-          <a href="#">
-            <span>如何开始一个个人网站</span>
-            <time datetime="2026-07-05">2026.07.05</time>
-          </a>
-          <a href="#">
-            <span>我最近学到的一件事</span>
-            <time datetime="2026-07-05">2026.07.05</time>
-          </a>
-          <a href="#">
-            <span>项目复盘：从想法到发布</span>
-            <time datetime="2026-07-05">2026.07.05</time>
-          </a>
-        </div>
+      <section id="notes" class="section">
+        <h2>Notes</h2>
+        <p>
+          Below are some notes I made using LaTeX on various areas of
+          mathematics, and also some handwritten notes. I am in graduate school
+          now and I am still learning new things, which means I will probably
+          continue to make some notes, but definitely not in the near future.
+        </p>
+
+        <h3>Graduate</h3>
+        <p>
+          Mathematical Physics: I wrote a two volume notes on relevant topics
+          of mathematical physics.
+        </p>
+        <ul>
+          <li>
+            <a href="https://drive.google.com/file/d/1V4ZUv7ATD-bBB-f2REYpT0gpWGbdazSu/view?usp=sharing" target="_blank" rel="noreferrer">Volume I</a>:
+            Mostly on general relativity and quantum mechanics, with a more
+            mathematical perspective.
+          </li>
+          <li>
+            <a href="https://drive.google.com/file/d/1O6NHu1EbOljXppW2fo2yBFBatajG95dR/view?usp=sharing" target="_blank" rel="noreferrer">Volume II</a>:
+            Mostly on supermanifolds, quantum field theory (QFT), and a
+            supersymmetric proof of the Atiyah-Singer index theorem using
+            functional integral and localization technique. A large part of
+            this also formed my master thesis.
+          </li>
+          <li>
+            <a href="https://drive.google.com/file/d/11THbLBRabpWn-z8A4U-XsaNV4ixsrMQj/view?usp=sharing" target="_blank" rel="noreferrer">Complex Algebraic Geometry</a>
+          </li>
+          <li>
+            <a href="https://drive.google.com/file/d/1CTdPs202FHgcrSz7LVkIkRbwPF2RGDJv/view?usp=sharing" target="_blank" rel="noreferrer">Smooth Manifolds and Differential Topology</a>
+          </li>
+        </ul>
+
+        <h3>Undergraduate</h3>
+        <p>LaTeX notes:</p>
+        <ul>
+          <li><a href="https://drive.google.com/file/d/1c7gCq_XkL7ybjNN82xIchQfiH0Xty11E/view?usp=sharing" target="_blank" rel="noreferrer">Commutative Algebra</a></li>
+          <li><a href="https://drive.google.com/file/d/1mpC3351XuQ8Yrhq7a6ueKvIB401HGjPG/view?usp=drive_link" target="_blank" rel="noreferrer">Galois Theory</a></li>
+          <li><a href="https://drive.google.com/file/d/13aaFoG5xBD9Q8axxGTjDv6AcOsHyuHnA/view?usp=drive_link" target="_blank" rel="noreferrer">Topology</a></li>
+          <li><a href="https://drive.google.com/file/d/1ANp-5PQVVGMV-Up04VG9D8eQD6KMvtQ2/view?usp=drive_link" target="_blank" rel="noreferrer">Solution to Problems from Reed and Simon's Functional Analysis</a></li>
+        </ul>
+        <p>
+          Handwritten notes (warning: incomplete, and significantly lower
+          quality compared to the LaTeX notes):
+        </p>
+        <ul>
+          <li><a href="https://drive.google.com/file/d/1QkokLjboHJrLpppVrHHdW_Hs2RX4wR3u/view?usp=sharing" target="_blank" rel="noreferrer">Complex Analysis</a></li>
+          <li><a href="https://drive.google.com/file/d/1doRWCE0K3PHVo6TSR5T9LJKlb2hYIPH7/view?usp=sharing" target="_blank" rel="noreferrer">Real Analysis</a></li>
+          <li><a href="https://drive.google.com/file/d/11tdPbdyF6qPjw9C888S7l2EFoMNmMVyC/view?usp=sharing" target="_blank" rel="noreferrer">Homological Algebra</a></li>
+          <li><a href="https://drive.google.com/file/d/1Imb0Sz5SSH1enw441pWsmljX26n2h1cU/view?usp=sharing" target="_blank" rel="noreferrer">Fundamental Groups</a></li>
+          <li><a href="https://drive.google.com/file/d/1100Jn5ZK-VAaJTt1sz_EFiOdcg-AmYU4/view?usp=sharing" target="_blank" rel="noreferrer">Cohomology Groups</a></li>
+          <li><a href="https://drive.google.com/file/d/1G-uzbThSof62sqkygnRd3yHjpwZ0F_D7/view?usp=sharing" target="_blank" rel="noreferrer">Quantum Mechanics</a></li>
+          <li><a href="https://drive.google.com/file/d/1_l-54GzIzS0MGQ_rfCuo5vUL3yW6cWA1/view?usp=sharing" target="_blank" rel="noreferrer">Basic Riemannian Geometry</a></li>
+          <li><a href="https://drive.google.com/file/d/1hhS2N68kiQh5rMnXHAzYipAn9a6qfTym/view?usp=sharing" target="_blank" rel="noreferrer">Advanced Riemannian Geometry</a></li>
+        </ul>
+
+        <h3>High School</h3>
+        <ul>
+          <li><a href="https://drive.google.com/file/d/1nt5zwahEola-EoupC0BTQJXXpcF3P46-/view?usp=drive_link" target="_blank" rel="noreferrer">Analysis</a></li>
+          <li><a href="https://drive.google.com/file/d/18OXU0G7BsrTeVfA7H1JJRxA-s_ViRo1A/view?usp=drive_link" target="_blank" rel="noreferrer">Linear Algebra</a></li>
+          <li><a href="https://drive.google.com/file/d/16NrvIDSRBeO4lhwzUH34S3r7JnYGs5wy/view?usp=drive_link" target="_blank" rel="noreferrer">Ordinary Differential Equations</a></li>
+        </ul>
+      </section>
+
+      <section id="resources" class="section">
+        <h2>Resources:</h2>
+        <p>
+          A
+          <a href="https://sites.google.com/view/tianyi-wang/cag" target="_blank" rel="noreferrer">guide</a>
+          for PhD students at UPenn who plans to take their oral exam with Ron
+          Donagi and Tony Pantev on complex algebraic geometry.
+        </p>
+        <p>
+          An interesting song
+          (<a href="https://www.youtube.com/watch?v=BipvGD-LCjU" target="_blank" rel="noreferrer">Finite simple group of order 2</a>)
+        </p>
       </section>
 
       <section id="contact" class="section contact-section">
-        <div class="section-heading">
-          <p class="eyebrow">Contact</p>
-          <h2>保持联系</h2>
-        </div>
-        <p class="section-text">
-          欢迎通过 GitHub、邮箱或社交平台联系我。把下面的链接替换成你的真实地址即可。
-        </p>
-        <div class="contact-links">
-          <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="mailto:hello@example.com">Email</a>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
-        </div>
+        <h2>Contact Information:</h2>
+        <p>Email: <a href="mailto:tywang9@sas.upenn.edu">tywang9@sas.upenn.edu</a></p>
       </section>
     </main>
 
     <footer class="site-footer">
-      <p>© 2026 你的名字. Built with GitHub Pages.</p>
+      <p>© 2026 Tianyi Wang.</p>
     </footer>
   </body>
 </html>
