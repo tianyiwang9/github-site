@@ -4,182 +4,60 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tianyi Wang's website</title>
-    <meta
-      name="description"
-      content="Tianyi Wang's academic website."
-    />
+    <meta name="description" content="Tianyi Wang's academic website." />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="#home">Tianyi Wang's website</a>
+      <a class="brand" href="index.html">Tianyi Wang's website</a>
       <nav class="nav" aria-label="Main navigation">
-        <a href="#about-me">About Me</a>
-        <a href="#publications">Publications</a>
-        <a href="#notes">Notes</a>
-        <a href="#resources">Resources</a>
+        <a href="about.html">About Me</a>
+        <a href="publications.html">Publications</a>
+        <a href="notes.html">Notes</a>
+        <a href="resources.html">Resources</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </header>
 
-    <main id="home">
-      <section class="intro">
+    <main>
+      <section class="intro home-intro">
         <h1>Tianyi Wang</h1>
         <p class="quote">"We must know, we will know"--David Hilbert</p>
-      </section>
-
-      <section id="about-me" class="section">
-        <h2>About Me</h2>
-        <p>
-          I am a graduate student in mathematics at the University of
-          Pennsylvania, since fall 2024.
-        </p>
-        <p>
-          My main research interest is complex (algebraic) geometry. However,
-          I'm interested in a broad range of mathematical areas related to
-          differential geometry, topology, and mathematical physics.
-        </p>
-        <p>
-          Feel free to contact me via my school email:
-          <a href="mailto:tywang9@sas.upenn.edu">tywang9@sas.upenn.edu</a>
-        </p>
-
-        <h3>Which Springer GTM would I be?</h3>
-        <p>I am Robin Hartshorne's Algebraic geometry :(</p>
-        <p>
-          Which Springer GTM would you be? Try out the
-          <a href="https://math.jhu.edu/~savitt/GTM.html" target="_blank" rel="noreferrer">Springer GTM Test</a>!
+        <p class="lede">
+          Graduate student in mathematics at the University of Pennsylvania.
+          My main research interest is complex (algebraic) geometry.
         </p>
       </section>
 
-      <section id="publications" class="section">
-        <h2>Publications</h2>
-        <p>
-          Here is my
-          <a href="https://scholar.google.co.uk/citations?hl=en&user=84svzwEAAAAJ&view_op=list_works&gmla=AFix5MYh0iCfLg8Pz-vdYxTahmrRDMb_1uaSt-c655uAK-3VF21x9kU-ruagz3Qpng_AXaycxEXUGRQoW6rIzkxbvWcRbX8q6XTKzQ" target="_blank" rel="noreferrer">Google Scholar page</a>.
-          It contains exactly the same information as follows.
-        </p>
-
-        <h3>Research Papers:</h3>
-        <div class="card-grid publication-list">
-          <article class="card">
-            <p class="card-label">Research Paper</p>
-            <h4>On the Nonprojectedness of Supermoduli with Neveu-Schwarz and Ramond Punctures</h4>
-            <p>T. Wang</p>
-            <a href="https://arxiv.org/abs/2512.15727" target="_blank" rel="noreferrer">arxiv.org/abs/2512.15727</a>
-          </article>
-          <article class="card">
-            <p class="card-label">Research Paper</p>
-            <h4>Invariant Geometric Structures on Complex Almost Abelian Lie Groups</h4>
-            <p>Z. Avetisyan, A. Baruer, B. Buran, J. Morentin, T. Wang</p>
-            <a href="https://arxiv.org/abs/2308.09203" target="_blank" rel="noreferrer">arxiv.org/abs/2308.09203</a>
-          </article>
-          <article class="card">
-            <p class="card-label">Research Paper</p>
-            <h4>Local Behavior of the Eden Model on Graphs and Tessellations of Manifolds</h4>
-            <p>D. Hua, F. Manin, T. Queer, T. Wang. Journal of Applied and Computational Topology (2023).</p>
-            <a href="https://doi.org/10.1007/s41468-023-00153-6" target="_blank" rel="noreferrer">https://doi.org/10.1007/s41468-023-00153-6</a>
-          </article>
+      <section class="section">
+        <h2>Index</h2>
+        <div class="home-grid">
+          <a class="card page-card" href="about.html">
+            <p class="card-label">About Me</p>
+            <h3>Background and research interests</h3>
+            <p>Mathematics at UPenn, complex algebraic geometry, and related interests.</p>
+          </a>
+          <a class="card page-card" href="publications.html">
+            <p class="card-label">Publications</p>
+            <h3>Research papers and thesis</h3>
+            <p>Papers, Google Scholar, and expository writing.</p>
+          </a>
+          <a class="card page-card" href="notes.html">
+            <p class="card-label">Notes</p>
+            <h3>Mathematics notes</h3>
+            <p>Graduate, undergraduate, and high school notes as direct PDF links.</p>
+          </a>
+          <a class="card page-card" href="resources.html">
+            <p class="card-label">Resources</p>
+            <h3>Guides and mathematical odds and ends</h3>
+            <p>Including the complex algebraic geometry oral exam guide.</p>
+          </a>
+          <a class="card page-card" href="contact.html">
+            <p class="card-label">Contact</p>
+            <h3>Contact information</h3>
+            <p>Email and basic contact details.</p>
+          </a>
         </div>
-
-        <h3>Expository Writting:</h3>
-        <article class="card single-card">
-          <p>
-            My
-            <a href="pdfs/master-thesis.pdf" target="_blank" rel="noreferrer">master thesis</a>
-            (Title: "The Atiyah-Singer Index Theorem for Dirac Operators: A
-            Supergeometry and Functional Integral Perspective").
-          </p>
-        </article>
-      </section>
-
-      <section id="notes" class="section">
-        <h2>Notes</h2>
-        <p>
-          Below are some notes I made using LaTeX on various areas of
-          mathematics, and also some handwritten notes. I am in graduate school
-          now and I am still learning new things, which means I will probably
-          continue to make some notes, but definitely not in the near future.
-        </p>
-
-        <div class="note-groups">
-          <article class="card note-card">
-            <h3>Graduate</h3>
-            <p>
-              Mathematical Physics: I wrote a two volume notes on relevant
-              topics of mathematical physics.
-            </p>
-            <ul>
-              <li>
-                <a href="pdfs/mathematical-physics-volume-i.pdf" target="_blank" rel="noreferrer">Volume I</a>:
-                Mostly on general relativity and quantum mechanics, with a more
-                mathematical perspective.
-              </li>
-              <li>
-                <a href="pdfs/mathematical-physics-volume-ii.pdf" target="_blank" rel="noreferrer">Volume II</a>:
-                Mostly on supermanifolds, quantum field theory (QFT), and a
-                supersymmetric proof of the Atiyah-Singer index theorem using
-                functional integral and localization technique. A large part of
-                this also formed my master thesis.
-              </li>
-              <li><a href="pdfs/master-thesis.pdf" target="_blank" rel="noreferrer">Master thesis</a></li>
-              <li><a href="pdfs/complex-algebraic-geometry.pdf" target="_blank" rel="noreferrer">Complex Algebraic Geometry</a></li>
-              <li><a href="pdfs/smooth-manifolds-differential-topology.pdf" target="_blank" rel="noreferrer">Smooth Manifolds and Differential Topology</a></li>
-            </ul>
-          </article>
-
-          <article class="card note-card">
-            <h3>Undergraduate</h3>
-            <p>LaTeX notes:</p>
-            <ul>
-              <li><a href="pdfs/commutative-algebra.pdf" target="_blank" rel="noreferrer">Commutative Algebra</a></li>
-              <li><a href="pdfs/galois-theory.pdf" target="_blank" rel="noreferrer">Galois Theory</a></li>
-              <li><a href="pdfs/topology.pdf" target="_blank" rel="noreferrer">Topology</a></li>
-              <li><a href="pdfs/reed-simon-functional-analysis-problems.pdf" target="_blank" rel="noreferrer">Solution to Problems from Reed and Simon's Functional Analysis</a></li>
-            </ul>
-            <p>
-              Handwritten notes (warning: incomplete, and significantly lower
-              quality compared to the LaTeX notes):
-            </p>
-            <ul>
-              <li><a href="pdfs/complex-analysis.pdf" target="_blank" rel="noreferrer">Complex Analysis</a></li>
-              <li><a href="pdfs/real-analysis.pdf" target="_blank" rel="noreferrer">Real Analysis</a></li>
-              <li><a href="pdfs/homological-algebra.pdf" target="_blank" rel="noreferrer">Homological Algebra</a></li>
-              <li><a href="pdfs/fundamental-groups.pdf" target="_blank" rel="noreferrer">Fundamental Groups</a></li>
-              <li><a href="pdfs/cohomology-groups.pdf" target="_blank" rel="noreferrer">Cohomology Groups</a></li>
-              <li><a href="pdfs/quantum-mechanics.pdf" target="_blank" rel="noreferrer">Quantum Mechanics</a></li>
-              <li><a href="pdfs/basic-riemannian-geometry.pdf" target="_blank" rel="noreferrer">Basic Riemannian Geometry</a></li>
-              <li><a href="pdfs/advanced-riemannian-geometry.pdf" target="_blank" rel="noreferrer">Advanced Riemannian Geometry</a></li>
-            </ul>
-          </article>
-
-          <article class="card note-card">
-            <h3>High School</h3>
-            <ul>
-              <li><a href="pdfs/analysis.pdf" target="_blank" rel="noreferrer">Analysis</a></li>
-              <li><a href="pdfs/linear-algebra.pdf" target="_blank" rel="noreferrer">Linear Algebra</a></li>
-              <li><a href="pdfs/ordinary-differential-equations.pdf" target="_blank" rel="noreferrer">Ordinary Differential Equations</a></li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section id="resources" class="section">
-        <h2>Resources:</h2>
-        <p>
-          A
-          <a href="https://sites.google.com/view/tianyi-wang/cag" target="_blank" rel="noreferrer">guide</a>
-          for PhD students at UPenn who plans to take their oral exam with Ron
-          Donagi and Tony Pantev on complex algebraic geometry.
-        </p>
-        <p>
-          An interesting song
-          (<a href="https://www.youtube.com/watch?v=BipvGD-LCjU" target="_blank" rel="noreferrer">Finite simple group of order 2</a>)
-        </p>
-      </section>
-
-      <section id="contact" class="section contact-section">
-        <h2>Contact Information:</h2>
-        <p>Email: <a href="mailto:tywang9@sas.upenn.edu">tywang9@sas.upenn.edu</a></p>
       </section>
     </main>
 

@@ -2,11 +2,9 @@
 
 Personal academic website for Tianyi Wang.
 
-This repository currently mirrors the public content from:
-
-https://sites.google.com/view/tianyi-wang/about-me
-
-The site is a static HTML/CSS page. Notes PDFs are stored in `pdfs/` so they
-can open directly in the browser instead of routing through Google Drive.
+The site is a static multi-page HTML/CSS website. Notes PDFs are stored in
+`pdfs/` so they can open directly in the browser instead of routing through
+Google Drive. The complex algebraic geometry oral exam guide is also mirrored
+as a local HTML page.
 
 The site is not currently published through GitHub Pages.

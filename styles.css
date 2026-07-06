@@ -66,7 +66,8 @@ a {
   text-decoration: none;
 }
 
-.nav a:hover {
+.nav a:hover,
+.nav a.active {
   color: var(--accent);
 }
 
@@ -77,6 +78,10 @@ main {
 
 .intro {
   padding: 4rem 0 3rem;
+}
+
+.home-intro {
+  padding-bottom: 2rem;
 }
 
 h1,
@@ -100,7 +105,7 @@ h2 {
 }
 
 h3 {
-  margin: 2rem 0 0.75rem;
+  margin: 1.5rem 0 0.75rem;
   font-size: 1.24rem;
 }
 
@@ -121,6 +126,11 @@ h4 {
   padding: 3.5rem 0;
 }
 
+.first-section {
+  padding-top: 0;
+  border-top: 0;
+}
+
 .section p,
 .section li {
   max-width: 74ch;
@@ -138,12 +148,14 @@ ul {
 }
 
 .card-grid,
-.note-groups {
+.note-groups,
+.home-grid {
   display: grid;
   gap: 1rem;
 }
 
-.card-grid {
+.card-grid,
+.home-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
@@ -158,6 +170,17 @@ ul {
   background: var(--surface);
   padding: 1.1rem;
   box-shadow: 0 10px 28px rgba(34, 34, 34, 0.06);
+}
+
+.page-card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.page-card h2,
+.page-card h3 {
+  margin-top: 0;
 }
 
 .card p:last-child,
@@ -178,12 +201,71 @@ ul {
   max-width: 74ch;
 }
 
+.note-card h2,
 .note-card h3 {
   margin-top: 0;
+  font-size: 1.45rem;
 }
 
 .note-card ul {
   gap: 0.5rem;
+}
+
+.single-grid {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 40rem;
+}
+
+.lede {
+  max-width: 48rem;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.guide-layout {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.34fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.toc {
+  position: sticky;
+  top: 5.5rem;
+  display: grid;
+  gap: 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 1rem;
+}
+
+.toc h2 {
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.toc a {
+  color: var(--muted);
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+
+.toc a:hover {
+  color: var(--accent);
+}
+
+.guide h2 {
+  margin-top: 3rem;
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+}
+
+.guide h2:first-child {
+  margin-top: 0;
+}
+
+.guide h3 {
+  margin-top: 2rem;
 }
 
 .contact-section {
@@ -218,7 +300,13 @@ ul {
   }
 
   .card-grid,
-  .note-groups {
+  .note-groups,
+  .home-grid,
+  .guide-layout {
     grid-template-columns: 1fr;
+  }
+
+  .toc {
+    position: static;
   }
 }
