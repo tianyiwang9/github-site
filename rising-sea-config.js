@@ -19,6 +19,7 @@ window.risingSeaConfig = {
     Z: "\\mathbb{Z}",
     Spec: "\\operatorname{Spec}",
     Hom: "\\operatorname{Hom}",
+    op: ["\\operatorname{#1}", 1],
     im: "\\operatorname{im}",
     mc: ["\\mathcal{#1}", 1],
     ms: ["\\mathscr{#1}", 1]
