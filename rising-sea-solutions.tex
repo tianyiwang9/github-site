@@ -8,7 +8,6 @@
 
 \newcommand{\mc}[1]{\mathcal{#1}}
 \newcommand{\ms}[1]{\mathscr{#1}}
-\newcommand{\op}[1]{\operatorname{#1}}
 \DeclareMathOperator{\Spec}{Spec}
 \DeclareMathOperator{\Hom}{Hom}
 
@@ -47,5 +46,19 @@ where $\epsilon_v: V^\vee\to k$ is defined to be the delta mass at the funcional
 Let $A$ be an object in a category $\ms C$. The invertible elements $\op{Aut}(A)\subset \op{Mor}(A,A)$ indeed forms a group because we have the identity $\op{id}_A: A\to A$, and every morphism is invertible by definition. Moreover associativity holds by definition of a category. Hence $\op{Aut}(A)$ is indeed a group.
 
 In the example of sets, $\op{Aut}(A)$ is the set of bijections from $A$ to itself; In the example of vector spaces, $\op{Aut}(V)$ is the set of linear isomorphisms from $V$ to itself.
+
+\section{1 -- 1.1.D -- Dimensions Characterizes Vector Spaces}
+% id: 1-1-1-d-dimensions-characterizes-vector-spaces
+% updated: 2026-08-27
+
+We show that $\ms V\to \op{f.d.Vec}_k$ is an equivalence of categories. We construct the inverse functor as follows: Simultaneously choose basis for each vector space $V\in \op{f.d.Vec}_k$ (which Vakil says we can do). Define the functor $D: \op{f.d.Vec}_k\to \ms V$ as follows: For each $V$ define
+$$
+D(V)=k^{\dim V}
+$$
+where $\dim V$ is defined as the length of the basis of $V$ we choose. For every linear map $f:V\to W$, by choosing a basis this becomes a matrix of dimension $(\dim W)\times (\dim V)$, which can be now identified with a map
+$$
+D(f): k^{\dim V}\to k^{\dim W}.
+$$
+[I have no idea if this works...]
 
 \end{document}
