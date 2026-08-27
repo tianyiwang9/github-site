@@ -1040,10 +1040,10 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
 `;
   }
 
-  function upsertSolution(entry) {
+  function upsertIntoList(entries, entry) {
     const entryChapter = normalize(entry.chapter);
     const entryProblem = normalize(entry.problem);
-    const next = solutions.slice();
+    const next = entries.slice();
     const index = next.findIndex((solution) => (
       solution.id === entry.id ||
       (normalize(solution.chapter) === entryChapter && normalize(solution.problem) === entryProblem)
@@ -1056,6 +1056,10 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     }
 
     return next;
+  }
+
+  function upsertSolution(entry) {
+    return upsertIntoList(solutions, entry);
   }
 
   function mergeSolutionLists(primary, secondary) {
@@ -1254,12 +1258,12 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
       const remoteSolutions = currentFile
         ? parseSolutionsSource(fromBase64(currentFile.content))
         : solutions.slice();
-      solutions.splice(0, solutions.length, ...remoteSolutions);
-      const nextSolutions = upsertSolution(entry);
+      const mergedSolutions = mergeSolutionLists(remoteSolutions, getLocalSolutions());
+      const nextSolutions = upsertIntoList(mergedSolutions, entry);
       const result = await syncSolutionsToGithub(nextSolutions, `Publish Rising Sea solution ${entry.problem}`);
 
       setSolutions(nextSolutions);
-      saveLocalSolutions(removeSolution(getLocalSolutions(), entry.id));
+      saveLocalSolutions([]);
       setPublishStatus(`Synced. GitHub Pages will refresh after the workflow finishes. Commit: ${result.commit.sha.slice(0, 7)}.`);
     } catch (error) {
       setPublishStatus(`It is visible here, but GitHub sync failed: ${error.message}`);
@@ -1360,7 +1364,7 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     }
     localStorage.setItem(tokenStorageKey, token);
     tokenInput.value = "";
-    setPublishStatus("Token saved in this browser.");
+    setPublishStatus("Token saved in this browser. The next publish or update will sync local solutions and the TeX file to GitHub.");
   }
 
   function clearGithubToken() {
