@@ -29,6 +29,7 @@
   const hiddenStorageKey = "rising-sea-hidden-solutions";
   const localSolutionsStorageKey = "rising-sea-local-solutions";
   const localTexStorageKey = "rising-sea-latest-tex";
+  const remoteSolutionIds = new Set(solutions.map((solution) => solution.id));
   let editingSolutionId = "";
 
   const defaultDraft = String.raw`We prove the claim by first recalling the relevant definition.
@@ -842,7 +843,7 @@ Now write the actual solution here.`;
   function getFilteredSolutions() {
     const hiddenIds = getHiddenSolutionIds();
     const query = normalize(searchInput ? searchInput.value : "");
-    const visibleSolutions = solutions.filter((solution) => !hiddenIds.includes(solution.id));
+    const visibleSolutions = solutions.filter((solution) => remoteSolutionIds.has(solution.id) || !hiddenIds.includes(solution.id));
     if (!query) return visibleSolutions;
     return visibleSolutions.filter((solution) => solutionText(solution).includes(query));
   }
@@ -900,6 +901,22 @@ Now write the actual solution here.`;
   function setPublishStatus(message) {
     if (!publishStatus) return;
     publishStatus.textContent = message;
+  }
+
+  async function loadLatestPublishedSolutions() {
+    const sourcePath = githubConfig.solutionsPath || "rising-sea-solutions.js";
+
+    try {
+      const response = await fetch(`${sourcePath}?v=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) return;
+
+      const remoteSolutions = parseSolutionsSource(await response.text());
+      remoteSolutionIds.clear();
+      remoteSolutions.forEach((solution) => remoteSolutionIds.add(solution.id));
+      setSolutions(mergeSolutionLists(remoteSolutions, getLocalSolutions()));
+    } catch (error) {
+      // The static copy loaded above is enough when this refresh is unavailable.
+    }
   }
 
   function saveDraft() {
@@ -1024,6 +1041,7 @@ Now write the actual solution here.`;
 
 \newcommand{\mc}[1]{\mathcal{#1}}
 \newcommand{\ms}[1]{\mathscr{#1}}
+\newcommand{\op}[1]{\operatorname{#1}}
 \DeclareMathOperator{\Spec}{Spec}
 \DeclareMathOperator{\Hom}{Hom}
 
@@ -1434,5 +1452,6 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
   bindSearch();
   bindSolutionActions();
   bindEditor();
+  loadLatestPublishedSolutions();
   typesetMath();
 })();
