@@ -15,11 +15,11 @@ window.risingSeaSolutions = [
 	\arrow["f"', from=2-1, to=2-2]
 	\arrow["{m_W}"', from=2-2, to=1-2]
 \end{tikzcd}\]
-Here, the map $m_V: V^{\vee\vee}\to V$ is defined to be
+Here, the map $m_V: V\to V^{\vee\vee}$ is defined to be
 $$
-m_V:v\mapsto \epsilon_v
+m_V:v\mapsto (\epsilon\mapsto \epsilon(v)).
 $$
-where $\epsilon_v: V^\vee\to k$ is defined to be the delta mass at the funcional $\delta_v\in V^\vee$, where $\delta_v: V\to k$ is the delta mass at the vector $v\in V$.`
+`
   },
   {
     id: "1-1-1-b-automorphism-group",
