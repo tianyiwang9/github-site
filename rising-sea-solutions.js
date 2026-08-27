@@ -35,16 +35,10 @@ In the example of sets, $\op{Aut}(A)$ is the set of bijections from $A$ to itsel
     id: "1-1-1-d-dimensions-characterizes-vector-spaces",
     chapter: "1",
     problem: "1.1.D",
-    title: "Dimensions Characterizes Vector Spaces",
+    title: "Dimensions and Basis Characterize Vector Spaces",
     updated: "2026-08-27",
-    body: String.raw`We show that $\ms V\to \op{f.d.Vec}_k$ is an equivalence of categories. We construct the inverse functor as follows: Simultaneously choose basis for each vector space $V\in \op{f.d.Vec}_k$ (which Vakil says we can do). Define the functor $D: \op{f.d.Vec}_k\to \ms V$ as follows: For each $V$ define
-$$
-D(V)=k^{\dim V}
-$$
-where $\dim V$ is defined as the length of the basis of $V$ we choose. For every linear map $f:V\to W$, by choosing a basis this becomes a matrix of dimension $(\dim W)\times (\dim V)$, which can be now identified with a map
-$$
-D(f): k^{\dim V}\to k^{\dim W}.
-$$
-[I have no idea if this works...]`
+    body: String.raw`We show that $\ms V\to \op{f.d.Vec}_k$ is an equivalence of categories. We construct the inverse functor as follows: Simultaneously choose basis for each vector space $V\in \op{f.d.Vec}_k$ (which Vakil says we can do). Define the functor $\rho: \op{f.d.Vec}_k\to \ms V$ as follows: 
+
+Let $V\in \op{f.d.Vec}_k$ be a vector space with chosen basis $e_1,...,e_n$. Then define $\rho(V)=k^n$. If $W$ is another vector space with basis $f_1,...,f_m$, so $\rho(W)=k^m$, and if $T:V\to W$ is a linear map, then with respect to these basis $T$ can be identified with an $m\times n$ matrix, which is a linear map $\rho(T):k^n\to k^m$. `
   }
 ];
