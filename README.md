@@ -7,4 +7,8 @@ The site is a static multi-page HTML/CSS website. Notes PDFs are stored in
 Google Drive. The complex algebraic geometry oral exam guide is also mirrored
 as a local HTML page.
 
-The site is not currently published through GitHub Pages.
+The repository includes a GitHub Pages workflow. After GitHub Pages is enabled
+for the repository and the `main` branch is pushed, the Rising Sea page will be
+available at:
+
+`https://tianyiwang9.github.io/github-site/vakil-rising-sea.html`

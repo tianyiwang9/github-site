@@ -33,6 +33,41 @@ a {
   text-underline-offset: 0.2em;
 }
 
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  min-height: 2.55rem;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent);
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.45rem 0.85rem;
+}
+
+button:hover {
+  background: #244b58;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.secondary-button {
+  background: var(--surface);
+  color: var(--accent);
+}
+
+.secondary-button:hover {
+  background: var(--accent-soft);
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -222,6 +257,378 @@ ul {
   font-size: 1.08rem;
 }
 
+.math-workspace {
+  width: min(1180px, calc(100% - 2rem));
+}
+
+.rising-sea-intro h1 {
+  max-width: 11ch;
+}
+
+.workspace-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.workspace-header h2 {
+  margin-bottom: 0.45rem;
+}
+
+.workspace-header p {
+  margin-bottom: 0;
+}
+
+.workspace-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: flex-end;
+}
+
+.solution-editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.editor-panel,
+.preview-panel,
+.solution-entry,
+.publish-settings {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 1rem;
+}
+
+.editor-panel {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.editor-panel label,
+.search-row label,
+.publish-settings label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.editor-panel label span,
+.search-row label span,
+.publish-settings label span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr minmax(8.5rem, 0.8fr);
+  gap: 0.65rem;
+}
+
+.editor-panel input,
+.editor-panel textarea,
+.search-row input,
+.publish-settings input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbf9;
+  color: var(--text);
+  padding: 0.65rem 0.75rem;
+}
+
+.editor-panel input:focus,
+.editor-panel textarea:focus,
+.search-row input:focus,
+.publish-settings input:focus {
+  border-color: var(--accent);
+  outline: 3px solid var(--accent-soft);
+}
+
+.editor-panel textarea {
+  min-height: 28rem;
+  resize: vertical;
+  font-family:
+    "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.editor-status {
+  min-height: 1.4rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.preview-panel {
+  min-height: 100%;
+  overflow-wrap: anywhere;
+}
+
+.solution-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.solution-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.search-row,
+.publish-settings {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.solution-entry h2 {
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.solution-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  justify-content: space-between;
+  margin-bottom: 0.55rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.solution-body {
+  overflow-x: auto;
+}
+
+.solution-body h2,
+.solution-body h3,
+.solution-body h4 {
+  margin-top: 1.25rem;
+}
+
+.solution-body p,
+.solution-body li {
+  max-width: 80ch;
+}
+
+.solution-body mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+.solution-body pre {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbf9;
+  padding: 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.math-block {
+  overflow-x: auto;
+}
+
+.quiver-embed {
+  width: min(100%, var(--quiver-width, 560px));
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.quiver-embed iframe {
+  display: block;
+  width: 100%;
+  height: var(--quiver-height, 360px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.quiver-embed figcaption {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.quiver-static {
+  width: min(100%, var(--quiver-width, 560px));
+  margin: 1rem auto;
+  overflow: visible;
+}
+
+.quiver-static-canvas {
+  position: relative;
+  min-width: max-content;
+}
+
+.quiver-static-canvas svg,
+.quiver-static-labels {
+  position: absolute;
+  inset: 0;
+}
+
+.quiver-static-canvas svg {
+  z-index: 1;
+  overflow: visible;
+}
+
+.quiver-static-canvas line,
+.quiver-static-canvas path {
+  fill: none;
+  stroke: var(--text);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.28;
+}
+
+.quiver-static-canvas marker path {
+  fill: none;
+  stroke: var(--text);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.28;
+}
+
+.quiver-static-labels {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.quiver-object-label,
+.quiver-arrow-label {
+  position: absolute;
+  display: block;
+  transform: translate(-50%, -50%);
+}
+
+.quiver-object-label span,
+.quiver-arrow-label span {
+  background: var(--surface);
+}
+
+.quiver-object-label span {
+  padding: 0 0.45rem;
+}
+
+.quiver-arrow-label span {
+  padding: 0 0.25rem;
+}
+
+.quiver-object-label mjx-container {
+  font-size: 150% !important;
+}
+
+.quiver-arrow-label mjx-container {
+  font-size: 118% !important;
+}
+
+.quiver-static figcaption {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.tikzcd-render {
+  max-width: 100%;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.tikzcd-canvas {
+  position: relative;
+  min-width: max-content;
+}
+
+.tikzcd-canvas svg,
+.tikzcd-labels {
+  position: absolute;
+  inset: 0;
+}
+
+.tikzcd-canvas svg {
+  z-index: 1;
+  overflow: visible;
+}
+
+.tikzcd-canvas line,
+.tikzcd-canvas path {
+  fill: none;
+  stroke: var(--text);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.15;
+}
+
+.tikzcd-canvas marker path {
+  fill: none;
+  stroke: var(--text);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.15;
+}
+
+.tikzcd-canvas text {
+  fill: var(--text);
+  font-size: 14px;
+}
+
+.tikzcd-labels {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.tikzcd-cell {
+  position: absolute;
+  display: block;
+  transform: translate(-50%, -50%);
+}
+
+.tikzcd-cell span {
+  background: var(--surface);
+  padding: 0 0.45rem;
+}
+
+.tikzcd-cell mjx-container {
+  font-size: 116% !important;
+}
+
+.tikzcd-arrow-label {
+  position: absolute;
+  display: block;
+  transform: translate(-50%, -50%);
+}
+
+.tikzcd-arrow-label span {
+  background: var(--surface);
+  padding: 0 0.25rem;
+}
+
+.tikzcd-arrow-label mjx-container {
+  font-size: 104% !important;
+}
+
+.muted,
+.empty-state {
+  color: var(--muted);
+}
+
 .guide-layout {
   display: grid;
   grid-template-columns: minmax(12rem, 0.34fr) minmax(0, 1fr);
@@ -314,8 +721,18 @@ ul {
   .card-grid,
   .note-groups,
   .home-grid,
-  .guide-layout {
+  .guide-layout,
+  .solution-editor,
+  .field-grid {
     grid-template-columns: 1fr;
+  }
+
+  .workspace-header {
+    display: grid;
+  }
+
+  .workspace-actions {
+    justify-content: flex-start;
   }
 
   .toc {

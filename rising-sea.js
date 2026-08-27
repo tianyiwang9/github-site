@@ -1,0 +1,1434 @@
+(function () {
+  const config = window.risingSeaConfig || {};
+  const githubConfig = config.github || {};
+  const solutions = Array.isArray(window.risingSeaSolutions)
+    ? window.risingSeaSolutions
+    : [];
+
+  const list = document.querySelector("[data-solution-list]");
+  const empty = document.querySelector("[data-empty-solutions]");
+  const searchInput = document.querySelector("[data-search]");
+  const searchStatus = document.querySelector("[data-search-status]");
+  const editor = document.querySelector("[data-editor]");
+  const preview = document.querySelector("[data-preview]");
+  const titleInput = document.querySelector("[data-title]");
+  const chapterInput = document.querySelector("[data-chapter]");
+  const problemInput = document.querySelector("[data-problem]");
+  const dateInput = document.querySelector("[data-date]");
+  const newSolutionButton = document.querySelector("[data-new-solution]");
+  const publishButton = document.querySelector("[data-publish-entry]");
+  const resetButton = document.querySelector("[data-reset-draft]");
+  const tokenInput = document.querySelector("[data-github-token]");
+  const saveTokenButton = document.querySelector("[data-save-token]");
+  const downloadTexButton = document.querySelector("[data-download-tex]");
+  const clearTokenButton = document.querySelector("[data-clear-token]");
+  const status = document.querySelector("[data-status]");
+  const publishStatus = document.querySelector("[data-publish-status]");
+  const storageKey = "rising-sea-draft";
+  const tokenStorageKey = "rising-sea-github-token";
+  const hiddenStorageKey = "rising-sea-hidden-solutions";
+  const localSolutionsStorageKey = "rising-sea-local-solutions";
+  const localTexStorageKey = "rising-sea-latest-tex";
+  let editingSolutionId = "";
+
+  const defaultDraft = String.raw`We prove the claim by first recalling the relevant definition.
+
+Let $X$ be a scheme and let $\mathcal{F}$ be a sheaf on $X$.
+
+$$
+0 \longrightarrow \mathcal{F}' \longrightarrow \mathcal{F}
+\longrightarrow \mathcal{F}'' \longrightarrow 0
+$$
+
+Now write the actual solution here.`;
+
+  function getGithubToken() {
+    return localStorage.getItem(tokenStorageKey) || "";
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function decodeHtmlEntities(value) {
+    const textarea = document.createElement("textarea");
+    textarea.innerHTML = String(value);
+    return textarea.value;
+  }
+
+  function normalize(value) {
+    return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+  }
+
+  function renderInline(value) {
+    return escapeHtml(value)
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*([^*]+)\*/g, "<em>$1</em>")
+      .replace(/`([^`]+)`/g, "<code>$1</code>");
+  }
+
+  function extractQuiverUrl(value) {
+    const source = String(value);
+    const iframeMatch = source.match(/<iframe\b[^>]*\bsrc=["']([^"']*q\.uiver\.app[^"']*)["'][^>]*>/i);
+    const urlMatch = iframeMatch || source.match(/https:\/\/q\.uiver\.app\/[^\s"'<>\\\]]+/i);
+    const rawUrl = urlMatch && urlMatch[1] ? urlMatch[1] : urlMatch && urlMatch[0];
+
+    if (!rawUrl) return "";
+
+    try {
+      const url = new URL(rawUrl.replace(/&amp;/g, "&"));
+      return url.hostname === "q.uiver.app" ? url.href : "";
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function getQuiverData(url) {
+    try {
+      const parsed = new URL(url);
+      const hashParams = new URLSearchParams(parsed.hash.replace(/^#/, ""));
+      return parsed.searchParams.get("q") || hashParams.get("q") || "";
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function makeQuiverEmbedUrl(url) {
+    try {
+      const parsed = new URL(url.replace(/&amp;/g, "&"));
+      const q = getQuiverData(parsed.href);
+      const embed = new URL("https://q.uiver.app/");
+      embed.searchParams.set("embed", "");
+      embed.searchParams.set("scale", "-1");
+
+      if (q) {
+        embed.hash = `q=${q}`;
+      } else {
+        embed.hash = parsed.hash.replace(/^#/, "");
+      }
+
+      return embed.href.replace("?embed=&", "?embed&");
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function decodeBase64Url(value) {
+    const normalized = String(value || "").replace(/-/g, "+").replace(/_/g, "/");
+    const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, "=");
+    return atob(padded);
+  }
+
+  function getQuiverSize(url) {
+    const fallback = { width: 560, height: 360 };
+    const q = getQuiverData(url);
+    if (!q) return fallback;
+
+    try {
+      const data = JSON.parse(decodeBase64Url(q));
+      const objectCount = Number(data[1]) || 0;
+      const objects = data.slice(2, 2 + objectCount);
+      const xs = objects.map((object) => Number(object[0])).filter(Number.isFinite);
+      const ys = objects.map((object) => Number(object[1])).filter(Number.isFinite);
+      if (!xs.length || !ys.length) return fallback;
+
+      const width = Math.min(720, Math.max(380, (Math.max(...xs) - Math.min(...xs) + 1) * 120 + 120));
+      const height = Math.min(560, Math.max(260, (Math.max(...ys) - Math.min(...ys) + 1) * 50 + 120));
+      return { width, height };
+    } catch (error) {
+      return fallback;
+    }
+  }
+
+  function parseQuiverDiagram(url) {
+    const q = getQuiverData(url);
+    if (!q) return null;
+
+    try {
+      const data = JSON.parse(decodeBase64Url(q));
+      const objectCount = Number(data[1]) || 0;
+      const objects = data.slice(2, 2 + objectCount).map((object, index) => ({
+        index,
+        x: Number(object[0]),
+        y: Number(object[1]),
+        label: String(object[2] || "")
+      }));
+      const arrows = data.slice(2 + objectCount).map((arrow) => ({
+        from: Number(arrow[0]),
+        to: Number(arrow[1]),
+        label: String(arrow[2] || ""),
+        labelSide: Number(arrow[3]) || 0,
+        options: arrow[4] || {}
+      }));
+
+      if (!objects.length) return null;
+      return { objects, arrows };
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function quiverStyleValue(arrow, path) {
+    return path.reduce((value, key) => value && value[key], arrow.options || {});
+  }
+
+  function isQuiverDashed(arrow) {
+    return quiverStyleValue(arrow, ["style", "body", "name"]) === "dashed";
+  }
+
+  function isQuiverHook(arrow) {
+    return Boolean(quiverStyleValue(arrow, ["style", "tail", "name"]) === "hook");
+  }
+
+  function isQuiverCornerMarker(arrow) {
+    return quiverStyleValue(arrow, ["style", "name"]) === "corner-inverse";
+  }
+
+  function renderQuiverSvgBlock(url) {
+    const diagram = parseQuiverDiagram(url);
+    if (!diagram) return "";
+
+    const gridX = 190;
+    const gridY = 70;
+    const padding = 70;
+    const xs = diagram.objects.map((object) => object.x);
+    const ys = diagram.objects.map((object) => object.y);
+    const minX = Math.min(...xs);
+    const minY = Math.min(...ys);
+    const maxX = Math.max(...xs);
+    const maxY = Math.max(...ys);
+    const width = Math.max(380, (maxX - minX) * gridX + padding * 2);
+    const height = Math.max(260, (maxY - minY) * gridY + padding * 2);
+    const markerId = `quiver-arrow-${Math.random().toString(36).slice(2)}`;
+    const objectPoints = new Map(diagram.objects.map((object) => [
+      object.index,
+      {
+        ...object,
+        px: padding + (object.x - minX) * gridX,
+        py: padding + (object.y - minY) * gridY
+      }
+    ]));
+    const labels = [];
+    const paths = diagram.arrows
+      .map((arrow) => {
+        const from = objectPoints.get(arrow.from);
+        const to = objectPoints.get(arrow.to);
+        if (!from || !to) return "";
+
+        if (isQuiverCornerMarker(arrow)) {
+          const x = from.px + (to.px - from.px) * 0.14;
+          const y = from.py + (to.py - from.py) * 0.14;
+          labels.push(`
+            <div class="quiver-arrow-label quiver-corner-label" style="left:${x}px; top:${y}px;">
+              <span>\\(\\ulcorner\\)</span>
+            </div>
+          `);
+          return "";
+        }
+
+        const start = { x: from.px, y: from.py };
+        const end = { x: to.px, y: to.py };
+        const dx = end.x - start.x;
+        const dy = end.y - start.y;
+        const length = Math.hypot(dx, dy) || 1;
+        const normal = { x: -dy / length, y: dx / length };
+        const line = shortenLine(start, end, Math.min(46, length * 0.32));
+        const curve = Number(arrow.options.curve || 0);
+        const curveOffset = curve * 66;
+        const unit = { x: dx / length, y: dy / length };
+        const middle = {
+          x: (line.start.x + line.end.x) / 2,
+          y: (line.start.y + line.end.y) / 2
+        };
+        const controlA = {
+          x: line.start.x + unit.x * length * 0.28 + normal.x * curveOffset,
+          y: line.start.y + unit.y * length * 0.28 + normal.y * curveOffset
+        };
+        const controlB = {
+          x: line.end.x - unit.x * length * 0.28 + normal.x * curveOffset,
+          y: line.end.y - unit.y * length * 0.28 + normal.y * curveOffset
+        };
+        const dash = isQuiverDashed(arrow) ? ' stroke-dasharray="8 10"' : "";
+        const path = curve
+          ? `<path d="M ${line.start.x} ${line.start.y} C ${controlA.x} ${controlA.y} ${controlB.x} ${controlB.y} ${line.end.x} ${line.end.y}"${dash} marker-end="url(#${markerId})"></path>`
+          : `<line x1="${line.start.x}" y1="${line.start.y}" x2="${line.end.x}" y2="${line.end.y}"${dash} marker-end="url(#${markerId})"></line>`;
+
+        if (arrow.label) {
+          const side = arrow.labelSide === 2 ? -1 : 1;
+          const labelOffset = curve ? curveOffset * 0.55 : -20 * side;
+          labels.push(`
+            <div class="quiver-arrow-label" style="left:${middle.x + normal.x * labelOffset}px; top:${middle.y + normal.y * labelOffset}px;">
+              <span>\\(${escapeHtml(arrow.label)}\\)</span>
+            </div>
+          `);
+        }
+
+        if (isQuiverHook(arrow)) {
+          const hookLength = 24;
+          const hookBack = 18;
+          const hookX1 = line.start.x + normal.x * hookLength * 0.55;
+          const hookY1 = line.start.y + normal.y * hookLength * 0.55;
+          const hookX2 = line.start.x - normal.x * hookLength * 0.55;
+          const hookY2 = line.start.y - normal.y * hookLength * 0.55;
+          const hookCx = line.start.x - unit.x * hookBack;
+          const hookCy = line.start.y - unit.y * hookBack;
+          return `${path}<path class="quiver-hook" d="M ${hookX1} ${hookY1} Q ${hookCx} ${hookCy} ${hookX2} ${hookY2}"></path>`;
+        }
+
+        return path;
+      })
+      .join("");
+    const objectLabels = diagram.objects
+      .map((object) => {
+        const point = objectPoints.get(object.index);
+        return `
+          <div class="quiver-object-label" style="left:${point.px}px; top:${point.py}px;">
+            <span>\\(${escapeHtml(point.label)}\\)</span>
+          </div>
+        `;
+      })
+      .join("");
+
+    return `
+      <figure class="quiver-static" style="--quiver-width:${width}px;">
+        <div class="quiver-static-canvas" style="width:${width}px; height:${height}px;">
+          <svg viewBox="0 0 ${width} ${height}" aria-hidden="true">
+            <defs>
+              <marker id="${markerId}" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto">
+                <path class="quiver-marker-path" d="M1.25,1.25 L11,6.5 L1.25,11.75"></path>
+              </marker>
+            </defs>
+            ${paths}
+          </svg>
+          <div class="quiver-static-labels">
+            ${objectLabels}
+            ${labels.join("")}
+          </div>
+        </div>
+        <figcaption><a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">Open in quiver</a></figcaption>
+      </figure>
+    `;
+  }
+
+  function renderQuiverBlock(value) {
+    const url = extractQuiverUrl(value);
+    if (!url) return "";
+
+    const embedUrl = makeQuiverEmbedUrl(url);
+    const size = getQuiverSize(url);
+
+    return `
+      <figure class="quiver-embed" style="--quiver-width:${size.width}px; --quiver-height:${size.height}px;">
+        <iframe src="${escapeHtml(embedUrl || url)}" loading="lazy" scrolling="no" title="quiver commutative diagram"></iframe>
+        <figcaption><a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">Open in quiver</a></figcaption>
+      </figure>
+    `;
+  }
+
+  function stripMathWrapper(value) {
+    return String(value)
+      .replace(/^\s*\\\[\s*/, "")
+      .replace(/\s*\\\]\s*$/, "")
+      .trim();
+  }
+
+  function parseCellReference(value) {
+    const match = String(value || "").match(/(\d+)-(\d+)/);
+    if (!match) return null;
+    return {
+      row: Number(match[1]),
+      col: Number(match[2])
+    };
+  }
+
+  function splitArrowOptions(value) {
+    const parts = [];
+    let current = "";
+    let braceDepth = 0;
+    let inQuote = false;
+
+    for (const character of String(value || "")) {
+      if (character === '"' && !current.endsWith("\\")) {
+        inQuote = !inQuote;
+      }
+
+      if (!inQuote) {
+        if (character === "{") braceDepth += 1;
+        if (character === "}") braceDepth = Math.max(0, braceDepth - 1);
+      }
+
+      if (character === "," && !inQuote && braceDepth === 0) {
+        parts.push(current.trim());
+        current = "";
+      } else {
+        current += character;
+      }
+    }
+
+    if (current.trim()) parts.push(current.trim());
+    return parts;
+  }
+
+  function stripOuterBraces(value) {
+    let text = String(value || "").trim();
+    while (text.startsWith("{") && text.endsWith("}")) {
+      text = text.slice(1, -1).trim();
+    }
+    return text;
+  }
+
+  function parseCurveHeight(value) {
+    const match = String(value || "").match(/curve\s*=\s*\{[^}]*height\s*=\s*([-0-9.]+)pt/i);
+    return match ? Number(match[1]) : 0;
+  }
+
+  function parseArrow(command) {
+    const optionMatch = String(command || "").match(/\\arrow\s*\[([\s\S]*)\]\s*$/);
+    if (!optionMatch) return null;
+
+    const options = splitArrowOptions(optionMatch[1]);
+    const from = parseCellReference((optionMatch[1].match(/from\s*=\s*([0-9]+-[0-9]+)/) || [])[1]);
+    const to = parseCellReference((optionMatch[1].match(/to\s*=\s*([0-9]+-[0-9]+)/) || [])[1]);
+    const labelOption = options.find((option) => /^"/.test(option));
+    const label = labelOption
+      ? stripOuterBraces((labelOption.match(/^"([\s\S]*)"$/) || [])[1] || "")
+      : "";
+    const dashed = options.some((option) => /^dashed$/i.test(option));
+    const curveHeight = parseCurveHeight(optionMatch[1]);
+
+    if (!from || !to) return null;
+    return { from, to, label, dashed, curveHeight };
+  }
+
+  function cleanTikzCell(value) {
+    return decodeHtmlEntities(value)
+      .replace(/\\\\\s*$/, "")
+      .replace(/\\\s*$/, "")
+      .trim();
+  }
+
+  function extractArrowCommands(value) {
+    const commands = [];
+    let matrix = "";
+    let index = 0;
+    const source = String(value || "");
+
+    while (index < source.length) {
+      const arrowIndex = source.indexOf("\\arrow", index);
+      if (arrowIndex === -1) {
+        matrix += source.slice(index);
+        break;
+      }
+
+      matrix += source.slice(index, arrowIndex);
+      let commandEnd = arrowIndex + "\\arrow".length;
+      while (/\s/.test(source[commandEnd] || "")) commandEnd += 1;
+
+      if (source[commandEnd] !== "[") {
+        index = commandEnd;
+        continue;
+      }
+
+      let bracketDepth = 0;
+      let inQuote = false;
+      while (commandEnd < source.length) {
+        const character = source[commandEnd];
+        if (character === '"' && source[commandEnd - 1] !== "\\") {
+          inQuote = !inQuote;
+        }
+        if (!inQuote) {
+          if (character === "[") bracketDepth += 1;
+          if (character === "]") {
+            bracketDepth -= 1;
+            if (bracketDepth === 0) {
+              commandEnd += 1;
+              break;
+            }
+          }
+        }
+        commandEnd += 1;
+      }
+
+      commands.push(source.slice(arrowIndex, commandEnd));
+      index = commandEnd;
+    }
+
+    return { matrix, commands };
+  }
+
+  function splitTikzRows(value) {
+    const rows = [];
+    let current = "";
+    const source = String(value || "");
+    let index = 0;
+
+    while (index < source.length) {
+      if (source[index] === "\\" && source[index + 1] === "\\") {
+        rows.push(current);
+        current = "";
+        index += 2;
+        while (/\s/.test(source[index] || "") && source[index] !== "\n") {
+          index += 1;
+        }
+      } else {
+        current += source[index];
+        index += 1;
+      }
+    }
+
+    rows.push(current);
+    return rows;
+  }
+
+  function parseTikzcd(value) {
+    const source = stripMathWrapper(decodeHtmlEntities(value));
+    if (!/\\begin\{tikzcd\}/.test(source)) return null;
+
+    const content = source
+      .replace(/^[\s\S]*?\\begin\{tikzcd\}(?:\[[^\]]*\])?/, "")
+      .replace(/\\end\{tikzcd\}[\s\S]*$/, "")
+      .trim();
+    const extracted = extractArrowCommands(content);
+    const rows = [];
+    const arrows = extracted.commands.map(parseArrow).filter(Boolean);
+
+    splitTikzRows(extracted.matrix).forEach((rawRow) => {
+      const cells = rawRow.split("&").map(cleanTikzCell);
+      rows.push(cells);
+    });
+
+    if (!rows.length) return null;
+    const usedCells = new Set();
+    arrows.forEach((arrow) => {
+      usedCells.add(`${arrow.from.row}-${arrow.from.col}`);
+      usedCells.add(`${arrow.to.row}-${arrow.to.col}`);
+    });
+    const hasUsedCells = usedCells.size > 0;
+    const displayRows = rows.map((row, rowIndex) => row.map((cell, colIndex) => ({
+      originalRow: rowIndex + 1,
+      originalCol: colIndex + 1,
+      text: hasUsedCells && !usedCells.has(`${rowIndex + 1}-${colIndex + 1}`) ? "" : cell
+    })));
+    const nonEmptyRows = displayRows.filter((row) => row.some((cell) => cell.text));
+    const columnCount = Math.max(...nonEmptyRows.map((row) => row.length), 1);
+    const rowMap = new Map();
+    const colMap = new Map();
+
+    nonEmptyRows.forEach((row, displayRowIndex) => {
+      rowMap.set(row[0].originalRow, displayRowIndex + 1);
+      row.forEach((cell) => {
+        if (cell.text) colMap.set(cell.originalCol, cell.originalCol);
+      });
+    });
+
+    const usedColumns = [...new Set(nonEmptyRows.flatMap((row) => row
+      .filter((cell) => cell.text)
+      .map((cell) => cell.originalCol)))].sort((a, b) => a - b);
+    usedColumns.forEach((column, displayColumnIndex) => {
+      colMap.set(column, displayColumnIndex + 1);
+    });
+
+    const compressedRows = nonEmptyRows.map((row) => {
+      const next = Array.from({ length: usedColumns.length || columnCount }, () => ({
+        text: "",
+        originalRow: row[0].originalRow,
+        originalCol: 0
+      }));
+      row.forEach((cell) => {
+        const col = colMap.get(cell.originalCol);
+        if (col) next[col - 1] = cell;
+      });
+      return next;
+    });
+
+    const compressedArrows = arrows
+      .map((arrow) => {
+        const fromRow = rowMap.get(arrow.from.row);
+        const toRow = rowMap.get(arrow.to.row);
+        const fromCol = colMap.get(arrow.from.col);
+        const toCol = colMap.get(arrow.to.col);
+        if (!fromRow || !toRow || !fromCol || !toCol) return null;
+        return {
+          ...arrow,
+          from: { row: fromRow, col: fromCol },
+          to: { row: toRow, col: toCol }
+        };
+      })
+      .filter(Boolean);
+
+    const finalColumnCount = Math.max(...compressedRows.map((row) => row.length), 1);
+    compressedRows.forEach((row) => {
+      while (row.length < finalColumnCount) row.push({ text: "", originalRow: 0, originalCol: 0 });
+    });
+
+    return { rows: compressedRows, arrows: compressedArrows, columnCount: finalColumnCount };
+  }
+
+  function diagramPoint(ref, cellWidth, rowHeight, padding) {
+    return {
+      x: padding + (ref.col - 1) * cellWidth,
+      y: padding + (ref.row - 1) * rowHeight
+    };
+  }
+
+  function shortenLine(start, end, amount) {
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const length = Math.hypot(dx, dy) || 1;
+    const ux = dx / length;
+    const uy = dy / length;
+    return {
+      start: { x: start.x + ux * amount, y: start.y + uy * amount },
+      end: { x: end.x - ux * amount, y: end.y - uy * amount },
+      middle: { x: (start.x + end.x) / 2, y: (start.y + end.y) / 2 }
+    };
+  }
+
+  function renderTikzcdBlock(value) {
+    const diagram = parseTikzcd(value);
+    if (!diagram) return "";
+
+    const cellWidth = 170;
+    const rowHeight = 112;
+    const padding = 52;
+    const width = padding * 2 + Math.max(0, diagram.columnCount - 1) * cellWidth;
+    const height = padding * 2 + Math.max(0, diagram.rows.length - 1) * rowHeight;
+    const markerId = `arrow-${Math.random().toString(36).slice(2)}`;
+    const labels = [];
+    const arrows = diagram.arrows
+      .map((arrow) => {
+        const start = diagramPoint(arrow.from, cellWidth, rowHeight, padding);
+        const end = diagramPoint(arrow.to, cellWidth, rowHeight, padding);
+        const line = shortenLine(start, end, 28);
+        const dx = end.x - start.x;
+        const dy = end.y - start.y;
+        const length = Math.hypot(dx, dy) || 1;
+        const normal = { x: -dy / length, y: dx / length };
+        const curveOffset = arrow.curveHeight ? arrow.curveHeight * 5 : 0;
+        const control = {
+          x: line.middle.x + normal.x * curveOffset,
+          y: line.middle.y + normal.y * curveOffset
+        };
+
+        if (arrow.label) {
+          const labelOffset = arrow.curveHeight ? curveOffset : -18;
+          labels.push(`
+            <div class="tikzcd-arrow-label" style="left:${line.middle.x + normal.x * labelOffset}px; top:${line.middle.y + normal.y * labelOffset}px;">
+              <span>\\(${escapeHtml(arrow.label)}\\)</span>
+            </div>
+          `);
+        }
+
+        const dash = arrow.dashed ? ' stroke-dasharray="6 7"' : "";
+        const path = arrow.curveHeight
+          ? `<path d="M ${line.start.x} ${line.start.y} Q ${control.x} ${control.y} ${line.end.x} ${line.end.y}"${dash} marker-end="url(#${markerId})"></path>`
+          : `<line x1="${line.start.x}" y1="${line.start.y}" x2="${line.end.x}" y2="${line.end.y}"${dash} marker-end="url(#${markerId})"></line>`;
+        return `
+          ${path}
+        `;
+      })
+      .join("");
+    const cells = diagram.rows
+      .map((row, rowIndex) => row
+        .map((cell, colIndex) => {
+          const point = diagramPoint(
+            { row: rowIndex + 1, col: colIndex + 1 },
+            cellWidth,
+            rowHeight,
+            padding
+          );
+          return `
+            <div class="tikzcd-cell" style="left:${point.x}px; top:${point.y}px;">
+              ${cell.text ? `<span>\\(${escapeHtml(cell.text)}\\)</span>` : ""}
+            </div>
+          `;
+        })
+        .join(""))
+      .join("");
+
+    return `
+      <figure class="tikzcd-render">
+        <div class="tikzcd-canvas" style="width:${width}px; height:${height}px;">
+          <svg viewBox="0 0 ${width} ${height}" aria-hidden="true">
+            <defs>
+              <marker id="${markerId}" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <path class="tikzcd-marker-path" d="M0.5,0.75 L6,3.5 L0.5,6.25"></path>
+              </marker>
+            </defs>
+            ${arrows}
+          </svg>
+          <div class="tikzcd-labels">
+            ${cells}
+            ${labels.join("")}
+          </div>
+        </div>
+      </figure>
+    `;
+  }
+
+  function tokenizeBlocks(value) {
+    const lines = String(value).replace(/\r\n?/g, "\n").split("\n");
+    const blocks = [];
+    let paragraph = [];
+    let index = 0;
+
+    function flushParagraph() {
+      if (paragraph.length) {
+        blocks.push({ type: "text", value: paragraph.join("\n") });
+        paragraph = [];
+      }
+    }
+
+    while (index < lines.length) {
+      const line = lines[index];
+
+      if (!line.trim()) {
+        flushParagraph();
+        index += 1;
+        continue;
+      }
+
+      if (/^```/.test(line.trim())) {
+        flushParagraph();
+        const collected = [line];
+        index += 1;
+        while (index < lines.length && !/^```/.test(lines[index].trim())) {
+          collected.push(lines[index]);
+          index += 1;
+        }
+        if (index < lines.length) collected.push(lines[index]);
+        blocks.push({ type: "code", value: collected.join("\n") });
+        index += 1;
+        continue;
+      }
+
+      if (/q\.uiver\.app/i.test(line)) {
+        flushParagraph();
+        const collected = [line];
+        let sawTikz = /\\begin\{tikzcd\}/.test(line);
+        index += 1;
+
+        while (index < lines.length) {
+          const nextLine = lines[index];
+          if (!sawTikz && !nextLine.trim()) break;
+          if (!sawTikz && !/^\s*(\\\[|\\begin\{tikzcd\})/.test(nextLine)) break;
+
+          collected.push(nextLine);
+          sawTikz = sawTikz || /\\begin\{tikzcd\}/.test(nextLine);
+          index += 1;
+
+          if (/\\end\{tikzcd\}/.test(nextLine)) break;
+        }
+
+        blocks.push({ type: "diagram", value: collected.join("\n") });
+        continue;
+      }
+
+      if (/^\{%\s*quiver\s*%\}/i.test(line.trim()) || /<iframe\b/i.test(line) || /\\begin\{tikzcd\}/.test(line)) {
+        flushParagraph();
+        const collected = [line];
+        let endPattern = /^\{%\s*endquiver\s*%\}/i.test(line.trim())
+          ? null
+          : /^\{%\s*quiver\s*%\}/i.test(line.trim())
+            ? /^\{%\s*endquiver\s*%\}/i
+            : /<iframe\b/i.test(line)
+              ? /<\/iframe>/i
+              : /\\end\{tikzcd\}/;
+        if (endPattern && endPattern.test(line)) {
+          endPattern = null;
+        }
+        index += 1;
+        while (endPattern && index < lines.length && !endPattern.test(lines[index])) {
+          collected.push(lines[index]);
+          index += 1;
+        }
+        if (endPattern && index < lines.length) collected.push(lines[index]);
+        blocks.push({ type: "diagram", value: collected.join("\n") });
+        index += 1;
+        continue;
+      }
+
+      paragraph.push(line);
+      index += 1;
+    }
+
+    flushParagraph();
+    return blocks;
+  }
+
+  function renderMarkdown(value) {
+    if (!String(value).trim()) {
+      return '<p class="muted">Start typing on the left. Your LaTeX preview will appear here.</p>';
+    }
+
+    return tokenizeBlocks(value)
+      .map((block) => {
+        const text = block.value.trim();
+        if (block.type === "code") {
+          return `<pre><code>${escapeHtml(text.replace(/^```\w*\n?/, "").replace(/\n?```$/, ""))}</code></pre>`;
+        }
+
+        if (block.type === "diagram") {
+          const quiver = renderQuiverBlock(text);
+          if (quiver) return quiver;
+          const tikzcd = renderTikzcdBlock(text);
+          if (tikzcd) return tikzcd;
+          return `<pre class="tikzcd-code"><code>${escapeHtml(text)}</code></pre>`;
+        }
+
+        if (extractQuiverUrl(text)) {
+          return renderQuiverBlock(text);
+        }
+
+        if (/^\$\$[\s\S]*\$\$$/.test(text)) {
+          return `<div class="math-block">${escapeHtml(text)}</div>`;
+        }
+
+        if (/^###\s+/.test(text)) {
+          return `<h4>${renderInline(text.replace(/^###\s+/, ""))}</h4>`;
+        }
+
+        if (/^##\s+/.test(text)) {
+          return `<h3>${renderInline(text.replace(/^##\s+/, ""))}</h3>`;
+        }
+
+        if (/^#\s+/.test(text)) {
+          return `<h2>${renderInline(text.replace(/^#\s+/, ""))}</h2>`;
+        }
+
+        if (/^[-*]\s+/m.test(text)) {
+          const items = text
+            .split(/\n/)
+            .filter((line) => /^[-*]\s+/.test(line.trim()))
+            .map((line) => `<li>${renderInline(line.trim().replace(/^[-*]\s+/, ""))}</li>`)
+            .join("");
+          return `<ul>${items}</ul>`;
+        }
+
+        if (/^\d+\.\s+/m.test(text)) {
+          const items = text
+            .split(/\n/)
+            .filter((line) => /^\d+\.\s+/.test(line.trim()))
+            .map((line) => `<li>${renderInline(line.trim().replace(/^\d+\.\s+/, ""))}</li>`)
+            .join("");
+          return `<ol>${items}</ol>`;
+        }
+
+        return `<p>${renderInline(text).replace(/\n/g, "<br>")}</p>`;
+      })
+      .join("");
+  }
+
+  function typesetMath() {
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise([preview, list].filter(Boolean)).catch(() => {});
+    }
+  }
+
+  function solutionText(solution) {
+    return normalize([
+      solution.chapter,
+      solution.problem,
+      solution.title,
+      solution.body
+    ].join(" "));
+  }
+
+  function getFilteredSolutions() {
+    const hiddenIds = getHiddenSolutionIds();
+    const query = normalize(searchInput ? searchInput.value : "");
+    const visibleSolutions = solutions.filter((solution) => !hiddenIds.includes(solution.id));
+    if (!query) return visibleSolutions;
+    return visibleSolutions.filter((solution) => solutionText(solution).includes(query));
+  }
+
+  function setSolutions(nextSolutions) {
+    solutions.splice(0, solutions.length, ...nextSolutions);
+    renderSolutions();
+  }
+
+  function renderSolutions() {
+    if (!list) return;
+    const matches = getFilteredSolutions();
+
+    if (!solutions.length) {
+      if (empty) empty.hidden = false;
+      list.innerHTML = "";
+      return;
+    }
+
+    if (empty) empty.hidden = true;
+    list.innerHTML = matches
+      .map((solution) => {
+        const label = [solution.chapter, solution.problem].filter(Boolean).join(" · ");
+        return `
+          <article class="solution-entry" id="${escapeHtml(solution.id)}">
+            <div class="solution-meta">
+              <span>${escapeHtml(label || "Solution")}</span>
+              <span>${escapeHtml(solution.updated || "")}</span>
+            </div>
+            <h2>${escapeHtml(solution.title || "Untitled solution")}</h2>
+            <div class="solution-body">${renderMarkdown(solution.body || "")}</div>
+            <div class="solution-actions">
+              <button type="button" class="secondary-button" data-edit-solution="${escapeHtml(solution.id)}">Edit solution</button>
+              <button type="button" class="secondary-button" data-delete-solution="${escapeHtml(solution.id)}">Delete solution</button>
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+
+    if (searchStatus) {
+      const query = searchInput ? searchInput.value.trim() : "";
+      searchStatus.textContent = query
+        ? `${matches.length} matching solution${matches.length === 1 ? "" : "s"}`
+        : `${matches.length} published solution${matches.length === 1 ? "" : "s"}`;
+    }
+    typesetMath();
+  }
+
+  function setStatus(message) {
+    if (!status) return;
+    status.textContent = message;
+  }
+
+  function setPublishStatus(message) {
+    if (!publishStatus) return;
+    publishStatus.textContent = message;
+  }
+
+  function saveDraft() {
+    const draft = {
+      id: editingSolutionId,
+      title: titleInput.value,
+      chapter: chapterInput.value,
+      problem: problemInput.value,
+      updated: dateInput.value,
+      body: editor.value
+    };
+    localStorage.setItem(storageKey, JSON.stringify(draft));
+  }
+
+  function loadDraft() {
+    const today = new Date().toISOString().slice(0, 10);
+    let draft = {
+      title: "",
+      chapter: "Chapter 1",
+      problem: "Problem 1.1",
+      updated: today,
+      body: defaultDraft
+    };
+
+    try {
+      draft = { ...draft, ...JSON.parse(localStorage.getItem(storageKey) || "{}") };
+    } catch (error) {
+      localStorage.removeItem(storageKey);
+    }
+
+    titleInput.value = draft.title;
+    chapterInput.value = draft.chapter;
+    problemInput.value = draft.problem;
+    dateInput.value = draft.updated;
+    editor.value = draft.body;
+    editingSolutionId = draft.id || "";
+    updatePublishButtonLabel();
+  }
+
+  function updatePreview() {
+    if (!preview) return;
+    preview.innerHTML = renderMarkdown(editor.value);
+    saveDraft();
+    typesetMath();
+  }
+
+  function makeSlug(value) {
+    return String(value || "solution")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 48) || "solution";
+  }
+
+  function makeEntryObject() {
+    const slugSource = `${chapterInput.value}-${problemInput.value}-${titleInput.value}`;
+    return {
+      id: editingSolutionId || makeSlug(slugSource),
+      chapter: chapterInput.value.trim(),
+      problem: problemInput.value.trim(),
+      title: titleInput.value.trim() || "Untitled solution",
+      updated: dateInput.value,
+      body: editor.value
+    };
+  }
+
+  function escapeTemplate(value) {
+    return String(value).replace(/`/g, "\\`").replace(/\$\{/g, "\\${");
+  }
+
+  function serializeSolutions(entries) {
+    const body = entries
+      .map((entry) => `  {
+    id: ${JSON.stringify(entry.id)},
+    chapter: ${JSON.stringify(entry.chapter)},
+    problem: ${JSON.stringify(entry.problem)},
+    title: ${JSON.stringify(entry.title)},
+    updated: ${JSON.stringify(entry.updated)},
+    body: String.raw\`${escapeTemplate(entry.body)}\`
+  }`)
+      .join(",\n");
+
+    return `window.risingSeaSolutions = [\n${body}\n];\n`;
+  }
+
+  function texSectionCommand(level) {
+    return level === 1 ? "section" : "subsection";
+  }
+
+  function escapeTexTitle(value) {
+    return String(value || "Untitled solution")
+      .replace(/\\/g, "\\textbackslash{}")
+      .replace(/([%#$&_{}])/g, "\\$1")
+      .replace(/\^/g, "\\textasciicircum{}")
+      .replace(/~/g, "\\textasciitilde{}");
+  }
+
+  function stripMarkdownEmphasis(value) {
+    return String(value || "").replace(/\*\*([^*]+)\*\*/g, "$1").replace(/\*([^*]+)\*/g, "$1");
+  }
+
+  function serializeTexDocument(entries) {
+    const sections = entries.map((entry) => {
+      const heading = [entry.chapter, entry.problem, entry.title].filter(Boolean).join(" -- ");
+      return [
+        `\\${texSectionCommand(1)}{${escapeTexTitle(heading)}}`,
+        `% id: ${entry.id}`,
+        `% updated: ${entry.updated || ""}`,
+        "",
+        stripMarkdownEmphasis(entry.body).trim(),
+        ""
+      ].join("\n");
+    });
+
+    return String.raw`\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{quiver}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\ms}[1]{\mathscr{#1}}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Hom}{Hom}
+
+\title{Solutions to Vakil's The Rising Sea}
+\author{Tianyi Wang}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
+\end{document}
+`;
+  }
+
+  function upsertSolution(entry) {
+    const entryChapter = normalize(entry.chapter);
+    const entryProblem = normalize(entry.problem);
+    const next = solutions.slice();
+    const index = next.findIndex((solution) => (
+      solution.id === entry.id ||
+      (normalize(solution.chapter) === entryChapter && normalize(solution.problem) === entryProblem)
+    ));
+
+    if (index >= 0) {
+      next[index] = entry;
+    } else {
+      next.push(entry);
+    }
+
+    return next;
+  }
+
+  function mergeSolutionLists(primary, secondary) {
+    return secondary.reduce((merged, entry) => {
+      const entryChapter = normalize(entry.chapter);
+      const entryProblem = normalize(entry.problem);
+      const index = merged.findIndex((solution) => (
+        solution.id === entry.id ||
+        (normalize(solution.chapter) === entryChapter && normalize(solution.problem) === entryProblem)
+      ));
+
+      if (index >= 0) {
+        merged[index] = entry;
+      } else {
+        merged.push(entry);
+      }
+
+      return merged;
+    }, primary.slice());
+  }
+
+  function getLocalSolutions() {
+    try {
+      const entries = JSON.parse(localStorage.getItem(localSolutionsStorageKey) || "[]");
+      return Array.isArray(entries) ? entries : [];
+    } catch (error) {
+      localStorage.removeItem(localSolutionsStorageKey);
+      return [];
+    }
+  }
+
+  function saveLocalSolutions(entries) {
+    localStorage.setItem(localSolutionsStorageKey, JSON.stringify(entries));
+    localStorage.setItem(localTexStorageKey, serializeTexDocument(mergeSolutionLists(solutions, entries)));
+  }
+
+  function removeSolution(entries, id) {
+    return entries.filter((solution) => solution.id !== id);
+  }
+
+  function getHiddenSolutionIds() {
+    try {
+      return JSON.parse(localStorage.getItem(hiddenStorageKey) || "[]");
+    } catch (error) {
+      localStorage.removeItem(hiddenStorageKey);
+      return [];
+    }
+  }
+
+  function saveHiddenSolutionIds(hiddenIds) {
+    localStorage.setItem(hiddenStorageKey, JSON.stringify(hiddenIds));
+  }
+
+  function unhideSolutionLocally(id) {
+    saveHiddenSolutionIds(getHiddenSolutionIds().filter((hiddenId) => hiddenId !== id));
+  }
+
+  function hideSolutionLocally(id) {
+    const hiddenIds = getHiddenSolutionIds();
+    if (!hiddenIds.includes(id)) hiddenIds.push(id);
+    saveHiddenSolutionIds(hiddenIds);
+    setSolutions(removeSolution(solutions, id));
+    saveLocalSolutions(removeSolution(getLocalSolutions(), id));
+  }
+
+  function toBase64(value) {
+    const bytes = new TextEncoder().encode(value);
+    let binary = "";
+    bytes.forEach((byte) => {
+      binary += String.fromCharCode(byte);
+    });
+    return btoa(binary);
+  }
+
+  function fromBase64(value) {
+    const binary = atob(String(value).replace(/\n/g, ""));
+    const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+
+  function parseSolutionsSource(source) {
+    const sandbox = {};
+    new Function("window", `"use strict";\n${source}`)(sandbox);
+    if (!Array.isArray(sandbox.risingSeaSolutions)) {
+      throw new Error("Remote solutions file did not define a solution list.");
+    }
+    return sandbox.risingSeaSolutions;
+  }
+
+  async function githubRequest(url, options) {
+    const token = getGithubToken();
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${token}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+        ...(options && options.headers ? options.headers : {})
+      }
+    });
+
+    if (!response.ok) {
+      let detail = response.statusText;
+      try {
+        const data = await response.json();
+        detail = data.message || detail;
+      } catch (error) {
+        detail = response.statusText;
+      }
+      throw new Error(`${response.status}: ${detail}`);
+    }
+
+    return response.json();
+  }
+
+  async function getGithubFile(contentsUrl, branch) {
+    try {
+      return await githubRequest(`${contentsUrl}?ref=${encodeURIComponent(branch)}`, {
+        method: "GET"
+      });
+    } catch (error) {
+      if (/^404:/.test(error.message)) return null;
+      throw error;
+    }
+  }
+
+  async function putGithubFile(contentsUrl, branch, file, message, content) {
+    return githubRequest(contentsUrl, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message,
+        content: toBase64(content),
+        sha: file ? file.sha : undefined,
+        branch
+      })
+    });
+  }
+
+  async function syncSolutionsToGithub(nextSolutions, message) {
+    const owner = githubConfig.owner;
+    const repo = githubConfig.repo;
+    const branch = githubConfig.branch || "main";
+    const solutionsPath = githubConfig.solutionsPath || "rising-sea-solutions.js";
+    const texPath = githubConfig.texPath || "rising-sea-solutions.tex";
+    const solutionsUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${solutionsPath}`;
+    const texUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${texPath}`;
+    const solutionsFile = await getGithubFile(solutionsUrl, branch);
+    const texFile = await getGithubFile(texUrl, branch);
+    const solutionsResult = await putGithubFile(
+      solutionsUrl,
+      branch,
+      solutionsFile,
+      message,
+      serializeSolutions(nextSolutions)
+    );
+    await putGithubFile(
+      texUrl,
+      branch,
+      texFile,
+      `${message} TeX`,
+      serializeTexDocument(nextSolutions)
+    );
+    return solutionsResult;
+  }
+
+  async function publishEntry() {
+    const entry = makeEntryObject();
+    if (!entry.chapter || !entry.problem) {
+      setStatus("Chapter and problem are required before publishing.");
+      return;
+    }
+
+    unhideSolutionLocally(entry.id);
+    const visibleNextSolutions = upsertSolution(entry);
+    setSolutions(visibleNextSolutions);
+    saveLocalSolutions(upsertSolution(entry));
+    setStatus("Published in the list below.");
+
+    const token = getGithubToken();
+    if (!token) {
+      setPublishStatus("Published in this browser. Save a GitHub token to sync it to the website.");
+      return;
+    }
+
+    publishButton.disabled = true;
+    setPublishStatus("Syncing solution to GitHub...");
+
+    try {
+      const owner = githubConfig.owner;
+      const repo = githubConfig.repo;
+      const branch = githubConfig.branch || "main";
+      const path = githubConfig.solutionsPath || "rising-sea-solutions.js";
+      const contentsUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+      const currentFile = await getGithubFile(contentsUrl, branch);
+      const remoteSolutions = currentFile
+        ? parseSolutionsSource(fromBase64(currentFile.content))
+        : solutions.slice();
+      solutions.splice(0, solutions.length, ...remoteSolutions);
+      const nextSolutions = upsertSolution(entry);
+      const result = await syncSolutionsToGithub(nextSolutions, `Publish Rising Sea solution ${entry.problem}`);
+
+      setSolutions(nextSolutions);
+      saveLocalSolutions(removeSolution(getLocalSolutions(), entry.id));
+      setPublishStatus(`Synced. GitHub Pages will refresh after the workflow finishes. Commit: ${result.commit.sha.slice(0, 7)}.`);
+    } catch (error) {
+      setPublishStatus(`It is visible here, but GitHub sync failed: ${error.message}`);
+    } finally {
+      publishButton.disabled = false;
+    }
+  }
+
+  async function deletePublishedSolution(id) {
+    const solution = solutions.find((entry) => entry.id === id);
+    if (!solution) return;
+
+    hideSolutionLocally(id);
+    setPublishStatus("Deleted from the list below.");
+
+    const token = getGithubToken();
+    if (!token) {
+      setPublishStatus("Deleted from this browser. Save a GitHub token to delete permanently from the published site.");
+      return;
+    }
+
+    setPublishStatus("Syncing deletion to GitHub...");
+
+    try {
+      const owner = githubConfig.owner;
+      const repo = githubConfig.repo;
+      const branch = githubConfig.branch || "main";
+      const path = githubConfig.solutionsPath || "rising-sea-solutions.js";
+      const contentsUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+      const currentFile = await getGithubFile(contentsUrl, branch);
+      const remoteSolutions = currentFile
+        ? parseSolutionsSource(fromBase64(currentFile.content))
+        : solutions.slice();
+      const nextSolutions = removeSolution(remoteSolutions, id);
+
+      if (nextSolutions.length === remoteSolutions.length) {
+        throw new Error("Solution was not found in the remote file.");
+      }
+
+      const result = await syncSolutionsToGithub(nextSolutions, `Delete Rising Sea solution ${solution.problem || solution.id}`);
+
+      setSolutions(nextSolutions);
+      saveLocalSolutions(removeSolution(getLocalSolutions(), id));
+      setPublishStatus(`Deleted. GitHub Pages will refresh after the workflow finishes. Commit: ${result.commit.sha.slice(0, 7)}.`);
+    } catch (error) {
+      setPublishStatus(`It is hidden here, but GitHub deletion failed: ${error.message}`);
+    }
+  }
+
+  function resetDraft() {
+    localStorage.removeItem(storageKey);
+    editingSolutionId = "";
+    loadDraft();
+    updatePreview();
+    setStatus("Draft reset.");
+  }
+
+  function updatePublishButtonLabel() {
+    if (!publishButton) return;
+    publishButton.textContent = editingSolutionId ? "Update solution" : "Publish solution";
+  }
+
+  function startNewSolution() {
+    const today = new Date().toISOString().slice(0, 10);
+    editingSolutionId = "";
+    titleInput.value = "";
+    chapterInput.value = "";
+    problemInput.value = "";
+    dateInput.value = today;
+    editor.value = "";
+    updatePublishButtonLabel();
+    updatePreview();
+    setStatus("Ready for a new solution.");
+    document.querySelector(".solution-editor").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function editPublishedSolution(id) {
+    const solution = solutions.find((entry) => entry.id === id);
+    if (!solution) return;
+
+    editingSolutionId = solution.id;
+    titleInput.value = solution.title || "";
+    chapterInput.value = solution.chapter || "";
+    problemInput.value = solution.problem || "";
+    dateInput.value = solution.updated || new Date().toISOString().slice(0, 10);
+    editor.value = solution.body || "";
+    updatePublishButtonLabel();
+    updatePreview();
+    setStatus("Editing the selected solution.");
+    document.querySelector(".solution-editor").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function saveGithubToken() {
+    const token = tokenInput.value.trim();
+    if (!token) {
+      setPublishStatus("Paste a GitHub token before saving.");
+      return;
+    }
+    localStorage.setItem(tokenStorageKey, token);
+    tokenInput.value = "";
+    setPublishStatus("Token saved in this browser.");
+  }
+
+  function clearGithubToken() {
+    localStorage.removeItem(tokenStorageKey);
+    setPublishStatus("Token cleared.");
+  }
+
+  function downloadTexDocument() {
+    const content = serializeTexDocument(solutions);
+    localStorage.setItem(localTexStorageKey, content);
+    const blob = new Blob([content], { type: "application/x-tex" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "rising-sea-solutions.tex";
+    link.click();
+    URL.revokeObjectURL(link.href);
+    setPublishStatus("Downloaded the current TeX file.");
+  }
+
+  function bindSearch() {
+    if (!searchInput) return;
+    searchInput.addEventListener("input", renderSolutions);
+    searchInput.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
+      const first = list && list.querySelector(".solution-entry");
+      if (first) first.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  function bindSolutionActions() {
+    if (!list) return;
+    list.addEventListener("click", (event) => {
+      const editButton = event.target.closest("[data-edit-solution]");
+      if (editButton) {
+        editPublishedSolution(editButton.getAttribute("data-edit-solution"));
+        return;
+      }
+
+      const button = event.target.closest("[data-delete-solution]");
+      if (!button) return;
+      deletePublishedSolution(button.getAttribute("data-delete-solution"));
+    });
+  }
+
+  function bindEditor() {
+    if (!editor || !preview) return;
+
+    loadDraft();
+    [editor, titleInput, chapterInput, problemInput, dateInput].forEach((input) => {
+      input.addEventListener("input", updatePreview);
+    });
+    newSolutionButton.addEventListener("click", startNewSolution);
+    publishButton.addEventListener("click", publishEntry);
+    resetButton.addEventListener("click", resetDraft);
+    saveTokenButton.addEventListener("click", saveGithubToken);
+    downloadTexButton.addEventListener("click", downloadTexDocument);
+    clearTokenButton.addEventListener("click", clearGithubToken);
+    updatePreview();
+
+    if (getGithubToken()) {
+      setPublishStatus("GitHub token is saved in this browser.");
+    }
+  }
+
+  setSolutions(mergeSolutionLists(solutions, getLocalSolutions()));
+  bindSearch();
+  bindSolutionActions();
+  bindEditor();
+  typesetMath();
+})();

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vakil Rising Sea Solutions | Tianyi Wang</title>
+    <meta
+      name="description"
+      content="Solutions and working notes for Ravi Vakil's The Rising Sea."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="rising-sea-config.js"></script>
+    <script>
+      const risingSeaConfig = window.risingSeaConfig || {};
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"], ["\\(", "\\)"]],
+          displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+          macros: risingSeaConfig.macros || {}
+        },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="rising-sea-solutions.js"></script>
+    <script defer src="rising-sea.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="about.html">Tianyi Wang's website</a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="about.html">About Me</a>
+        <a href="publications.html">Publications</a>
+        <a href="notes.html">Notes</a>
+        <a class="active" href="vakil-rising-sea.html">Rising Sea</a>
+        <a href="resources.html">Resources</a>
+      </nav>
+    </header>
+
+    <main class="math-workspace">
+      <section class="intro rising-sea-intro">
+        <p class="card-label">Solutions workspace</p>
+        <h1>Vakil Rising Sea</h1>
+        <p class="lede">
+          A place to write, preview, and publish solutions to problems from Ravi
+          Vakil's <em>The Rising Sea</em>.
+        </p>
+      </section>
+
+      <section class="section first-section">
+        <div class="workspace-header">
+          <div>
+            <h2>Write a Solution</h2>
+            <p>
+              Drafts are saved in this browser. Once GitHub publishing is set
+              up below, the publish button writes the solution directly to the
+              website repository.
+            </p>
+          </div>
+          <div class="workspace-actions">
+            <button type="button" class="secondary-button" data-new-solution>New solution</button>
+            <button type="button" data-publish-entry>Publish solution</button>
+            <button type="button" class="secondary-button" data-reset-draft>Reset draft</button>
+          </div>
+        </div>
+
+        <div class="solution-editor">
+          <form class="editor-panel" aria-label="Solution editor">
+            <div class="field-grid">
+              <label>
+                <span>Chapter</span>
+                <input data-chapter type="text" autocomplete="off" />
+              </label>
+              <label>
+                <span>Problem</span>
+                <input data-problem type="text" autocomplete="off" />
+              </label>
+              <label>
+                <span>Updated</span>
+                <input data-date type="date" />
+              </label>
+            </div>
+            <label>
+              <span>Title</span>
+              <input data-title type="text" placeholder="e.g. Fiber products preserve open immersions" />
+            </label>
+            <label>
+              <span>Solution</span>
+              <textarea data-editor spellcheck="false"></textarea>
+            </label>
+            <p class="editor-status" data-status aria-live="polite"></p>
+          </form>
+
+          <article class="preview-panel" aria-label="Live preview">
+            <p class="card-label">Live preview</p>
+            <div class="solution-body" data-preview></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="workspace-header">
+          <div>
+            <h2>Published Solutions</h2>
+            <p>
+              Search by chapter, problem number, title, or text. Press Enter
+              to jump to the first matching solution.
+            </p>
+          </div>
+        </div>
+        <div class="search-row">
+          <label>
+            <span>Search solutions</span>
+            <input
+              data-search
+              type="search"
+              placeholder="e.g. 1.1, Chapter 3, affine scheme"
+              autocomplete="off"
+            />
+          </label>
+          <p class="editor-status" data-search-status aria-live="polite"></p>
+        </div>
+        <p class="empty-state" data-empty-solutions hidden>No solutions have been published yet.</p>
+        <div class="solution-list" data-solution-list></div>
+      </section>
+
+      <section class="section">
+        <div class="workspace-header">
+          <div>
+            <h2>Publishing Setup</h2>
+            <p>
+              Save a fine-grained GitHub token for
+              <code>tianyiwang9/github-site</code> with Contents read/write
+              access. It stays in this browser only. Publishing also updates
+              <code>rising-sea-solutions.tex</code>.
+            </p>
+          </div>
+        </div>
+        <div class="publish-settings">
+          <label>
+            <span>GitHub token</span>
+            <input data-github-token type="password" placeholder="github_pat_..." autocomplete="off" />
+          </label>
+          <div class="workspace-actions">
+            <button type="button" data-save-token>Save token</button>
+            <button type="button" class="secondary-button" data-download-tex>Download TeX</button>
+            <button type="button" class="secondary-button" data-clear-token>Clear token</button>
+          </div>
+          <p class="editor-status" data-publish-status aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© 2026 Tianyi Wang.</p>
+    </footer>
+  </body>
+</html>
