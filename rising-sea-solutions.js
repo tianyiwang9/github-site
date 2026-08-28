@@ -37,6 +37,7 @@ In the example of sets, $\op{Aut}(A)$ is the set of bijections from $A$ to itsel
     id: "1-1-1-d-dimensions-characterizes-vector-spaces",
     chapter: "1",
     problem: "1.1.D",
+    author: "",
     title: "Dimensions and Basis Characterize Vector Spaces",
     updated: "2026-08-27",
     body: String.raw`We show that $\ms V\to \op{f.d.Vec}_k$ is an equivalence of categories. We construct the inverse functor as follows: Simultaneously choose basis for each vector space $V\in \op{f.d.Vec}_k$ (which Vakil says we can do). Define the functor $\rho: \op{f.d.Vec}_k\to \ms V$ as follows: 
@@ -47,6 +48,7 @@ Let $V\in \op{f.d.Vec}_k$ be a vector space with chosen basis $e_1,...,e_n$. The
     id: "1-1-2-a-initial-and-final-objects",
     chapter: "1",
     problem: "1.2.A",
+    author: "",
     title: "Initial and Final Objects",
     updated: "2026-08-28",
     body: String.raw`Let $\ms C$ be a category and $I,I'$ be two initial objects in the category. Then there is a unique map $f: I\to I'$ and a unique map $g: I'\to I$. So we get a map $g\circ f:I\to I$. But we also have $\op{id}_I: I\to I$. Hence we conclude that $g\circ f=\op{id}_I$ and similarly $f\circ g=\op{id}_{I'}$. Hence $I,I'$ are isomorphic. Similar argument shows that two final objects are isomorphic.`
@@ -55,6 +57,7 @@ Let $V\in \op{f.d.Vec}_k$ be a vector space with chosen basis $e_1,...,e_n$. The
     id: "1-1-2-b",
     chapter: "1",
     problem: "1.2.B",
+    author: "",
     title: "Untitled solution",
     updated: "2026-08-28",
     body: String.raw`In both $Sets$ and $Tops$, the initial object is $\emptyset$. 
@@ -71,6 +74,7 @@ In $Rings$, both the initial and final object is the 0 ring.`
     id: "1-1-2-c-a-to-s-1-a-injective-iff-no-zero-divisor",
     chapter: "1",
     problem: "1.2.C",
+    author: "",
     title: "$A\\to S^{-1}A$ injective iff no zero divisors in S",
     updated: "2026-08-28",
     body: String.raw`Suppose $S$ has a zero divisor $a$. Then there exists a nonzero $b$ such that $ab=0$. Then $b/1=0/1$ because $a(b\cdot 1-0\cdot 1)=0$. But $b$ is nonzero, so the map $A \to S^{-1}A$ is not injective.
@@ -81,6 +85,7 @@ Conversely, suppose the map $A\to S^{-1}A$ is not injective, which means there i
     id: "1-1-2-d-universal-property-of-localization",
     chapter: "1",
     problem: "1.2.D",
+    author: "",
     title: "Universal Property of Localization",
     updated: "2026-08-28",
     body: String.raw`We want to show that any map $\phi: A \to B$ that sends $S$ to invertible elements in $B$ factors through the localization $A\to S^{-1}A$, i.e., the following diagram commutes:
@@ -93,5 +98,18 @@ Conversely, suppose the map $A\to S^{-1}A$ is not injective, which means there i
 	\arrow["{\exists!\psi}", dashed, from=1-3, to=2-2]
 \end{tikzcd}\]
 Indeed, define $\psi: S^{-1}A\to B$ via $\psi(a/s)=\phi(a)\phi(s)^{-1}$. It is easy to check that this construction makes the diagram commute and is unique.`
+  },
+  {
+    id: "1-1-2-e",
+    chapter: "1",
+    problem: "1.2.E",
+    author: "Lazy Tianyi",
+    title: "Untitled solution",
+    updated: "2026-08-28",
+    body: String.raw`Just follow the hint and check...
+
+![lazy](rising-sea-images/2026-08-28/1787961508381-lazy.png)
+
+`
   }
 ];
