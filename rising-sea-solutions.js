@@ -48,5 +48,16 @@ Let $V\in \op{f.d.Vec}_k$ be a vector space with chosen basis $e_1,...,e_n$. The
     title: "Initial and Final Objects",
     updated: "2026-08-28",
     body: String.raw`Let $\ms C$ be a category and $I,I'$ be two initial objects in the category. Then there is a unique map $f: I\to I'$ and a unique map $g: I'\to I$. So we get a map $g\circ f:I\to I$. But we also have $\op{id}_I: I\to I$. Hence we conclude that $g\circ f=\op{id}_I$ and similarly $f\circ g=\op{id}_{I'}$. Hence $I,I'$ are isomorphic. Similar argument shows that two final objects are isomorphic.`
+  },
+  {
+    id: "1-1-2-b",
+    chapter: "1",
+    problem: "1.2.B",
+    title: "Untitled solution",
+    updated: "2026-08-28",
+    body: String.raw`In both $Sets$ and $Tops$, the initial object is $\emptyset$. There is precisely one map $\emptyset\to X$ for any object $X$, Since there are no elements in $\emptyset$ whose images need to be specified. The final object is a singleton $\{*\}$. 
+There is precisely one map $X\to\{*\}$ which is the constant map.
+
+In $Rings$, both the initial and final object is the 0 ring.`
   }
 ];
