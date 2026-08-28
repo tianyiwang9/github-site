@@ -74,5 +74,22 @@ In $Rings$, both the initial and final object is the 0 ring.`
     body: String.raw`Suppose $S$ has a zero divisor $a$. Then there exists a nonzero $b$ such that $ab=0$. Then $b/1=0/1$ because $a(b\cdot 1-0\cdot 1)=0$. But $b$ is nonzero, so the map $A \to S^{-1}A$ is not injective.
 
 Conversely, suppose the map $A\to S^{-1}A$ is not injective, which means there is a nonzero $a$ such that $a/1=0/1$. Then there exists $s\in S$ such that $s(a-0)=0$. Hence $sa=0$ ans $s$ is a zero divisor.`
+  },
+  {
+    id: "1-1-2-d-universal-property-of-localization",
+    chapter: "1",
+    problem: "1.2.D",
+    title: "Universal Property of Localization",
+    updated: "2026-08-28",
+    body: String.raw`We want to show that any map $\phi: A \to B$ that sends $S$ to invertible elements in $B$ factors through the localization $A\to S^{-1}A$, i.e., the following diagram commutes:
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCJBIl0sWzIsMCwiU157LTF9QSJdLFsxLDEsIkIiXSxbMCwyLCJcXHBoaSIsMl0sWzAsMV0sWzEsMiwiXFxleGlzdHMhXFxwc2kiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+\[\begin{tikzcd}[cramped]
+	A && {S^{-1}A} \\
+	& B
+	\arrow[from=1-1, to=1-3]
+	\arrow["\phi"', from=1-1, to=2-2]
+	\arrow["{\exists!\psi}", dashed, from=1-3, to=2-2]
+\end{tikzcd}\]
+Indeed, define $\psi: S^{-1}A\to B$ via $\psi(a/s)=\phi(a)\phi(s)^{-1}$. It is easy to check that this construction makes the diagram commute and is unique.`
   }
 ];
