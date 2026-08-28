@@ -55,9 +55,24 @@ Let $V\in \op{f.d.Vec}_k$ be a vector space with chosen basis $e_1,...,e_n$. The
     problem: "1.2.B",
     title: "Untitled solution",
     updated: "2026-08-28",
-    body: String.raw`In both $Sets$ and $Tops$, the initial object is $\emptyset$. There is precisely one map $\emptyset\to X$ for any object $X$, Since there are no elements in $\emptyset$ whose images need to be specified. The final object is a singleton $\{*\}$. 
+    body: String.raw`In both $Sets$ and $Tops$, the initial object is $\emptyset$. 
+
+There is precisely one map $\emptyset\to X$ for any object $X$, Since there are no elements in $\emptyset$ whose images need to be specified. 
+
+The final object is a singleton $\{*\}$. 
+
 There is precisely one map $X\to\{*\}$ which is the constant map.
 
 In $Rings$, both the initial and final object is the 0 ring.`
+  },
+  {
+    id: "1-1-2-c-a-to-s-1-a-injective-iff-no-zero-divisor",
+    chapter: "1",
+    problem: "1.2.C",
+    title: "$A\\to S^{-1}A$ injective iff no zero divisors in S",
+    updated: "2026-08-28",
+    body: String.raw`Suppose $S$ has a zero divisor $a$. Then there exists a nonzero $b$ such that $ab=0$. Then $b/1=0/1$ because $a(b\cdot 1-0\cdot 1)=0$. But $b$ is nonzero, so the map $A \to S^{-1}A$ is not injective.
+
+Conversely, suppose the map $A\to S^{-1}A$ is not injective, which means there is a nonzero $a$ such that $a/1=0/1$. Then there exists $s\in S$ such that $s(a-0)=0$. Hence $sa=0$ ans $s$ is a zero divisor.`
   }
 ];
