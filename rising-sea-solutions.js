@@ -40,5 +40,13 @@ In the example of sets, $\op{Aut}(A)$ is the set of bijections from $A$ to itsel
     body: String.raw`We show that $\ms V\to \op{f.d.Vec}_k$ is an equivalence of categories. We construct the inverse functor as follows: Simultaneously choose basis for each vector space $V\in \op{f.d.Vec}_k$ (which Vakil says we can do). Define the functor $\rho: \op{f.d.Vec}_k\to \ms V$ as follows: 
 
 Let $V\in \op{f.d.Vec}_k$ be a vector space with chosen basis $e_1,...,e_n$. Then define $\rho(V)=k^n$. If $W$ is another vector space with basis $f_1,...,f_m$, so $\rho(W)=k^m$, and if $T:V\to W$ is a linear map, then with respect to these basis $T$ can be identified with an $m\times n$ matrix, which is a linear map $\rho(T):k^n\to k^m$. `
+  },
+  {
+    id: "1-1-2-a-initial-and-final-objects",
+    chapter: "1",
+    problem: "1.2.A",
+    title: "Initial and Final Objects",
+    updated: "2026-08-28",
+    body: String.raw`Let $\ms C$ be a category and $I,I'$ be two initial objects in the category. Then there is a unique map $f: I\to I'$ and a unique map $g: I'\to I$. So we get a map $g\circ f:I\to I$. But we also have $\op{id}_I: I\to I$. Hence we conclude that $g\circ f=\op{id}_I$ and similarly $f\circ g=\op{id}_{I'}$. Hence $I,I'$ are isomorphic. Similar argument shows that two final objects are isomorphic.`
   }
 ];
