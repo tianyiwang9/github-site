@@ -38,17 +38,6 @@
   let refreshingSolutions = false;
   let editingSolutionId = "";
 
-  const defaultDraft = String.raw`We prove the claim by first recalling the relevant definition.
-
-Let $X$ be a scheme and let $\mathcal{F}$ be a sheaf on $X$.
-
-$$
-0 \longrightarrow \mathcal{F}' \longrightarrow \mathcal{F}
-\longrightarrow \mathcal{F}'' \longrightarrow 0
-$$
-
-Now write the actual solution here.`;
-
   function getGithubToken() {
     return localStorage.getItem(tokenStorageKey) || "";
   }
@@ -790,7 +779,7 @@ Now write the actual solution here.`;
 
   function renderMarkdown(value) {
     if (!String(value).trim()) {
-      return '<p class="muted">Start typing on the left. Your LaTeX preview will appear here.</p>';
+      return "";
     }
 
     return tokenizeBlocks(value)
@@ -975,11 +964,11 @@ Now write the actual solution here.`;
     const today = new Date().toISOString().slice(0, 10);
     let draft = {
       title: "",
-      chapter: "Chapter 1",
-      problem: "Problem 1.1",
+      chapter: "",
+      problem: "",
       author: localStorage.getItem(authorStorageKey) || "",
       updated: today,
-      body: defaultDraft
+      body: ""
     };
 
     try {
