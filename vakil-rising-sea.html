@@ -8,7 +8,7 @@
       name="description"
       content="Solutions and working notes for Ravi Vakil's The Rising Sea."
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260828-2" />
     <script src="rising-sea-config.js"></script>
     <script>
       const risingSeaConfig = window.risingSeaConfig || {};
@@ -45,6 +45,91 @@
           A place to write, preview, and publish solutions to problems from Ravi
           Vakil's <em>The Rising Sea</em>.
         </p>
+        <details class="collaborator-guide" open>
+          <summary>Contributor guide</summary>
+          <div class="collaborator-guide-grid">
+            <section>
+              <h2>Who Can Publish</h2>
+              <p>
+                Anyone can read the solutions on this page. To publish, edit, delete,
+                or upload images, you must be a trusted collaborator on
+                <code>tianyiwang9/github-site</code>. Ask Tianyi to add your GitHub
+                account to the repository before you begin.
+              </p>
+              <p>
+                Do not use Tianyi's token or share your own token with anyone else.
+                Each contributor should use their own GitHub account and their own
+                fine-grained personal access token.
+              </p>
+            </section>
+
+            <section>
+              <h2>Set Up Publishing</h2>
+              <ol>
+                <li>Log in to GitHub with the account that has collaborator access.</li>
+                <li>Create a fine-grained personal access token.</li>
+                <li>For repository access, select only <code>github-site</code>.</li>
+                <li>For permissions, set <code>Contents</code> to read and write.</li>
+                <li>Copy the token once. GitHub will not show it again later.</li>
+                <li>Paste it into the <code>GitHub token</code> box at the bottom of this page and click <code>Save token</code>.</li>
+              </ol>
+              <p>
+                The token is stored only in your current browser. If you switch
+                browsers, clear website data, or the token expires, save a new token.
+              </p>
+            </section>
+
+            <section>
+              <h2>Write A Solution</h2>
+              <ol>
+                <li>Click <code>New solution</code> before starting a different problem.</li>
+                <li>Fill in the chapter, problem number, date, author, and title.</li>
+                <li>Write in Markdown and LaTeX. Inline math uses <code>$...$</code>; display math uses <code>\[...\]</code> or <code>$$...$$</code>.</li>
+                <li>Use the live preview to check the formatting before publishing.</li>
+                <li>Click <code>Publish solution</code>. Wait for the synced confirmation before leaving the page.</li>
+              </ol>
+            </section>
+
+            <section>
+              <h2>Diagrams And Images</h2>
+              <p>
+                For quiver diagrams, paste the exported quiver link as a comment
+                directly above the <code>tikzcd</code> code. The page will display the
+                fixed quiver view and keep the LaTeX source in the solution.
+              </p>
+              <p>
+                To include an image, click <code>Upload image</code>, choose a PNG,
+                JPG, GIF, or WebP file, and wait until the page inserts the Markdown
+                image code into the editor. Then publish or update the solution.
+              </p>
+            </section>
+
+            <section>
+              <h2>Edit Or Delete</h2>
+              <p>
+                Each published solution has <code>Edit solution</code> and
+                <code>Delete solution</code> buttons. Editing loads the original
+                Markdown/LaTeX source back into the editor. After making changes,
+                click <code>Update solution</code> and wait for the synced confirmation.
+              </p>
+            </section>
+
+            <section>
+              <h2>What Gets Updated</h2>
+              <p>
+                A successful publish, update, or delete changes the public solutions
+                list and regenerates <code>rising-sea-solutions.tex</code>. Open pages
+                check for new public solutions automatically, but GitHub Pages may
+                take a short time to rebuild.
+              </p>
+              <p>
+                If syncing fails, your draft should still be visible in your browser.
+                Do not clear browser data; save the text somewhere safe if needed,
+                refresh, and try again.
+              </p>
+            </section>
+          </div>
+        </details>
       </section>
 
       <section class="section first-section">
