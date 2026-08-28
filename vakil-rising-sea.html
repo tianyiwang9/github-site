@@ -22,8 +22,8 @@
       };
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-    <script defer src="rising-sea-solutions.js?v=20260827-2"></script>
-    <script defer src="rising-sea.js?v=20260827-2"></script>
+    <script defer src="rising-sea-solutions.js?v=20260828-1"></script>
+    <script defer src="rising-sea.js?v=20260828-1"></script>
   </head>
   <body>
     <header class="site-header">
@@ -81,6 +81,10 @@
               </label>
             </div>
             <label>
+              <span>Author</span>
+              <input data-author type="text" autocomplete="off" />
+            </label>
+            <label>
               <span>Title</span>
               <input data-title type="text" placeholder="e.g. Fiber products preserve open immersions" />
             </label>
@@ -88,6 +92,11 @@
               <span>Solution</span>
               <textarea data-editor spellcheck="false"></textarea>
             </label>
+            <div class="editor-tools">
+              <button type="button" class="secondary-button" data-insert-image>Upload image</button>
+              <input data-image-upload type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden />
+              <p class="editor-status" data-image-status aria-live="polite"></p>
+            </div>
             <p class="editor-status" data-status aria-live="polite"></p>
           </form>
 
@@ -129,9 +138,9 @@
           <div>
             <h2>Publishing Setup</h2>
             <p>
-              Save a fine-grained GitHub token for
-              <code>tianyiwang9/github-site</code> with Contents read/write
-              access. It stays in this browser only. Publishing also updates
+              Trusted contributors can save their own fine-grained GitHub token
+              for <code>tianyiwang9/github-site</code> with Contents read/write
+              access. Readers do not need a token. Publishing also updates
               <code>rising-sea-solutions.tex</code>.
             </p>
           </div>

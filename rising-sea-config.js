@@ -5,6 +5,8 @@ window.risingSeaConfig = {
     branch: "main",
     solutionsPath: "rising-sea-solutions.js",
     texPath: "rising-sea-solutions.tex",
+    imagesPath: "rising-sea-images",
+    refreshMs: 30000,
     publishedUrl: "https://tianyiwang9.github.io/github-site/vakil-rising-sea.html"
   },
   macros: {

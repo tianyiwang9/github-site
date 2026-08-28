@@ -360,6 +360,17 @@ ul {
   line-height: 1.6;
 }
 
+.editor-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.8rem;
+  align-items: center;
+}
+
+.editor-tools .editor-status {
+  flex: 1 1 15rem;
+}
+
 .editor-status {
   min-height: 1.4rem;
   margin: 0;
@@ -421,6 +432,17 @@ ul {
 .solution-body p,
 .solution-body li {
   max-width: 80ch;
+}
+
+.solution-image {
+  display: block;
+  width: min(100%, 720px);
+  max-height: 70vh;
+  object-fit: contain;
+  margin: 1rem 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
 }
 
 .solution-body mjx-container {

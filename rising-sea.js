@@ -15,6 +15,10 @@
   const chapterInput = document.querySelector("[data-chapter]");
   const problemInput = document.querySelector("[data-problem]");
   const dateInput = document.querySelector("[data-date]");
+  const authorInput = document.querySelector("[data-author]");
+  const insertImageButton = document.querySelector("[data-insert-image]");
+  const imageUploadInput = document.querySelector("[data-image-upload]");
+  const imageStatus = document.querySelector("[data-image-status]");
   const newSolutionButton = document.querySelector("[data-new-solution]");
   const publishButton = document.querySelector("[data-publish-entry]");
   const resetButton = document.querySelector("[data-reset-draft]");
@@ -26,10 +30,12 @@
   const publishStatus = document.querySelector("[data-publish-status]");
   const storageKey = "rising-sea-draft";
   const tokenStorageKey = "rising-sea-github-token";
+  const authorStorageKey = "rising-sea-author";
   const hiddenStorageKey = "rising-sea-hidden-solutions";
   const localSolutionsStorageKey = "rising-sea-local-solutions";
   const localTexStorageKey = "rising-sea-latest-tex";
   const remoteSolutionIds = new Set(solutions.map((solution) => solution.id));
+  let refreshingSolutions = false;
   let editingSolutionId = "";
 
   const defaultDraft = String.raw`We prove the claim by first recalling the relevant definition.
@@ -66,8 +72,28 @@ Now write the actual solution here.`;
     return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
   }
 
+  function safeImageSrc(value) {
+    const source = decodeHtmlEntities(value).trim();
+    if (!source || /^javascript:/i.test(source)) return "";
+    if (/^[./a-z0-9_-]/i.test(source) && !/^[a-z][a-z0-9+.-]*:/i.test(source)) return source;
+
+    try {
+      const parsed = new URL(source, window.location.href);
+      if (parsed.protocol === "http:" || parsed.protocol === "https:") return parsed.href;
+    } catch (error) {
+      return "";
+    }
+
+    return "";
+  }
+
   function renderInline(value) {
     return escapeHtml(value)
+      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
+        const safeSrc = safeImageSrc(src);
+        if (!safeSrc) return match;
+        return `<img class="solution-image" src="${escapeHtml(safeSrc)}" alt="${escapeHtml(decodeHtmlEntities(alt))}" loading="lazy" />`;
+      })
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
       .replace(/\*([^*]+)\*/g, "<em>$1</em>")
       .replace(/`([^`]+)`/g, "<code>$1</code>");
@@ -836,6 +862,7 @@ Now write the actual solution here.`;
       solution.chapter,
       solution.problem,
       solution.title,
+      solution.author,
       solution.body
     ].join(" "));
   }
@@ -867,10 +894,12 @@ Now write the actual solution here.`;
     list.innerHTML = matches
       .map((solution) => {
         const label = [solution.chapter, solution.problem].filter(Boolean).join(" · ");
+        const author = solution.author ? `By ${solution.author}` : "";
         return `
           <article class="solution-entry" id="${escapeHtml(solution.id)}">
             <div class="solution-meta">
               <span>${escapeHtml(label || "Solution")}</span>
+              ${author ? `<span>${escapeHtml(author)}</span>` : ""}
               <span>${escapeHtml(solution.updated || "")}</span>
             </div>
             <h2>${escapeHtml(solution.title || "Untitled solution")}</h2>
@@ -903,7 +932,14 @@ Now write the actual solution here.`;
     publishStatus.textContent = message;
   }
 
+  function setImageStatus(message) {
+    if (!imageStatus) return;
+    imageStatus.textContent = message;
+  }
+
   async function loadLatestPublishedSolutions() {
+    if (refreshingSolutions) return;
+    refreshingSolutions = true;
     const sourcePath = githubConfig.solutionsPath || "rising-sea-solutions.js";
 
     try {
@@ -916,6 +952,8 @@ Now write the actual solution here.`;
       setSolutions(mergeSolutionLists(remoteSolutions, getLocalSolutions()));
     } catch (error) {
       // The static copy loaded above is enough when this refresh is unavailable.
+    } finally {
+      refreshingSolutions = false;
     }
   }
 
@@ -925,10 +963,12 @@ Now write the actual solution here.`;
       title: titleInput.value,
       chapter: chapterInput.value,
       problem: problemInput.value,
+      author: authorInput.value,
       updated: dateInput.value,
       body: editor.value
     };
     localStorage.setItem(storageKey, JSON.stringify(draft));
+    localStorage.setItem(authorStorageKey, authorInput.value);
   }
 
   function loadDraft() {
@@ -937,6 +977,7 @@ Now write the actual solution here.`;
       title: "",
       chapter: "Chapter 1",
       problem: "Problem 1.1",
+      author: localStorage.getItem(authorStorageKey) || "",
       updated: today,
       body: defaultDraft
     };
@@ -950,6 +991,7 @@ Now write the actual solution here.`;
     titleInput.value = draft.title;
     chapterInput.value = draft.chapter;
     problemInput.value = draft.problem;
+    authorInput.value = draft.author || localStorage.getItem(authorStorageKey) || "";
     dateInput.value = draft.updated;
     editor.value = draft.body;
     editingSolutionId = draft.id || "";
@@ -977,6 +1019,7 @@ Now write the actual solution here.`;
       id: editingSolutionId || makeSlug(slugSource),
       chapter: chapterInput.value.trim(),
       problem: problemInput.value.trim(),
+      author: authorInput.value.trim(),
       title: titleInput.value.trim() || "Untitled solution",
       updated: dateInput.value,
       body: editor.value
@@ -993,6 +1036,7 @@ Now write the actual solution here.`;
     id: ${JSON.stringify(entry.id)},
     chapter: ${JSON.stringify(entry.chapter)},
     problem: ${JSON.stringify(entry.problem)},
+    author: ${JSON.stringify(entry.author || "")},
     title: ${JSON.stringify(entry.title)},
     updated: ${JSON.stringify(entry.updated)},
     body: String.raw\`${escapeTemplate(entry.body)}\`
@@ -1018,15 +1062,48 @@ Now write the actual solution here.`;
     return String(value || "").replace(/\*\*([^*]+)\*\*/g, "$1").replace(/\*([^*]+)\*/g, "$1");
   }
 
+  function texImagePath(value) {
+    const source = decodeHtmlEntities(value).trim().replace(/^<|>$/g, "");
+    if (!source) return "";
+
+    try {
+      const parsed = new URL(source, window.location.href);
+      const publishedUrl = new URL(githubConfig.publishedUrl || window.location.href);
+      if (parsed.origin === publishedUrl.origin) {
+        return parsed.pathname.replace(/^\/github-site\//, "").replace(/^\//, "");
+      }
+    } catch (error) {
+      return source;
+    }
+
+    return source;
+  }
+
+  function markdownToTex(value) {
+    return stripMarkdownEmphasis(value).replace(/!\[[^\]]*\]\(([^)]+)\)/g, (match, src) => {
+      const imagePath = texImagePath(src);
+      if (!imagePath || /^https?:\/\//i.test(imagePath)) {
+        return `% External image omitted from TeX: ${src}`;
+      }
+
+      return [
+        "\\begin{center}",
+        `\\includegraphics[width=0.85\\linewidth]{${imagePath}}`,
+        "\\end{center}"
+      ].join("\n");
+    });
+  }
+
   function serializeTexDocument(entries) {
     const sections = entries.map((entry) => {
       const heading = [entry.chapter, entry.problem, entry.title].filter(Boolean).join(" -- ");
       return [
         `\\${texSectionCommand(1)}{${escapeTexTitle(heading)}}`,
         `% id: ${entry.id}`,
+        `% author: ${entry.author || ""}`,
         `% updated: ${entry.updated || ""}`,
         "",
-        stripMarkdownEmphasis(entry.body).trim(),
+        markdownToTex(entry.body).trim(),
         ""
       ].join("\n");
     });
@@ -1034,7 +1111,7 @@ Now write the actual solution here.`;
     return String.raw`\documentclass[11pt]{article}
 
 \usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs,graphicx}
 \usepackage{tikz-cd}
 \usepackage{quiver}
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
@@ -1152,6 +1229,18 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     return btoa(binary);
   }
 
+  function arrayBufferToBase64(buffer) {
+    const bytes = new Uint8Array(buffer);
+    let binary = "";
+    const chunkSize = 0x8000;
+
+    for (let index = 0; index < bytes.length; index += chunkSize) {
+      binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize));
+    }
+
+    return btoa(binary);
+  }
+
   function fromBase64(value) {
     const binary = atob(String(value).replace(/\n/g, ""));
     const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
@@ -1204,17 +1293,105 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     }
   }
 
-  async function putGithubFile(contentsUrl, branch, file, message, content) {
+  async function putGithubFile(contentsUrl, branch, file, message, content, options = {}) {
     return githubRequest(contentsUrl, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         message,
-        content: toBase64(content),
+        content: options.base64 ? content : toBase64(content),
         sha: file ? file.sha : undefined,
         branch
       })
     });
+  }
+
+  function encodeGithubPath(path) {
+    return String(path).split("/").map(encodeURIComponent).join("/");
+  }
+
+  function imageExtension(file) {
+    const byName = (file.name.match(/\.[a-z0-9]+$/i) || [])[0];
+    if (byName && /^(\.png|\.jpe?g|\.gif|\.webp)$/i.test(byName)) {
+      return byName.toLowerCase();
+    }
+
+    const byType = {
+      "image/png": ".png",
+      "image/jpeg": ".jpg",
+      "image/gif": ".gif",
+      "image/webp": ".webp"
+    };
+    return byType[file.type] || ".png";
+  }
+
+  function makeImagePath(file) {
+    const baseName = file.name
+      .replace(/\.[^.]+$/, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 42) || "image";
+    const folder = githubConfig.imagesPath || "rising-sea-images";
+    const date = new Date().toISOString().slice(0, 10);
+    return `${folder}/${date}/${Date.now()}-${baseName}${imageExtension(file)}`;
+  }
+
+  function insertTextAtCursor(input, text) {
+    const start = input.selectionStart || 0;
+    const end = input.selectionEnd || start;
+    input.value = `${input.value.slice(0, start)}${text}${input.value.slice(end)}`;
+    input.selectionStart = start + text.length;
+    input.selectionEnd = start + text.length;
+    input.focus();
+    updatePreview();
+  }
+
+  async function uploadImage(file) {
+    if (!file) return;
+    if (!getGithubToken()) {
+      setImageStatus("Save a GitHub token before uploading images.");
+      return;
+    }
+
+    if (!["image/png", "image/jpeg", "image/gif", "image/webp"].includes(file.type)) {
+      setImageStatus("Choose a PNG, JPG, GIF, or WebP image.");
+      return;
+    }
+
+    if (file.size > 8 * 1024 * 1024) {
+      setImageStatus("Choose an image smaller than 8 MB.");
+      return;
+    }
+
+    insertImageButton.disabled = true;
+    setImageStatus("Uploading image...");
+
+    try {
+      const owner = githubConfig.owner;
+      const repo = githubConfig.repo;
+      const branch = githubConfig.branch || "main";
+      const path = makeImagePath(file);
+      const contentsUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeGithubPath(path)}`;
+      const content = arrayBufferToBase64(await file.arrayBuffer());
+      await putGithubFile(
+        contentsUrl,
+        branch,
+        null,
+        `Upload Rising Sea image ${file.name}`,
+        content,
+        { base64: true }
+      );
+
+      const alt = file.name.replace(/\.[^.]+$/, "").replace(/[\[\]\r\n]/g, " ").trim() || "image";
+      insertTextAtCursor(editor, `\n\n![${alt}](${path})\n\n`);
+      setImageStatus("Image uploaded and inserted. Publish or update the solution to share it.");
+    } catch (error) {
+      setImageStatus(`Image upload failed: ${error.message}`);
+    } finally {
+      insertImageButton.disabled = false;
+      imageUploadInput.value = "";
+    }
   }
 
   async function syncSolutionsToGithub(nextSolutions, message) {
@@ -1253,8 +1430,9 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
 
     unhideSolutionLocally(entry.id);
     const visibleNextSolutions = upsertSolution(entry);
+    const localPendingSolutions = upsertIntoList(getLocalSolutions(), entry);
     setSolutions(visibleNextSolutions);
-    saveLocalSolutions(upsertSolution(entry));
+    saveLocalSolutions(localPendingSolutions);
     setStatus("Published in the list below.");
 
     const token = getGithubToken();
@@ -1276,13 +1454,13 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
       const remoteSolutions = currentFile
         ? parseSolutionsSource(fromBase64(currentFile.content))
         : solutions.slice();
-      const mergedSolutions = mergeSolutionLists(remoteSolutions, getLocalSolutions());
+      const mergedSolutions = mergeSolutionLists(remoteSolutions, localPendingSolutions);
       const nextSolutions = upsertIntoList(mergedSolutions, entry);
       const result = await syncSolutionsToGithub(nextSolutions, `Publish Rising Sea solution ${entry.problem}`);
 
       setSolutions(nextSolutions);
       saveLocalSolutions([]);
-      setPublishStatus(`Synced. GitHub Pages will refresh after the workflow finishes. Commit: ${result.commit.sha.slice(0, 7)}.`);
+      setPublishStatus(`Synced to the public site. Open pages refresh automatically after GitHub Pages updates. Commit: ${result.commit.sha.slice(0, 7)}.`);
     } catch (error) {
       setPublishStatus(`It is visible here, but GitHub sync failed: ${error.message}`);
     } finally {
@@ -1325,7 +1503,7 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
 
       setSolutions(nextSolutions);
       saveLocalSolutions(removeSolution(getLocalSolutions(), id));
-      setPublishStatus(`Deleted. GitHub Pages will refresh after the workflow finishes. Commit: ${result.commit.sha.slice(0, 7)}.`);
+      setPublishStatus(`Deleted from the public site. Open pages refresh automatically after GitHub Pages updates. Commit: ${result.commit.sha.slice(0, 7)}.`);
     } catch (error) {
       setPublishStatus(`It is hidden here, but GitHub deletion failed: ${error.message}`);
     }
@@ -1350,6 +1528,7 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     titleInput.value = "";
     chapterInput.value = "";
     problemInput.value = "";
+    authorInput.value = localStorage.getItem(authorStorageKey) || authorInput.value || "";
     dateInput.value = today;
     editor.value = "";
     updatePublishButtonLabel();
@@ -1366,6 +1545,7 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     titleInput.value = solution.title || "";
     chapterInput.value = solution.chapter || "";
     problemInput.value = solution.problem || "";
+    authorInput.value = solution.author || localStorage.getItem(authorStorageKey) || "";
     dateInput.value = solution.updated || new Date().toISOString().slice(0, 10);
     editor.value = solution.body || "";
     updatePublishButtonLabel();
@@ -1432,7 +1612,7 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     if (!editor || !preview) return;
 
     loadDraft();
-    [editor, titleInput, chapterInput, problemInput, dateInput].forEach((input) => {
+    [editor, titleInput, chapterInput, problemInput, authorInput, dateInput].forEach((input) => {
       input.addEventListener("input", updatePreview);
     });
     newSolutionButton.addEventListener("click", startNewSolution);
@@ -1441,6 +1621,8 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     saveTokenButton.addEventListener("click", saveGithubToken);
     downloadTexButton.addEventListener("click", downloadTexDocument);
     clearTokenButton.addEventListener("click", clearGithubToken);
+    insertImageButton.addEventListener("click", () => imageUploadInput.click());
+    imageUploadInput.addEventListener("change", () => uploadImage(imageUploadInput.files[0]));
     updatePreview();
 
     if (getGithubToken()) {
@@ -1453,5 +1635,6 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
   bindSolutionActions();
   bindEditor();
   loadLatestPublishedSolutions();
+  setInterval(loadLatestPublishedSolutions, githubConfig.refreshMs || 30000);
   typesetMath();
 })();
