@@ -288,5 +288,14 @@ which one can check is an inverse to $G^{\#}$. Since $G^{\#}$ is an isomorphism 
     body: String.raw`Let $X\times_Z Y=\{(x,y)\in X\times Y: \alpha(x)=\beta(y)\}$. Suppose we have the following diagram
 % https://q.uiver.app/#q=WzAsNSxbMSwxLCJYXFx0aW1lc19aIFkiXSxbMSwyLCJYIl0sWzIsMSwiWSJdLFsyLDIsIloiXSxbMCwwLCJXIl0sWzEsMywiXFxhbHBoYSJdLFsyLDMsIlxcYmV0YSIsMl0sWzAsMV0sWzAsMl0sWzQsMSwiXFxwaGkiLDIseyJjdXJ2ZSI6MX1dLFs0LDIsIlxccHNpIiwwLHsiY3VydmUiOi0yfV0sWzQsMCwiXFxyaG8iLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
 We can define the map $\rho: W\to X\times_Z Y$ as $\rho(w)=(\phi(w),\psi(w)).$ It is straightforward to check that the map is well-defined (i.e., lands in the fiber product), and is unique.`
+  },
+  {
+    id: "1-1-2o-fibered-products-in-the-category-of-open-",
+    chapter: "1",
+    problem: "1.2O",
+    author: "Tianyi",
+    title: "Fibered Products in the Category of Open Sets",
+    updated: "2026-08-29",
+    body: String.raw`Fiber Product is simply intersection of open sets in this category.`
   }
 ];
