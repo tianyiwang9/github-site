@@ -110,6 +110,10 @@
       .replace(/`([^`]+)`/g, "<code>$1</code>");
   }
 
+  function renderTitle(value) {
+    return escapeHtml(value || "Untitled solution");
+  }
+
   function extractQuiverUrl(value) {
     const source = String(value);
     const iframeMatch = source.match(/<iframe\b[^>]*\bsrc=["']([^"']*q\.uiver\.app[^"']*)["'][^>]*>/i);
@@ -958,7 +962,7 @@
               ${author ? `<span>${escapeHtml(author)}</span>` : ""}
               <span>${escapeHtml(solution.updated || "")}</span>
             </div>
-            <h2>${escapeHtml(solution.title || "Untitled solution")}</h2>
+            <h2>${renderTitle(solution.title || "Untitled solution")}</h2>
             <div class="solution-body">${renderMarkdown(solution.body || "")}</div>
             <div class="solution-actions">
               <button type="button" class="secondary-button" data-edit-solution="${escapeHtml(solution.id)}">Edit solution</button>
@@ -1056,7 +1060,10 @@
 
   function updatePreview() {
     if (!preview) return;
-    preview.innerHTML = renderMarkdown(editor.value);
+    const previewTitle = titleInput.value.trim()
+      ? `<h2 class="preview-solution-title">${renderTitle(titleInput.value.trim())}</h2>`
+      : "";
+    preview.innerHTML = `${previewTitle}${renderMarkdown(editor.value)}`;
     saveDraft();
     typesetMath();
   }
@@ -1107,11 +1114,28 @@
   }
 
   function escapeTexTitle(value) {
-    return String(value || "Untitled solution")
-      .replace(/\\/g, "\\textbackslash{}")
-      .replace(/([%#$&_{}])/g, "\\$1")
-      .replace(/\^/g, "\\textasciicircum{}")
-      .replace(/~/g, "\\textasciitilde{}");
+    const source = String(value || "Untitled solution");
+    const mathPattern = /\$[^$\n]*\$/g;
+    let output = "";
+    let cursor = 0;
+    let match;
+
+    function escapeTextSegment(segment) {
+      return segment
+        .replace(/\\/g, "\\textbackslash{}")
+        .replace(/([%#$&_{}])/g, "\\$1")
+        .replace(/\^/g, "\\textasciicircum{}")
+        .replace(/~/g, "\\textasciitilde{}");
+    }
+
+    while ((match = mathPattern.exec(source))) {
+      output += escapeTextSegment(source.slice(cursor, match.index));
+      output += match[0];
+      cursor = mathPattern.lastIndex;
+    }
+
+    output += escapeTextSegment(source.slice(cursor));
+    return output;
   }
 
   function stripMarkdownEmphasis(value) {

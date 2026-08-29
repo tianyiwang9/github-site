@@ -459,6 +459,12 @@ ul {
   font-size: clamp(1.45rem, 3vw, 2rem);
 }
 
+.preview-solution-title {
+  margin-bottom: 1rem;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
 .solution-meta {
   display: flex;
   flex-wrap: wrap;
