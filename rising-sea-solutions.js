@@ -26,7 +26,7 @@ $$
     id: "1-1-1-b-automorphism-group",
     chapter: "1",
     problem: "1.1.B",
-    author: "",
+    author: "Tianyi",
     title: "Automorphism Group",
     updated: "2026-08-27",
     body: String.raw`Let $A$ be an object in a category $\ms C$. The invertible elements $\op{Aut}(A)\subset \op{Mor}(A,A)$ indeed forms a group because we have the identity $\op{id}_A: A\to A$, and every morphism is invertible by definition. Moreover associativity holds by definition of a category. Hence $\op{Aut}(A)$ is indeed a group.
@@ -37,7 +37,7 @@ In the example of sets, $\op{Aut}(A)$ is the set of bijections from $A$ to itsel
     id: "1-1-1-d-dimensions-characterizes-vector-spaces",
     chapter: "1",
     problem: "1.1.D",
-    author: "",
+    author: "Tianyi",
     title: "Dimensions and Basis Characterize Vector Spaces",
     updated: "2026-08-27",
     body: String.raw`We show that $\ms V\to \op{f.d.Vec}_k$ is an equivalence of categories. We construct the inverse functor as follows: Simultaneously choose basis for each vector space $V\in \op{f.d.Vec}_k$ (which Vakil says we can do). Define the functor $\rho: \op{f.d.Vec}_k\to \ms V$ as follows: 
@@ -48,7 +48,7 @@ Let $V\in \op{f.d.Vec}_k$ be a vector space with chosen basis $e_1,...,e_n$. The
     id: "1-1-2-a-initial-and-final-objects",
     chapter: "1",
     problem: "1.2.A",
-    author: "",
+    author: "Tianyi",
     title: "Initial and Final Objects",
     updated: "2026-08-28",
     body: String.raw`Let $\ms C$ be a category and $I,I'$ be two initial objects in the category. Then there is a unique map $f: I\to I'$ and a unique map $g: I'\to I$. So we get a map $g\circ f:I\to I$. But we also have $\op{id}_I: I\to I$. Hence we conclude that $g\circ f=\op{id}_I$ and similarly $f\circ g=\op{id}_{I'}$. Hence $I,I'$ are isomorphic. Similar argument shows that two final objects are isomorphic.`
@@ -57,7 +57,7 @@ Let $V\in \op{f.d.Vec}_k$ be a vector space with chosen basis $e_1,...,e_n$. The
     id: "1-1-2-b",
     chapter: "1",
     problem: "1.2.B",
-    author: "",
+    author: "Tianyi",
     title: "Untitled solution",
     updated: "2026-08-28",
     body: String.raw`In both $Sets$ and $Tops$, the initial object is $\emptyset$. 
@@ -74,7 +74,7 @@ In $Rings$, both the initial and final object is the 0 ring.`
     id: "1-1-2-c-a-to-s-1-a-injective-iff-no-zero-divisor",
     chapter: "1",
     problem: "1.2.C",
-    author: "",
+    author: "Tianyi",
     title: "$A\\to S^{-1}A$ injective iff no zero divisors in S",
     updated: "2026-08-28",
     body: String.raw`Suppose $S$ has a zero divisor $a$. Then there exists a nonzero $b$ such that $ab=0$. Then $b/1=0/1$ because $a(b\cdot 1-0\cdot 1)=0$. But $b$ is nonzero, so the map $A \to S^{-1}A$ is not injective.
@@ -85,7 +85,7 @@ Conversely, suppose the map $A\to S^{-1}A$ is not injective, which means there i
     id: "1-1-2-d-universal-property-of-localization",
     chapter: "1",
     problem: "1.2.D",
-    author: "",
+    author: "Tianyi",
     title: "Universal Property of Localization",
     updated: "2026-08-28",
     body: String.raw`We want to show that any map $\phi: A \to B$ that sends $S$ to invertible elements in $B$ factors through the localization $A\to S^{-1}A$, i.e., the following diagram commutes:
