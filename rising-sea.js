@@ -709,6 +709,28 @@
     `;
   }
 
+  function texDisplayEnvironment(line) {
+    const match = line.trim().match(/^\\begin\{([a-zA-Z]+(?:\*)?)\}/);
+    if (!match) return "";
+
+    const displayEnvironments = new Set([
+      "align",
+      "align*",
+      "alignat",
+      "alignat*",
+      "equation",
+      "equation*",
+      "flalign",
+      "flalign*",
+      "gather",
+      "gather*",
+      "multline",
+      "multline*"
+    ]);
+
+    return displayEnvironments.has(match[1]) ? match[1] : "";
+  }
+
   function tokenizeBlocks(value) {
     const lines = String(value).replace(/\r\n?/g, "\n").split("\n");
     const blocks = [];
@@ -791,6 +813,25 @@
         continue;
       }
 
+      const displayEnvironment = texDisplayEnvironment(line);
+      if (displayEnvironment) {
+        flushParagraph();
+        const collected = [line];
+        const escapedEnvironment = displayEnvironment.replace(/\*/g, "\\*");
+        const endPattern = new RegExp(`\\\\end\\{${escapedEnvironment}\\}`);
+        index += 1;
+
+        while (index < lines.length && !endPattern.test(lines[index])) {
+          collected.push(lines[index]);
+          index += 1;
+        }
+        if (index < lines.length) collected.push(lines[index]);
+
+        blocks.push({ type: "math", value: collected.join("\n") });
+        index += 1;
+        continue;
+      }
+
       paragraph.push(line);
       index += 1;
     }
@@ -819,11 +860,15 @@
           return `<pre class="tikzcd-code"><code>${escapeHtml(text)}</code></pre>`;
         }
 
+        if (block.type === "math") {
+          return `<div class="math-block">${escapeHtml(text)}</div>`;
+        }
+
         if (extractQuiverUrl(text)) {
           return renderQuiverBlock(text);
         }
 
-        if (/^\$\$[\s\S]*\$\$$/.test(text)) {
+        if (/^\$\$[\s\S]*\$\$$/.test(text) || /^\\\[[\s\S]*\\\]$/.test(text)) {
           return `<div class="math-block">${escapeHtml(text)}</div>`;
         }
 

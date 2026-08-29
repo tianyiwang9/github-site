@@ -13,9 +13,12 @@
     <script>
       const risingSeaConfig = window.risingSeaConfig || {};
       window.MathJax = {
+        loader: { load: ["[tex]/ams"] },
         tex: {
+          packages: { "[+]": ["ams"] },
           inlineMath: [["$", "$"], ["\\(", "\\)"]],
           displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+          processEnvironments: true,
           macros: risingSeaConfig.macros || {}
         },
         svg: { fontCache: "global" }
@@ -23,7 +26,7 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <script defer src="rising-sea-solutions.js?v=20260828-1"></script>
-    <script defer src="rising-sea.js?v=20260828-3"></script>
+    <script defer src="rising-sea.js?v=20260829-1"></script>
   </head>
   <body>
     <header class="site-header">
@@ -89,7 +92,7 @@
               <ol>
                 <li>Click <code>New solution</code> before starting a different problem.</li>
                 <li>Fill in the chapter, problem number, date, author, and title.</li>
-                <li>Write in Markdown and LaTeX. Inline math uses <code>$...$</code>; display math uses <code>\[...\]</code> or <code>$$...$$</code>.</li>
+                <li>Write in Markdown and LaTeX. Inline math uses <code>$...$</code>; display math uses <code>\[...\]</code>, <code>$$...$$</code>, or standalone environments such as <code>\begin{align*}...\end{align*}</code>.</li>
                 <li>Use the live preview to check the formatting before publishing.</li>
                 <li>Click <code>Publish solution</code>. Wait for the synced confirmation before leaving the page.</li>
               </ol>
