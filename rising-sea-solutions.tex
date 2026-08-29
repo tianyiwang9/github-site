@@ -175,4 +175,13 @@ The identity axiom is immediate in each case.
 
 Let \(\{U_i\}\) be an open cover of \(U\), and let \(f_i\in\mathcal O(U_i)\) satisfy \(f_i|_{U_i\cap U_j}=f_j|_{U_i\cap U_j}\). They glue to a function \(f\) on \(U\): for \(x\in U\), choose \(i\) with \(x\in U_i\) and set \(f(x)=f_i(x)\). Compatibility makes \(f\) well-defined, and clearly \(f|_{U_i}=f_i\). Continuity, smoothness, and real-analyticity are local properties, so \(f\) has the required regularity. The same argument applies to continuous real-valued functions on an arbitrary topological space.
 
+\section{2 -- 2.2.F -- Continuous Maps Form a Sheaf}
+% id: 2-2-2-f-continuous-maps-form-a-sheaf
+% author: Anson
+% updated: 2026-08-28
+
+Let \(\{U_i\}\) be an open cover of \(U\). For the identity axiom, if \(f,g:U\to Y\) satisfy \(f|_{U_i}=g|_{U_i}\) for all \(i\), then \(f=g\).
+
+For gluability, let \(f_i:U_i\to Y\) be continuous maps agreeing on overlaps. Define \(f:U\to Y\) by \(f(x)=f_i(x)\) for \(x\in U_i\). This is well-defined, and \(f|_{U_i}=f_i\), so \(f\) is continuous. Thus continuous maps to \(Y\) form a sheaf.
+
 \end{document}
