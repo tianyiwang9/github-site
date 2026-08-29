@@ -100,20 +100,18 @@ Conversely, suppose the map $A\to S^{-1}A$ is not injective, which means there i
 Indeed, define $\psi: S^{-1}A\to B$ via $\psi(a/s)=\phi(a)\phi(s)^{-1}$. It is easy to check that this construction makes the diagram commute and is unique.`
   },
   {
-    id: "1-1-2-e",
+    id: "1-1-2-e-localization-with-sums-and-products",
     chapter: "1",
     problem: "1.2.E",
-    author: "Lazy Tianyi",
-    title: "Untitled solution",
-    updated: "2026-08-28",
-    body: String.raw`Just follow the hint and check...
-
-
-![lazy](rising-sea-images/2026-08-29/1787962072714-lazy.png)
-
-
-
-`
+    author: "Tianyi",
+    title: "Localization with Sums and Products",
+    updated: "2026-08-29",
+    body: String.raw`For (a) and (b) we prove the isomorphism exists by the universal property of localization. That is, given $\phi$ sending $S$ to invertible elements of $N$ we want to show
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCJNXzFcXHRpbWVzXFxjZG90c1xcdGltZXMgTV9uIl0sWzIsMCwiU157LTF9TV8xXFx0aW1lc1xcY2RvdHNcXHRpbWVzIFNeey0xfU1fbiJdLFsxLDEsIk4iXSxbMCwyLCJcXHBoaSIsMl0sWzAsMV0sWzEsMiwiXFxleGlzdHMhXFxwc2kiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+where the verticle map is the obvious one $(m_1,...,m_n)\mapsto (m_1/1,...,m_n/1).$ Now let $e_1,...,e_n$ denote the standard basis in $M_1\times\cdots\times M_n$. Then we see that we can define
+\begin{align*}
+\psi(m_1/s_1,...,m_n/s_n)=\psi(\sum_{1\leq i\leq n}(0,...,m_i/s_i,...,0))=\sum_{1\leq i\leq n}\phi(s_i)^{-1}\phi(0,...,m_i,...,0).
+\end{align*}`
   },
   {
     id: "2-2-1-b-the-cotangent-space-from-germs-vanishing",
