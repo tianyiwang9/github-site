@@ -3,7 +3,7 @@ window.risingSeaSolutions = [
     id: "1-1-1-c-double-dual-functor",
     chapter: "1",
     problem: "1.1.C",
-    author: "",
+    author: "Tianyi",
     title: "Double Dual Functor",
     updated: "2026-08-27",
     body: String.raw`This amounts to checking commutativity of the following diagram:
