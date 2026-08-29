@@ -36,6 +36,20 @@
   const localSolutionsStorageKey = "rising-sea-local-solutions";
   const localTexStorageKey = "rising-sea-latest-tex";
   const remoteSolutionIds = new Set(solutions.map((solution) => solution.id));
+  const texDisplayEnvironments = new Set([
+    "align",
+    "align*",
+    "alignat",
+    "alignat*",
+    "equation",
+    "equation*",
+    "flalign",
+    "flalign*",
+    "gather",
+    "gather*",
+    "multline",
+    "multline*"
+  ]);
   let refreshingSolutions = false;
   let editingSolutionId = "";
   let toastTimer = null;
@@ -100,7 +114,7 @@
     return "";
   }
 
-  function renderInline(value) {
+  function renderInlineText(value) {
     return escapeHtml(value)
       .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
         const safeSrc = safeImageSrc(src);
@@ -110,6 +124,66 @@
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
       .replace(/\*([^*]+)\*/g, "<em>$1</em>")
       .replace(/`([^`]+)`/g, "<code>$1</code>");
+  }
+
+  function findClosingDollar(source, start) {
+    for (let index = start; index < source.length; index += 1) {
+      if (source[index] === "$" && source[index - 1] !== "\\" && source[index + 1] !== "$") {
+        return index;
+      }
+    }
+    return -1;
+  }
+
+  function findNextInlineMath(source, start) {
+    let cursor = start;
+
+    while (cursor < source.length) {
+      const dollarStart = source.indexOf("$", cursor);
+      const parenStart = source.indexOf("\\(", cursor);
+      const starts = [dollarStart, parenStart].filter((index) => index >= 0);
+      if (!starts.length) return null;
+
+      const mathStart = Math.min(...starts);
+      if (mathStart === parenStart) {
+        const end = source.indexOf("\\)", mathStart + 2);
+        if (end >= 0) {
+          return { start: mathStart, end: end + 2 };
+        }
+        cursor = mathStart + 2;
+        continue;
+      }
+
+      if (source[mathStart + 1] === "$") {
+        cursor = mathStart + 2;
+        continue;
+      }
+
+      const end = findClosingDollar(source, mathStart + 1);
+      if (end >= 0) {
+        return { start: mathStart, end: end + 1 };
+      }
+      cursor = mathStart + 1;
+    }
+
+    return null;
+  }
+
+  function renderInline(value) {
+    const source = String(value || "");
+    let output = "";
+    let cursor = 0;
+    let mathRange = findNextInlineMath(source, cursor);
+
+    while (mathRange) {
+      output += renderInlineText(source.slice(cursor, mathRange.start));
+      output += escapeHtml(source.slice(mathRange.start, mathRange.end));
+      cursor = mathRange.end;
+      mathRange = findNextInlineMath(source, cursor);
+    }
+
+    output += renderInlineText(source.slice(cursor));
+    return output;
   }
 
   function renderTitle(value) {
@@ -731,22 +805,31 @@
     const match = line.trim().match(/^\\begin\{([a-zA-Z]+(?:\*)?)\}/);
     if (!match) return "";
 
-    const displayEnvironments = new Set([
-      "align",
-      "align*",
-      "alignat",
-      "alignat*",
-      "equation",
-      "equation*",
-      "flalign",
-      "flalign*",
-      "gather",
-      "gather*",
-      "multline",
-      "multline*"
-    ]);
+    return texDisplayEnvironments.has(match[1]) ? match[1] : "";
+  }
 
-    return displayEnvironments.has(match[1]) ? match[1] : "";
+  function displayMathDelimiter(line) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith("\\[")) {
+      return {
+        endPattern: /\\\]/,
+        isClosed: (value) => /\\\]/.test(value)
+      };
+    }
+
+    if (trimmed.startsWith("$$")) {
+      return {
+        endPattern: /\$\$/,
+        isClosed: (value, isFirstLine) => {
+          const source = String(value);
+          return isFirstLine
+            ? source.indexOf("$$", source.indexOf("$$") + 2) >= 0
+            : /\$\$/.test(source);
+        }
+      };
+    }
+
+    return null;
   }
 
   function tokenizeBlocks(value) {
@@ -828,6 +911,21 @@
         if (endPattern && index < lines.length) collected.push(lines[index]);
         blocks.push({ type: "diagram", value: collected.join("\n") });
         index += 1;
+        continue;
+      }
+
+      const displayDelimiter = displayMathDelimiter(line);
+      if (displayDelimiter) {
+        flushParagraph();
+        const collected = [line];
+        index += 1;
+
+        while (index < lines.length && !displayDelimiter.isClosed(collected[collected.length - 1], collected.length === 1)) {
+          collected.push(lines[index]);
+          index += 1;
+        }
+
+        blocks.push({ type: "math", value: collected.join("\n") });
         continue;
       }
 
@@ -1152,8 +1250,66 @@
     return output;
   }
 
-  function stripMarkdownEmphasis(value) {
+  function stripMarkdownEmphasisText(value) {
     return String(value || "").replace(/\*\*([^*]+)\*\*/g, "$1").replace(/\*([^*]+)\*/g, "$1");
+  }
+
+  function findTexMathRange(source, start) {
+    for (let index = start; index < source.length; index += 1) {
+      if (source.startsWith("\\(", index)) {
+        const end = source.indexOf("\\)", index + 2);
+        if (end >= 0) return { start: index, end: end + 2 };
+      }
+
+      if (source.startsWith("\\[", index)) {
+        const end = source.indexOf("\\]", index + 2);
+        if (end >= 0) return { start: index, end: end + 2 };
+      }
+
+      if (source.startsWith("$$", index)) {
+        const end = source.indexOf("$$", index + 2);
+        if (end >= 0) return { start: index, end: end + 2 };
+        index += 1;
+        continue;
+      }
+
+      if (source[index] === "$" && source[index - 1] !== "\\" && source[index + 1] !== "$") {
+        const end = findClosingDollar(source, index + 1);
+        if (end >= 0) return { start: index, end: end + 1 };
+      }
+
+      if (source.startsWith("\\begin{", index)) {
+        const match = source.slice(index).match(/^\\begin\{([a-zA-Z]+(?:\*)?)\}/);
+        if (match && texDisplayEnvironments.has(match[1])) {
+          const closing = `\\end{${match[1]}}`;
+          const end = source.indexOf(closing, index + match[0].length);
+          if (end >= 0) return { start: index, end: end + closing.length };
+        }
+      }
+    }
+
+    return null;
+  }
+
+  function stripMarkdownEmphasis(value) {
+    const source = String(value || "");
+    let output = "";
+    let cursor = 0;
+    let mathRange = findTexMathRange(source, cursor);
+
+    while (mathRange) {
+      output += stripMarkdownEmphasisText(source.slice(cursor, mathRange.start));
+      output += source.slice(mathRange.start, mathRange.end);
+      cursor = mathRange.end;
+      mathRange = findTexMathRange(source, cursor);
+    }
+
+    output += stripMarkdownEmphasisText(source.slice(cursor));
+    return output;
+  }
+
+  function trimTrailingWhitespace(value) {
+    return String(value || "").replace(/[ \t]+$/gm, "");
   }
 
   function texImagePath(value) {
@@ -1181,7 +1337,7 @@
   }
 
   function markdownToTex(value) {
-    return stripMarkdownEmphasis(value).replace(/!\[[^\]]*\]\(([^)]+)\)/g, (match, src) => {
+    return trimTrailingWhitespace(stripMarkdownEmphasis(value).replace(/!\[[^\]]*\]\(([^)]+)\)/g, (match, src) => {
       const imagePath = texImagePath(src);
       if (!imagePath || /^https?:\/\//i.test(imagePath)) {
         return `% External image omitted from TeX: ${src}`;
@@ -1192,7 +1348,7 @@
         `\\includegraphics[width=0.85\\linewidth]{${imagePath}}`,
         "\\end{center}"
       ].join("\n");
-    });
+    }));
   }
 
   function serializeTexDocument(entries) {
@@ -1217,11 +1373,34 @@
 \usepackage{quiver}
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 
-\newcommand{\mc}[1]{\mathcal{#1}}
-\newcommand{\ms}[1]{\mathscr{#1}}
-\newcommand{\op}[1]{\operatorname{#1}}
+\providecommand{\A}{}
+\renewcommand{\A}{\mathbb{A}}
+\providecommand{\C}{}
+\renewcommand{\C}{\mathbb{C}}
+\providecommand{\F}{}
+\renewcommand{\F}{\mathcal{F}}
+\providecommand{\G}{}
+\renewcommand{\G}{\mathcal{G}}
+\providecommand{\mc}[1]{}
+\renewcommand{\mc}[1]{\mathcal{#1}}
+\providecommand{\ms}[1]{}
+\renewcommand{\ms}[1]{\mathscr{#1}}
+\providecommand{\O}{}
+\renewcommand{\O}{\mathcal{O}}
+\providecommand{\op}[1]{}
+\renewcommand{\op}[1]{\operatorname{#1}}
+\providecommand{\P}{}
+\renewcommand{\P}{\mathbb{P}}
+\providecommand{\Q}{}
+\renewcommand{\Q}{\mathbb{Q}}
+\providecommand{\R}{}
+\renewcommand{\R}{\mathbb{R}}
+\providecommand{\Z}{}
+\renewcommand{\Z}{\mathbb{Z}}
 \DeclareMathOperator{\Spec}{Spec}
 \DeclareMathOperator{\Hom}{Hom}
+\providecommand{\im}{}
+\renewcommand{\im}{\operatorname{im}}
 
 \title{Solutions to Vakil's The Rising Sea}
 \author{Tianyi Wang}

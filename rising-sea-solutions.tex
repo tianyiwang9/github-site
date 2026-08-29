@@ -6,11 +6,34 @@
 \usepackage{quiver}
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 
-\newcommand{\mc}[1]{\mathcal{#1}}
-\newcommand{\ms}[1]{\mathscr{#1}}
-\newcommand{\op}[1]{\operatorname{#1}}
+\providecommand{\A}{}
+\renewcommand{\A}{\mathbb{A}}
+\providecommand{\C}{}
+\renewcommand{\C}{\mathbb{C}}
+\providecommand{\F}{}
+\renewcommand{\F}{\mathcal{F}}
+\providecommand{\G}{}
+\renewcommand{\G}{\mathcal{G}}
+\providecommand{\mc}[1]{}
+\renewcommand{\mc}[1]{\mathcal{#1}}
+\providecommand{\ms}[1]{}
+\renewcommand{\ms}[1]{\mathscr{#1}}
+\providecommand{\O}{}
+\renewcommand{\O}{\mathcal{O}}
+\providecommand{\op}[1]{}
+\renewcommand{\op}[1]{\operatorname{#1}}
+\providecommand{\P}{}
+\renewcommand{\P}{\mathbb{P}}
+\providecommand{\Q}{}
+\renewcommand{\Q}{\mathbb{Q}}
+\providecommand{\R}{}
+\renewcommand{\R}{\mathbb{R}}
+\providecommand{\Z}{}
+\renewcommand{\Z}{\mathbb{Z}}
 \DeclareMathOperator{\Spec}{Spec}
 \DeclareMathOperator{\Hom}{Hom}
+\providecommand{\im}{}
+\renewcommand{\im}{\operatorname{im}}
 
 \title{Solutions to Vakil's The Rising Sea}
 \author{Tianyi Wang}
@@ -54,7 +77,7 @@ In the example of sets, $\op{Aut}(A)$ is the set of bijections from $A$ to itsel
 % author: 
 % updated: 2026-08-27
 
-We show that $\ms V\to \op{f.d.Vec}_k$ is an equivalence of categories. We construct the inverse functor as follows: Simultaneously choose basis for each vector space $V\in \op{f.d.Vec}_k$ (which Vakil says we can do). Define the functor $\rho: \op{f.d.Vec}_k\to \ms V$ as follows: 
+We show that $\ms V\to \op{f.d.Vec}_k$ is an equivalence of categories. We construct the inverse functor as follows: Simultaneously choose basis for each vector space $V\in \op{f.d.Vec}_k$ (which Vakil says we can do). Define the functor $\rho: \op{f.d.Vec}_k\to \ms V$ as follows:
 
 Let $V\in \op{f.d.Vec}_k$ be a vector space with chosen basis $e_1,...,e_n$. Then define $\rho(V)=k^n$. If $W$ is another vector space with basis $f_1,...,f_m$, so $\rho(W)=k^m$, and if $T:V\to W$ is a linear map, then with respect to these basis $T$ can be identified with an $m\times n$ matrix, which is a linear map $\rho(T):k^n\to k^m$.
 
@@ -70,13 +93,13 @@ Let $\ms C$ be a category and $I,I'$ be two initial objects in the category. The
 % author: 
 % updated: 2026-08-28
 
-In both $Sets$ and $Tops$, the initial object is $\emptyset$. 
+In both $Sets$ and $Tops$, the initial object is $\emptyset$.
 
-There is precisely one map $\emptyset\to X$ for any object $X$, Since there are no elements in $\emptyset$ whose images need to be specified. 
+There is precisely one map $\emptyset\to X$ for any object $X$, Since there are no elements in $\emptyset$ whose images need to be specified.
 
-The final object is a singleton $\{\}$. 
+The final object is a singleton $\{*\}$.
 
-There is precisely one map $X\to\{\}$ which is the constant map.
+There is precisely one map $X\to\{*\}$ which is the constant map.
 
 In $Rings$, both the initial and final object is the 0 ring.
 
@@ -113,9 +136,9 @@ Indeed, define $\psi: S^{-1}A\to B$ via $\psi(a/s)=\phi(a)\phi(s)^{-1}$. It is e
 For (a) and (b) we prove the isomorphism exists by the universal property of localization. That is, given $\phi$ sending $S$ to invertible elements of $N$ we want to show
 % https://q.uiver.app/#q=WzAsMyxbMCwwLCJNXzFcXHRpbWVzXFxjZG90c1xcdGltZXMgTV9uIl0sWzIsMCwiU157LTF9TV8xXFx0aW1lc1xcY2RvdHNcXHRpbWVzIFNeey0xfU1fbiJdLFsxLDEsIk4iXSxbMCwyLCJcXHBoaSIsMl0sWzAsMV0sWzEsMiwiXFxleGlzdHMhXFxwc2kiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
 where the verticle map is the obvious one $(m_1,...,m_n)\mapsto (m_1/1,...,m_n/1).$ Now let $e_1,...,e_n$ denote the standard basis in $M_1\times\cdots\times M_n$. Then we see that we can define
-\begin{align}
+\begin{align*}
 \psi(m_1/s_1,...,m_n/s_n)&=\psi(\sum_{1\leq i\leq n}(0,...,m_i/s_i,...,0))=\sum_{1\leq i\leq n}\phi(s_i)^{-1}\phi(0,...,m_i,...,0).
-\end{align}
+\end{align*}
 
 (b) Recall that $\bigoplus_{i\in I}M_i$ is the collection of elements of the form $(m_i)_{i\in I}$ where $m_i=0$ for all but finitely many $i$. Again similar argument shows that we have a commutative diagram
 % https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXGJpZ29wbHVzX3tpXFxpbiBJfSBNX2kiXSxbMiwwLCJcXGJpZ29wbHVzX3tpXFxpbiBJfSBTXnstMX1NX2kiXSxbMSwxLCJOIl0sWzAsMiwiXFxwaGkiLDJdLFswLDFdLFsxLDIsIlxcZXhpc3RzIVxccHNpIiwwLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV1d
@@ -130,12 +153,12 @@ and the map $\psi$ is defined similarly as in (a). Note that the reason that we 
 
 Consider
 \[
-\Phi:\mathfrak m_p\longrightarrow T_p^X,
+\Phi:\mathfrak m_p\longrightarrow T_p^*X,
 \qquad [f,U]\longmapsto (df)_p.
 \]
 It suffices to work in a coordinate chart, so we may assume that \(X=\mathbb R^n\) and \(p=0\).
 
-To prove surjectivity, let \(\alpha\in T_0^\mathbb R^n\) and define \(f_\alpha:\mathbb R^n\to\mathbb R\) by \(f_\alpha(x)=\alpha(x)\). Then \(f_\alpha\in\mathfrak m_0\) and \((df_\alpha)_0=\alpha\).
+To prove surjectivity, let \(\alpha\in T_0^*\mathbb R^n\) and define \(f_\alpha:\mathbb R^n\to\mathbb R\) by \(f_\alpha(x)=\alpha(x)\). Then \(f_\alpha\in\mathfrak m_0\) and \((df_\alpha)_0=\alpha\).
 
 We now compute the kernel. If \(f\in\mathfrak m_0^2\), then by linearity it suffices to consider \(f=gh\) with \(g,h\in\mathfrak m_0\). The product rule gives
 \[
@@ -204,19 +227,19 @@ Suppose that \(W\subseteq V\subseteq U\) are open in \(Y\). Since
 \[
 \pi^{-1}(W)\subseteq\pi^{-1}(V)\subseteq\pi^{-1}(U),
 \]
-the restriction maps of \(\mathcal F\) define those of \(\pi_\mathcal F\), and the presheaf axioms follow from those of \(\mathcal F\).
+the restriction maps of \(\mathcal F\) define those of \(\pi_*\mathcal F\), and the presheaf axioms follow from those of \(\mathcal F\).
 
-If \(\{U_i\}\) is an open cover of \(U\), then \(\{\pi^{-1}(U_i)\}\) is an open cover of \(\pi^{-1}(U)\). Hence the identity and gluability axioms for \(\pi_\mathcal F\) follow from those for \(\mathcal F\). Thus \(\pi_*\mathcal F\) is a sheaf whenever \(\mathcal F\) is.
+If \(\{U_i\}\) is an open cover of \(U\), then \(\{\pi^{-1}(U_i)\}\) is an open cover of \(\pi^{-1}(U)\). Hence the identity and gluability axioms for \(\pi_*\mathcal F\) follow from those for \(\mathcal F\). Thus \(\pi_*\mathcal F\) is a sheaf whenever \(\mathcal F\) is.
 
 \section{2 -- 2.2.I -- Pushforward Induces a Map on Stalks}
 % id: 2-2-2-i-pushforward-induces-a-map-on-stalks
 % author: Anson
 % updated: 2026-08-28
 
-For $[f,V]\in(\pi_\mathcal F)_q$, where $q\in V\subseteq Y$ and $f\in\mathcal F(\pi^{-1}(V))$, the natural morphism is
+For $[f,V]\in(\pi_*\mathcal F)_q$, where $q\in V\subseteq Y$ and $f\in\mathcal F(\pi^{-1}(V))$, the natural morphism is
 
 \[
-(\pi_\mathcal F)_q\to \mathcal F_p,
+(\pi_*\mathcal F)_q\to \mathcal F_p,
 \qquad
 [f,V]\to [f,\pi^{-1}(V)].
 \]
