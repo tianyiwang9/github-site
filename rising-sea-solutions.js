@@ -297,5 +297,22 @@ We can define the map $\rho: W\to X\times_Z Y$ as $\rho(w)=(\phi(w),\psi(w)).$ I
     title: "Fibered Products in the Category of Open Sets",
     updated: "2026-08-29",
     body: String.raw`Fiber Product is simply intersection of open sets in this category.`
+  },
+  {
+    id: "1-1-2-p-terminal-fiber-product-is-product",
+    chapter: "1",
+    problem: "1.2.P",
+    author: "Tianyi",
+    title: "Terminal Fiber Product is Product",
+    updated: "2026-08-29",
+    body: String.raw`Another beautiful Saturday wasted on universal property... Let $Z$ be the terminal object in $\ms C$. Let $\mu:X\times Y\to X$ and $\nu: X\times Y\to Y$ be the projection maps of the product. Since $Z$ is terminal, universal property gives the following two commutative diagrams with maps $\phi,\psi$:
+
+https://q.uiver.app/#q=WzAsMTAsWzEsMSwiWFxcdGltZXMgWSJdLFsxLDIsIlgiXSxbMiwxLCJZIl0sWzIsMiwiWiJdLFswLDAsIlhcXHRpbWVzX1pZIl0sWzUsMSwiWFxcdGltZXNfWiBZIl0sWzYsMSwiWSJdLFs1LDIsIlgiXSxbNiwyLCJaIl0sWzQsMCwiWFxcdGltZXMgWSJdLFswLDIsIlxcbnUiXSxbMCwxLCJcXG11IiwyXSxbMSwzXSxbMiwzXSxbNCwxLCJwcl9YIiwyLHsiY3VydmUiOjJ9XSxbNCwyLCJwcl9ZIiwwLHsiY3VydmUiOi0yfV0sWzQsMCwiXFxleGlzdHMhXFxwaGkiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbNyw4XSxbNiw4XSxbNSw3LCJwcl9YIiwyXSxbNSw2LCJwcl9ZIl0sWzksNywiXFxtdSIsMix7ImN1cnZlIjoyfV0sWzksNiwiXFxudSIsMCx7ImN1cnZlIjotMn1dLFs5LDUsIlxcZXhpc3QhXFxwc2kiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+
+The claim is that $\phi,\psi$ are inverses of each other hence establishes isomorphisms $X\times Y\cong X\times_Z Y$. To see this, compose the two diagrams:
+https://q.uiver.app/#q=WzAsNixbMiwyLCJYXFx0aW1lcyBZIl0sWzIsMywiWCJdLFszLDIsIlkiXSxbMywzLCJaIl0sWzEsMSwiWFxcdGltZXNfWlkiXSxbMCwwLCJYXFx0aW1lcyBZIl0sWzAsMiwiXFxudSJdLFswLDEsIlxcbXUiLDJdLFsxLDNdLFsyLDNdLFs0LDEsInByX1giLDEseyJjdXJ2ZSI6Mn1dLFs0LDIsInByX1kiLDEseyJjdXJ2ZSI6LTJ9XSxbNCwwLCJcXHBoaSJdLFs1LDEsIlxcbXUiLDAseyJjdXJ2ZSI6NX1dLFs1LDIsIlxcbnUiLDIseyJjdXJ2ZSI6LTV9XSxbNSw0LCJcXHBzaSJdXQ==
+
+Universal property of the product implies $\phi\psi=\id_{X\times Y}$, similarly universal property of fiber product implies $\psi\phi=\id_{X\times_Z Y}$.
+`
   }
 ];
