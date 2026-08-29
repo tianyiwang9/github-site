@@ -114,5 +114,50 @@ Indeed, define $\psi: S^{-1}A\to B$ via $\psi(a/s)=\phi(a)\phi(s)^{-1}$. It is e
 
 
 `
+  },
+  {
+    id: "2-2-1-b-the-cotangent-space-from-germs-vanishing",
+    chapter: "2",
+    problem: "2.1.B",
+    author: "Anson",
+    title: "The Cotangent Space from Germs Vanishing at a Point",
+    updated: "2026-08-28",
+    body: String.raw`Consider
+\[
+\Phi:\mathfrak m_p\longrightarrow T_p^*X,
+\qquad [f,U]\longmapsto (df)_p.
+\]
+It suffices to work in a coordinate chart, so we may assume that \(X=\mathbb R^n\) and \(p=0\).
+
+To prove surjectivity, let \(\alpha\in T_0^*\mathbb R^n\) and define \(f_\alpha:\mathbb R^n\to\mathbb R\) by \(f_\alpha(x)=\alpha(x)\). Then \(f_\alpha\in\mathfrak m_0\) and \((df_\alpha)_0=\alpha\).
+
+We now compute the kernel. If \(f\in\mathfrak m_0^2\), then by linearity it suffices to consider \(f=gh\) with \(g,h\in\mathfrak m_0\). The product rule gives
+\[
+(df)_0=h(0)(dg)_0+g(0)(dh)_0=0,
+\]
+so \(\mathfrak m_0^2\subseteq\ker\Phi\).
+
+Conversely, suppose that \((df)_0=0\). After shrinking the domain of \(f\) around \(0\), for \(x\) in this neighborhood we have
+\[
+\begin{aligned}
+f(x)
+&=f(x)-f(0)\\
+&=\int_0^1\frac{d}{dt}f(tx)\,dt\\
+&=\sum_{i=1}^n x_i\int_0^1
+\frac{\partial f}{\partial x_i}(tx)\,dt.
+\end{aligned}
+\]
+Set
+\[
+g_i(x):=\int_0^1\frac{\partial f}{\partial x_i}(tx)\,dt.
+\]
+Then \(g_i(0)=\frac{\partial f}{\partial x_i}(0)=0\), so \(x_i,g_i\in\mathfrak m_0\). Since
+\[
+f=\sum_{i=1}^n x_i g_i,
+\]
+we have \(f\in\mathfrak m_0^2\). Therefore \(\ker\Phi=\mathfrak m_0^2\), and hence
+\[
+\mathfrak m_p/\mathfrak m_p^2\cong T_p^*X.
+\]`
   }
 ];
