@@ -485,13 +485,20 @@ ul {
 
 .solution-image {
   display: block;
-  width: min(100%, 720px);
-  max-height: 70vh;
+  width: auto;
+  max-width: min(100%, 520px);
+  max-height: min(52vh, 460px);
+  height: auto;
   object-fit: contain;
-  margin: 1rem 0;
+  margin: 1rem auto;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
+}
+
+.preview-panel .solution-image {
+  max-width: min(100%, 420px);
+  max-height: min(42vh, 360px);
 }
 
 .solution-body mjx-container {
