@@ -108,7 +108,10 @@ Indeed, define $\psi: S^{-1}A\to B$ via $\psi(a/s)=\phi(a)\phi(s)^{-1}$. It is e
     updated: "2026-08-28",
     body: String.raw`Just follow the hint and check...
 
-![lazy](rising-sea-images/2026-08-28/1787961508381-lazy.png)
+
+![lazy](rising-sea-images/2026-08-29/1787962072714-lazy.png)
+
+
 
 `
   }
