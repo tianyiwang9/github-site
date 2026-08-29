@@ -3,7 +3,7 @@ window.risingSeaSolutions = [
     id: "1-1-1-c-double-dual-functor",
     chapter: "1",
     problem: "1.1.C",
-    author: "Tianyi",
+    author: "",
     title: "Double Dual Functor",
     updated: "2026-08-27",
     body: String.raw`This amounts to checking commutativity of the following diagram:
@@ -16,17 +16,17 @@ window.risingSeaSolutions = [
 	\arrow["f"', from=2-1, to=2-2]
 	\arrow["{m_W}"', from=2-2, to=1-2]
 \end{tikzcd}\]
-Here, the map $m_V: V\to V^{\vee\vee}$ is defined to be
+Here, the map $m_V: V^{\vee\vee}\to V$ is defined to be
 $$
-m_V:v\mapsto (\epsilon\mapsto \epsilon(v)).
+m_V:v\mapsto \epsilon_v
 $$
-`
+where $\epsilon_v: V^\vee\to k$ is defined to be the delta mass at the funcional $\delta_v\in V^\vee$, where $\delta_v: V\to k$ is the delta mass at the vector $v\in V$.`
   },
   {
     id: "1-1-1-b-automorphism-group",
     chapter: "1",
     problem: "1.1.B",
-    author: "Tianyi",
+    author: "",
     title: "Automorphism Group",
     updated: "2026-08-27",
     body: String.raw`Let $A$ be an object in a category $\ms C$. The invertible elements $\op{Aut}(A)\subset \op{Mor}(A,A)$ indeed forms a group because we have the identity $\op{id}_A: A\to A$, and every morphism is invertible by definition. Moreover associativity holds by definition of a category. Hence $\op{Aut}(A)$ is indeed a group.
@@ -243,5 +243,39 @@ If \(\{U_i\}\) is an open cover of \(U\), then \(\{\pi^{-1}(U_i)\}\) is an open 
 \left[f|_{U\cap V}\,a|_{U\cap V},\,U\cap V\right].
 \]
 The module axioms follow from those on sections, so \(\mathcal F_p\) is an \(\mathcal O_{X,p}\)-module.`
+  },
+  {
+    id: "1-1-2-h-tensor-product-is-right-exact",
+    chapter: "1",
+    problem: "1.2.H",
+    author: "Tianyi",
+    title: "Tensor Product is Right Exact",
+    updated: "2026-08-29",
+    body: String.raw`Suppose we have an exact sequence of $A$-modules
+\[
+M'\xrightarrow{f} M\xrightarrow{g} M''\to 0
+\]
+Tensor product functor $\otimes _A N$, denoted by $\otimes N$ for convienience gives a sequence
+\[
+M'\ot N\xrightarrow{f\ot 1} M\ot N\xrightarrow{g\ot 1} M''\ot N\to 0.
+\]
+We use the shorthand $F:=f\ot 1, G:=g\ot 1$. 
+
+Since $\im f=\ker g$, it follows immediately that $\im F\subset \ker G$. 
+
+Also, since $g$ is surjective, so is $G$: Suppose we have a pure tensor $m''\ot n\in M''\ot N$, then by surjectivity there is an $m\in M$ such that $g(m)=m''$. Hence $G(m\ot n)=m''\ot n$, and surjectivity of $G$ follows from linearity.
+
+Hence we only need to prove $\ker G\subset \im F$. Note that we have an map
+\[G^\#:M\ot N/\im F\to M''\ot N\]
+induced by $G$. We claim that this is actually an isomorphism by finding an inverse. First, We construct a map 
+\[
+M''\times N\to M\ot N/\im F
+\]
+as follows: For every $(m'',n)\in M''\times N$, surjectivity of $g$ gives an element $m\in M$ such that $g(m)=m''$. Then the map is $(m'',n)\mapsto m\ot n\op{mod }\im F$. Then it follows from universal property of tensor product that we have a map
+\[
+M''\ot N\to M\ot N/\im F
+\]
+which one can check is an inverse to $G^{\#}$. Since $G^{\#}$ is an isomorphism and is induced from $G$, it follows that $\ker G=\im F$, as desired.
+`
   }
 ];
