@@ -80,7 +80,7 @@ There is precisely one map $X\to\{\}$ which is the constant map.
 
 In $Rings$, both the initial and final object is the 0 ring.
 
-\section{1 -- 1.2.C -- $A\to S^{-1}A$ injective iff no zero divisors in S}
+\section{1 -- 1.2.C -- \$A\textbackslash\{\}to S\textasciicircum{}\{-1\}A\$ injective iff no zero divisors in S}
 % id: 1-1-2-c-a-to-s-1-a-injective-iff-no-zero-divisor
 % author: 
 % updated: 2026-08-28
@@ -184,7 +184,7 @@ Let \(\{U_i\}\) be an open cover of \(U\). For the identity axiom, if \(f,g:U\to
 
 For gluability, let \(f_i:U_i\to Y\) be continuous maps agreeing on overlaps. Define \(f:U\to Y\) by \(f(x)=f_i(x)\) for \(x\in U_i\). This is well-defined, and \(f|_{U_i}=f_i\), so \(f\) is continuous. Thus continuous maps to \(Y\) form a sheaf.
 
-\section{1 -- 1.2.G -- $\Z/(10)\otimes_{\Z}\Z/(12)\cong \Z/(2).$}
+\section{1 -- 1.2.G -- \$\textbackslash\{\}Z/(10)\textbackslash\{\}otimes\_\{\textbackslash\{\}Z\}\textbackslash\{\}Z/(12)\textbackslash\{\}cong \textbackslash\{\}Z/(2).\$}
 % id: 1-1-2-g-z-10-otimes-z-z-12-cong-z-2
 % author: Tianyi
 % updated: 2026-08-29
@@ -194,5 +194,43 @@ This is actually an interesting problem. Note that since tensor product is bilin
 0=12x-10x=2x.
 \]
 Hence $x$ has order divisible by 2. Therefore, the ring in question must be isomorphic to $\Z/(2)$.
+
+\section{2 -- 2.2.H -- Pushforward Preserves Sheaves}
+% id: 2-2-2-h-pushforward-preserves-sheaves
+% author: Anson
+% updated: 2026-08-28
+
+Suppose that \(W\subseteq V\subseteq U\) are open in \(Y\). Since
+\[
+\pi^{-1}(W)\subseteq\pi^{-1}(V)\subseteq\pi^{-1}(U),
+\]
+the restriction maps of \(\mathcal F\) define those of \(\pi_\mathcal F\), and the presheaf axioms follow from those of \(\mathcal F\).
+
+If \(\{U_i\}\) is an open cover of \(U\), then \(\{\pi^{-1}(U_i)\}\) is an open cover of \(\pi^{-1}(U)\). Hence the identity and gluability axioms for \(\pi_\mathcal F\) follow from those for \(\mathcal F\). Thus \(\pi_*\mathcal F\) is a sheaf whenever \(\mathcal F\) is.
+
+\section{2 -- 2.2.I -- Pushforward Induces a Map on Stalks}
+% id: 2-2-2-i-pushforward-induces-a-map-on-stalks
+% author: Anson
+% updated: 2026-08-28
+
+For \([f,V]\in(\pi_\mathcal F)_q\), where \(q\in V\subseteq Y\) and \(f\in\mathcal F(\pi^{-1}(V))\), the natural morphism is
+\[
+(\pi_\mathcal F)_q\longrightarrow\mathcal F_p,
+\qquad
+[f,V]\longmapsto[f,\pi^{-1}(V)].
+\]
+
+\section{2 -- 2.2.J -- The Stalk of a Module Sheaf}
+% id: 2-2-2-j-the-stalk-of-a-module-sheaf
+% author: Anson
+% updated: 2026-08-28
+
+For \([f,U]\in\mathcal O_{X,p}\) and \([a,V]\in\mathcal F_p\), define
+\[
+[f,U]\cdot[a,V]
+=
+\left[f|_{U\cap V}\,a|_{U\cap V},\,U\cap V\right].
+\]
+The module axioms follow from those on sections, so \(\mathcal F_p\) is an \(\mathcal O_{X,p}\)-module.
 
 \end{document}
