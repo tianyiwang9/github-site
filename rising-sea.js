@@ -1555,6 +1555,8 @@
 \renewcommand{\Z}{\mathbb{Z}}
 \DeclareMathOperator{\Spec}{Spec}
 \DeclareMathOperator{\Hom}{Hom}
+\providecommand{\id}{}
+\renewcommand{\id}{\operatorname{id}}
 \providecommand{\im}{}
 \renewcommand{\im}{\operatorname{im}}
 
