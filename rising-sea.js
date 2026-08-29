@@ -61,10 +61,32 @@
     return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
   }
 
+  function isRelativePath(value) {
+    return /^[./a-z0-9_-]/i.test(value) && !/^[a-z][a-z0-9+.-]*:/i.test(value);
+  }
+
+  function cleanRelativePath(value) {
+    return String(value || "").replace(/^\.?\//, "");
+  }
+
+  function isUploadedImagePath(value) {
+    const imageFolder = githubConfig.imagesPath || "rising-sea-images";
+    const cleanPath = cleanRelativePath(value);
+    return cleanPath === imageFolder || cleanPath.startsWith(`${imageFolder}/`);
+  }
+
+  function rawGithubAssetUrl(path) {
+    if (!githubConfig.owner || !githubConfig.repo) return "";
+    const branch = githubConfig.branch || "main";
+    return `https://raw.githubusercontent.com/${githubConfig.owner}/${githubConfig.repo}/${branch}/${encodeGithubPath(cleanRelativePath(path))}`;
+  }
+
   function safeImageSrc(value) {
-    const source = decodeHtmlEntities(value).trim();
+    const source = decodeHtmlEntities(value).trim().replace(/^<|>$/g, "");
     if (!source || /^javascript:/i.test(source)) return "";
-    if (/^[./a-z0-9_-]/i.test(source) && !/^[a-z][a-z0-9+.-]*:/i.test(source)) return source;
+    if (isRelativePath(source)) {
+      return isUploadedImagePath(source) ? rawGithubAssetUrl(source) || source : source;
+    }
 
     try {
       const parsed = new URL(source, window.location.href);
@@ -1058,6 +1080,13 @@
     try {
       const parsed = new URL(source, window.location.href);
       const publishedUrl = new URL(githubConfig.publishedUrl || window.location.href);
+      const branch = githubConfig.branch || "main";
+      const rawPrefix = `/${githubConfig.owner}/${githubConfig.repo}/${branch}/`;
+
+      if (parsed.hostname === "raw.githubusercontent.com" && parsed.pathname.startsWith(rawPrefix)) {
+        return decodeURIComponent(parsed.pathname.slice(rawPrefix.length));
+      }
+
       if (parsed.origin === publishedUrl.origin) {
         return parsed.pathname.replace(/^\/github-site\//, "").replace(/^\//, "");
       }
@@ -1373,7 +1402,8 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
       );
 
       const alt = file.name.replace(/\.[^.]+$/, "").replace(/[\[\]\r\n]/g, " ").trim() || "image";
-      insertTextAtCursor(editor, `\n\n![${alt}](${path})\n\n`);
+      const imageUrl = rawGithubAssetUrl(path) || path;
+      insertTextAtCursor(editor, `\n\n![${alt}](${imageUrl})\n\n`);
       setImageStatus("Image uploaded and inserted. Publish or update the solution to share it.");
     } catch (error) {
       setImageStatus(`Image upload failed: ${error.message}`);
