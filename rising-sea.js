@@ -1537,6 +1537,24 @@
 \renewcommand{\F}{\mathcal{F}}
 \providecommand{\G}{}
 \renewcommand{\G}{\mathcal{G}}
+\providecommand{\bb}{}
+\renewcommand{\bb}{\mathbb}
+\providecommand{\td}{}
+\renewcommand{\td}{\tilde}
+\providecommand{\epsi}{}
+\renewcommand{\epsi}{\varepsilon}
+\providecommand{\mf}{}
+\renewcommand{\mf}{\mathfrak}
+\providecommand{\bs}{}
+\renewcommand{\bs}{\backslash}
+\providecommand{\supp}{}
+\renewcommand{\supp}{\operatorname{Supp}}
+\providecommand{\del}{}
+\renewcommand{\del}{\partial}
+\providecommand{\wg}{}
+\renewcommand{\wg}{\wedge}
+\providecommand{\proj}{}
+\renewcommand{\proj}{\operatorname{proj}}
 \providecommand{\mc}[1]{}
 \renewcommand{\mc}[1]{\mathcal{#1}}
 \providecommand{\ms}[1]{}
@@ -1559,6 +1577,40 @@
 \renewcommand{\id}{\operatorname{id}}
 \providecommand{\im}{}
 \renewcommand{\im}{\operatorname{im}}
+\providecommand{\sgn}{}
+\renewcommand{\sgn}{\operatorname{sgn}}
+\providecommand{\rad}{}
+\renewcommand{\rad}{\operatorname{rad}}
+\providecommand{\md}{}
+\renewcommand{\md}{\operatorname{mod}}
+\providecommand{\sign}{}
+\renewcommand{\sign}{\operatorname{sign}}
+\providecommand{\Ann}{}
+\renewcommand{\Ann}{\operatorname{Ann}}
+\providecommand{\End}{}
+\renewcommand{\End}{\operatorname{End}}
+\providecommand{\Aut}{}
+\renewcommand{\Aut}{\operatorname{Aut}}
+\providecommand{\coker}{}
+\renewcommand{\coker}{\operatorname{coker}}
+\providecommand{\spa}{}
+\renewcommand{\spa}{\operatorname{span}}
+\providecommand{\gr}{}
+\renewcommand{\gr}{\operatorname{Gr}}
+\providecommand{\ot}{}
+\renewcommand{\ot}{\otimes}
+\providecommand{\range}{}
+\renewcommand{\range}{\text{Range}}
+\providecommand{\nb}{}
+\renewcommand{\nb}{\nabla}
+\providecommand{\bk}[1]{}
+\renewcommand{\bk}[1]{\langle #1\rangle}
+\providecommand{\bwg}{}
+\renewcommand{\bwg}{\bigwedge\nolimits}
+\providecommand{\Tor}{}
+\renewcommand{\Tor}{\operatorname{Tor}}
+\providecommand{\Bl}{}
+\renewcommand{\Bl}{\operatorname{Bl}}
 
 \title{Solutions to Vakil's The Rising Sea}
 \author{Tianyi Wang}
