@@ -8,7 +8,7 @@
       name="description"
       content="Solutions and working notes for Ravi Vakil's The Rising Sea."
     />
-    <link rel="stylesheet" href="styles.css?v=20260829-2" />
+    <link rel="stylesheet" href="styles.css?v=20260829-3" />
     <script src="rising-sea-config.js"></script>
     <script>
       const risingSeaConfig = window.risingSeaConfig || {};
@@ -26,7 +26,7 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <script defer src="rising-sea-solutions.js?v=20260828-1"></script>
-    <script defer src="rising-sea.js?v=20260829-4"></script>
+    <script defer src="rising-sea.js?v=20260829-5"></script>
   </head>
   <body>
     <header class="site-header">
@@ -47,6 +47,11 @@
         <p class="lede">
           A place to write, preview, and publish solutions to problems from Ravi
           Vakil's <em>The Rising Sea</em>.
+        </p>
+        <p class="posting-reminder">
+          Before posting a new solution, search for the problem number first.
+          If the problem has already been solved, please edit the existing
+          solution instead of creating a duplicate entry.
         </p>
         <details class="collaborator-guide" open>
           <summary>Contributor guide</summary>
@@ -90,6 +95,7 @@
             <section>
               <h2>Write A Solution</h2>
               <ol>
+                <li>Search for the problem number first. If it already exists, use <code>Edit solution</code> on the existing entry instead of posting a duplicate.</li>
                 <li>Click <code>New solution</code> before starting a different problem.</li>
                 <li>Fill in the chapter, problem number, date, author, and title. Titles may include inline math such as <code>$X \to Y$</code>.</li>
                 <li>Write in Markdown and LaTeX. Inline math uses <code>$...$</code>; display math uses <code>\[...\]</code>, <code>$$...$$</code>, or standalone environments such as <code>\begin{align*}...\end{align*}</code>.</li>
@@ -203,7 +209,10 @@
       <section class="section">
         <div class="workspace-header">
           <div>
-            <h2>Published Solutions</h2>
+            <div class="published-title-row">
+              <h2>Published Solutions</h2>
+              <span class="solution-count" data-solution-count>0 solutions</span>
+            </div>
             <p>
               Search by chapter, problem number, title, or text. Press Enter
               to jump to the first matching solution.

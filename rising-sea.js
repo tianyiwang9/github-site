@@ -9,6 +9,7 @@
   const empty = document.querySelector("[data-empty-solutions]");
   const searchInput = document.querySelector("[data-search]");
   const searchStatus = document.querySelector("[data-search-status]");
+  const solutionCount = document.querySelector("[data-solution-count]");
   const editor = document.querySelector("[data-editor]");
   const preview = document.querySelector("[data-preview]");
   const titleInput = document.querySelector("[data-title]");
@@ -75,6 +76,93 @@
 
   function normalize(value) {
     return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+  }
+
+  function normalizeCompact(value) {
+    return normalize(value).replace(/[^a-z0-9]+/g, "");
+  }
+
+  function letterSortValue(value) {
+    const letters = String(value || "").toUpperCase().replace(/[^A-Z]/g, "");
+    if (!letters) return 0;
+
+    return letters.split("").reduce((total, letter) => (
+      total * 26 + letter.charCodeAt(0) - 64
+    ), 0);
+  }
+
+  function parseProblemReference(solution) {
+    const chapterText = String(solution && solution.chapter || "");
+    const problemText = String(solution && solution.problem || "");
+    const chapterMatch = chapterText.match(/\d+/);
+    const problemMatch = problemText.match(/(\d+)\s*[.-]\s*(\d+)\s*(?:[.-]|\s+)?\s*([a-z]+)?/i);
+    let chapter = chapterMatch ? Number(chapterMatch[0]) : NaN;
+    let section = NaN;
+    let letter = "";
+
+    if (problemMatch) {
+      chapter = Number(problemMatch[1]);
+      section = Number(problemMatch[2]);
+      letter = (problemMatch[3] || "").toUpperCase();
+    } else {
+      const problemNumbers = problemText.match(/\d+/g) || [];
+      if (problemNumbers.length >= 2) {
+        chapter = Number(problemNumbers[0]);
+        section = Number(problemNumbers[1]);
+      } else if (problemNumbers.length === 1) {
+        section = Number(problemNumbers[0]);
+      }
+
+      const letterMatch = problemText.match(/([a-z]+)\s*$/i);
+      letter = letterMatch ? letterMatch[1].toUpperCase() : "";
+    }
+
+    return {
+      chapter,
+      section,
+      letter,
+      hasStructuredProblem: Number.isFinite(chapter) && Number.isFinite(section),
+      rawChapter: normalizeCompact(chapterText),
+      rawProblem: normalizeCompact(problemText),
+      raw: normalize([chapterText, problemText, solution && solution.title].filter(Boolean).join(" "))
+    };
+  }
+
+  function problemKey(solution) {
+    const parts = parseProblemReference(solution);
+    if (parts.hasStructuredProblem) {
+      return `${parts.chapter}.${parts.section}.${parts.letter}`;
+    }
+
+    return [parts.rawChapter, parts.rawProblem].filter(Boolean).join(".");
+  }
+
+  function compareNumbers(left, right) {
+    const safeLeft = Number.isFinite(left) ? left : Number.MAX_SAFE_INTEGER;
+    const safeRight = Number.isFinite(right) ? right : Number.MAX_SAFE_INTEGER;
+    return safeLeft - safeRight;
+  }
+
+  function compareSolutionsByProblem(left, right) {
+    const leftParts = parseProblemReference(left);
+    const rightParts = parseProblemReference(right);
+    const byChapter = compareNumbers(leftParts.chapter, rightParts.chapter);
+    if (byChapter) return byChapter;
+
+    const bySection = compareNumbers(leftParts.section, rightParts.section);
+    if (bySection) return bySection;
+
+    const byLetter = letterSortValue(leftParts.letter) - letterSortValue(rightParts.letter);
+    if (byLetter) return byLetter;
+
+    return leftParts.raw.localeCompare(rightParts.raw, undefined, {
+      numeric: true,
+      sensitivity: "base"
+    });
+  }
+
+  function sortSolutionsByProblem(entries) {
+    return entries.slice().sort(compareSolutionsByProblem);
   }
 
   function isRelativePath(value) {
@@ -1039,12 +1127,20 @@
     ].join(" "));
   }
 
-  function getFilteredSolutions() {
+  function getVisibleSolutions() {
     const hiddenIds = getHiddenSolutionIds();
+    return solutions.filter((solution) => remoteSolutionIds.has(solution.id) || !hiddenIds.includes(solution.id));
+  }
+
+  function getFilteredSolutions(visibleSolutions = getVisibleSolutions()) {
     const query = normalize(searchInput ? searchInput.value : "");
-    const visibleSolutions = solutions.filter((solution) => remoteSolutionIds.has(solution.id) || !hiddenIds.includes(solution.id));
     if (!query) return visibleSolutions;
     return visibleSolutions.filter((solution) => solutionText(solution).includes(query));
+  }
+
+  function updateSolutionCount(total) {
+    if (!solutionCount) return;
+    solutionCount.textContent = `${total} solution${total === 1 ? "" : "s"}`;
   }
 
   function setSolutions(nextSolutions) {
@@ -1054,9 +1150,11 @@
 
   function renderSolutions() {
     if (!list) return;
-    const matches = getFilteredSolutions();
+    const visibleSolutions = getVisibleSolutions();
+    const matches = getFilteredSolutions(visibleSolutions);
+    updateSolutionCount(visibleSolutions.length);
 
-    if (!solutions.length) {
+    if (!visibleSolutions.length) {
       if (empty) empty.hidden = false;
       list.innerHTML = "";
       return;
@@ -1201,6 +1299,36 @@
     };
   }
 
+  function solutionProblemLabel(solution) {
+    return [solution.chapter, solution.problem].filter(Boolean).join(" · ") || solution.problem || "This problem";
+  }
+
+  function findDuplicateSolution(entry, entries = solutions) {
+    const key = problemKey(entry);
+    if (!key) return null;
+
+    return entries.find((solution) => (
+      solution.id !== entry.id && problemKey(solution) === key
+    )) || null;
+  }
+
+  function showDuplicateWarning(duplicate) {
+    const label = solutionProblemLabel(duplicate);
+    const message = `${label} already has a published solution. Please edit the existing solution instead of posting a duplicate.`;
+    setStatus(message);
+    showToast("This problem already has a solution");
+
+    if (searchInput) {
+      searchInput.value = duplicate.problem || label;
+      renderSolutions();
+    }
+
+    window.setTimeout(() => {
+      const target = document.getElementById(duplicate.id);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
+  }
+
   function escapeTemplate(value) {
     return String(value).replace(/`/g, "\\`").replace(/\$\{/g, "\\${");
   }
@@ -1223,6 +1351,11 @@
 
   function texSectionCommand(level) {
     return level === 1 ? "section" : "subsection";
+  }
+
+  function texMetadataLine(label, value) {
+    const text = String(value || "").trim();
+    return text ? `% ${label}: ${text}` : `% ${label}:`;
   }
 
   function escapeTexTitle(value) {
@@ -1352,13 +1485,13 @@
   }
 
   function serializeTexDocument(entries) {
-    const sections = entries.map((entry) => {
+    const sections = sortSolutionsByProblem(entries).map((entry) => {
       const heading = [entry.chapter, entry.problem, entry.title].filter(Boolean).join(" -- ");
       return [
         `\\${texSectionCommand(1)}{${escapeTexTitle(heading)}}`,
         `% id: ${entry.id}`,
-        `% author: ${entry.author || ""}`,
-        `% updated: ${entry.updated || ""}`,
+        texMetadataLine("author", entry.author),
+        texMetadataLine("updated", entry.updated),
         "",
         markdownToTex(entry.body).trim(),
         ""
@@ -1710,6 +1843,15 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
       return;
     }
 
+    setStatus("Checking for an existing solution to this problem...");
+    await loadLatestPublishedSolutions();
+
+    const duplicate = findDuplicateSolution(entry);
+    if (duplicate) {
+      showDuplicateWarning(duplicate);
+      return;
+    }
+
     unhideSolutionLocally(entry.id);
     const visibleNextSolutions = upsertSolution(entry);
     const localPendingSolutions = upsertIntoList(getLocalSolutions(), entry);
@@ -1737,6 +1879,16 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
       const remoteSolutions = currentFile
         ? parseSolutionsSource(fromBase64(currentFile.content))
         : solutions.slice();
+      const remoteDuplicate = findDuplicateSolution(entry, remoteSolutions);
+      if (remoteDuplicate) {
+        const cleanedLocalPending = removeSolution(localPendingSolutions, entry.id);
+        setSolutions(mergeSolutionLists(remoteSolutions, cleanedLocalPending));
+        saveLocalSolutions(cleanedLocalPending);
+        showDuplicateWarning(remoteDuplicate);
+        setPublishStatus("Sync stopped because this problem already exists on the public site.");
+        return;
+      }
+
       const mergedSolutions = mergeSolutionLists(remoteSolutions, localPendingSolutions);
       const nextSolutions = upsertIntoList(mergedSolutions, entry);
       const result = await syncSolutionsToGithub(nextSolutions, `Publish Rising Sea solution ${entry.problem}`);
