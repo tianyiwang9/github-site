@@ -8,7 +8,7 @@
       name="description"
       content="Solutions and working notes for Ravi Vakil's The Rising Sea."
     />
-    <link rel="stylesheet" href="styles.css?v=20260829-3" />
+    <link rel="stylesheet" href="styles.css?v=20260829-4" />
     <script src="rising-sea-config.js"></script>
     <script>
       const risingSeaConfig = window.risingSeaConfig || {};
@@ -26,7 +26,7 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <script defer src="rising-sea-solutions.js?v=20260828-1"></script>
-    <script defer src="rising-sea.js?v=20260829-5"></script>
+    <script defer src="rising-sea.js?v=20260829-6"></script>
   </head>
   <body>
     <header class="site-header">
@@ -74,6 +74,39 @@
                 every trusted collaborator: publish, update, edit, delete, upload
                 images, and regenerate the shared TeX file.
               </p>
+            </section>
+
+            <section>
+              <h2>Request Access</h2>
+              <p>
+                If you would like to become a trusted collaborator, send Tianyi
+                your name and GitHub account here. Tianyi will use the GitHub
+                account to send the repository invitation.
+              </p>
+              <form
+                class="collaborator-request-form"
+                data-collaborator-request-form
+                action="https://formsubmit.co/ajax/tianyiwang919@gmail.com"
+                method="POST"
+              >
+                <label>
+                  <span>Name</span>
+                  <input data-collaborator-name name="name" type="text" autocomplete="name" required />
+                </label>
+                <label>
+                  <span>GitHub account</span>
+                  <input
+                    data-collaborator-github
+                    name="github_account"
+                    type="text"
+                    placeholder="e.g. Anson-Law"
+                    autocomplete="off"
+                    required
+                  />
+                </label>
+                <button type="submit" data-collaborator-request-submit>Send request</button>
+                <p class="editor-status" data-collaborator-request-status aria-live="polite"></p>
+              </form>
             </section>
 
             <section>

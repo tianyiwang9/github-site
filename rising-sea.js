@@ -30,6 +30,9 @@
   const status = document.querySelector("[data-status]");
   const publishStatus = document.querySelector("[data-publish-status]");
   const toastRegion = document.querySelector("[data-toast-region]");
+  const collaboratorRequestForm = document.querySelector("[data-collaborator-request-form]");
+  const collaboratorRequestStatus = document.querySelector("[data-collaborator-request-status]");
+  const collaboratorRequestSubmit = document.querySelector("[data-collaborator-request-submit]");
   const storageKey = "rising-sea-draft";
   const tokenStorageKey = "rising-sea-github-token";
   const authorStorageKey = "rising-sea-author";
@@ -80,6 +83,21 @@
 
   function normalizeCompact(value) {
     return normalize(value).replace(/[^a-z0-9]+/g, "");
+  }
+
+  function normalizeGithubAccount(value) {
+    return String(value || "")
+      .trim()
+      .replace(/^@/, "")
+      .replace(/^https?:\/\/(?:www\.)?github\.com\//i, "")
+      .replace(/^github\.com\//i, "")
+      .split(/[/?#]/)[0]
+      .replace(/^@/, "")
+      .trim();
+  }
+
+  function isGithubAccount(value) {
+    return /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i.test(value);
   }
 
   function letterSortValue(value) {
@@ -1202,6 +1220,11 @@
     publishStatus.textContent = message;
   }
 
+  function setCollaboratorRequestStatus(message) {
+    if (!collaboratorRequestStatus) return;
+    collaboratorRequestStatus.textContent = message;
+  }
+
   function setImageStatus(message) {
     if (!imageStatus) return;
     imageStatus.textContent = message;
@@ -2017,6 +2040,66 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     setPublishStatus("Downloaded the current TeX file.");
   }
 
+  async function sendCollaboratorRequest(event) {
+    event.preventDefault();
+    if (!collaboratorRequestForm) return;
+
+    const nameInput = collaboratorRequestForm.querySelector("[data-collaborator-name]");
+    const githubInput = collaboratorRequestForm.querySelector("[data-collaborator-github]");
+    const name = String(nameInput && nameInput.value || "").trim();
+    const githubAccount = normalizeGithubAccount(githubInput && githubInput.value);
+
+    if (!name || !githubAccount) {
+      setCollaboratorRequestStatus("Name and GitHub account are required.");
+      return;
+    }
+
+    if (!isGithubAccount(githubAccount)) {
+      setCollaboratorRequestStatus("Enter a valid GitHub username, for example Anson-Law.");
+      return;
+    }
+
+    if (collaboratorRequestSubmit) collaboratorRequestSubmit.disabled = true;
+    setCollaboratorRequestStatus("Sending request...");
+
+    try {
+      const response = await fetch(collaboratorRequestForm.action, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          _subject: "Rising Sea collaborator request",
+          _template: "table",
+          _captcha: "false",
+          name,
+          github_account: githubAccount,
+          github_profile: `https://github.com/${githubAccount}`,
+          requested_from: window.location.href
+        })
+      });
+      let data = {};
+      try {
+        data = await response.json();
+      } catch (error) {
+        data = {};
+      }
+
+      if (!response.ok || data.success === false) {
+        throw new Error(data.message || response.statusText || "Request could not be sent.");
+      }
+
+      collaboratorRequestForm.reset();
+      setCollaboratorRequestStatus("Request sent. Tianyi will receive an email with your GitHub account.");
+      showToast("Request sent");
+    } catch (error) {
+      setCollaboratorRequestStatus(`Request failed: ${error.message}`);
+    } finally {
+      if (collaboratorRequestSubmit) collaboratorRequestSubmit.disabled = false;
+    }
+  }
+
   function bindSearch() {
     if (!searchInput) return;
     searchInput.addEventListener("input", renderSolutions);
@@ -2041,6 +2124,11 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
       if (!button) return;
       deletePublishedSolution(button.getAttribute("data-delete-solution"));
     });
+  }
+
+  function bindCollaboratorRequest() {
+    if (!collaboratorRequestForm) return;
+    collaboratorRequestForm.addEventListener("submit", sendCollaboratorRequest);
   }
 
   function bindEditor() {
@@ -2068,6 +2156,7 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
   setSolutions(mergeSolutionLists(solutions, getLocalSolutions()));
   bindSearch();
   bindSolutionActions();
+  bindCollaboratorRequest();
   bindEditor();
   loadLatestPublishedSolutions();
   setInterval(loadLatestPublishedSolutions, githubConfig.refreshMs || 30000);
