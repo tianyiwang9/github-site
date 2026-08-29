@@ -197,7 +197,7 @@ For gluability, let \(f_i:U_i\to Y\) be continuous maps agreeing on overlaps. De
 \[
 0=12x-10x=2x.
 \]
-Hence $x$ has order divisible by 2. Therefore, the ring in question must be isomorphic to $\Z/(2)$.`
+Hence $x$ has order divisible by 2. Therefore, the ring $\Z/(10)\otimes_{\Z}\Z/(12)$ must be isomorphic to $\Z/(2)$.`
   },
   {
     id: "2-2-2-h-pushforward-preserves-sheaves",
@@ -221,11 +221,12 @@ If \(\{U_i\}\) is an open cover of \(U\), then \(\{\pi^{-1}(U_i)\}\) is an open 
     author: "Anson",
     title: "Pushforward Induces a Map on Stalks",
     updated: "2026-08-28",
-    body: String.raw`For \([f,V]\in(\pi_*\mathcal F)_q\), where \(q\in V\subseteq Y\) and \(f\in\mathcal F(\pi^{-1}(V))\), the natural morphism is
+    body: String.raw`For $[f,V]\in(\pi_*\mathcal F)_q$, where $q\in V\subseteq Y$ and $f\in\mathcal F(\pi^{-1}(V))$, the natural morphism is
+
 \[
-(\pi_*\mathcal F)_q\longrightarrow\mathcal F_p,
+(\pi_*\mathcal F)_q\to \mathcal F_p,
 \qquad
-[f,V]\longmapsto[f,\pi^{-1}(V)].
+[f,V]\to [f,\pi^{-1}(V)].
 \]`
   },
   {
