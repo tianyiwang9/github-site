@@ -28,6 +28,7 @@
   const clearTokenButton = document.querySelector("[data-clear-token]");
   const status = document.querySelector("[data-status]");
   const publishStatus = document.querySelector("[data-publish-status]");
+  const toastRegion = document.querySelector("[data-toast-region]");
   const storageKey = "rising-sea-draft";
   const tokenStorageKey = "rising-sea-github-token";
   const authorStorageKey = "rising-sea-author";
@@ -37,6 +38,7 @@
   const remoteSolutionIds = new Set(solutions.map((solution) => solution.id));
   let refreshingSolutions = false;
   let editingSolutionId = "";
+  let toastTimer = null;
 
   function getGithubToken() {
     return localStorage.getItem(tokenStorageKey) || "";
@@ -112,6 +114,18 @@
 
   function renderTitle(value) {
     return escapeHtml(value || "Untitled solution");
+  }
+
+  function showToast(message) {
+    if (!toastRegion) return;
+
+    window.clearTimeout(toastTimer);
+    toastRegion.innerHTML = `<div class="toast-message" role="status">${escapeHtml(message)}</div>`;
+    toastRegion.classList.add("is-visible");
+
+    toastTimer = window.setTimeout(() => {
+      toastRegion.classList.remove("is-visible");
+    }, 2800);
   }
 
   function extractQuiverUrl(value) {
@@ -1510,6 +1524,7 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
   }
 
   async function publishEntry() {
+    const isEditing = Boolean(editingSolutionId);
     const entry = makeEntryObject();
     if (!entry.chapter || !entry.problem) {
       setStatus("Chapter and problem are required before publishing.");
@@ -1522,6 +1537,7 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     setSolutions(visibleNextSolutions);
     saveLocalSolutions(localPendingSolutions);
     setStatus("Published in the list below.");
+    showToast(isEditing ? "Solution edited" : "Solution posted");
 
     const token = getGithubToken();
     if (!token) {
