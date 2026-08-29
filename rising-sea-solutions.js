@@ -198,5 +198,49 @@ For gluability, let \(f_i:U_i\to Y\) be continuous maps agreeing on overlaps. De
 0=12x-10x=2x.
 \]
 Hence $x$ has order divisible by 2. Therefore, the ring in question must be isomorphic to $\Z/(2)$.`
+  },
+  {
+    id: "2-2-2-h-pushforward-preserves-sheaves",
+    chapter: "2",
+    problem: "2.2.H",
+    author: "Anson",
+    title: "Pushforward Preserves Sheaves",
+    updated: "2026-08-28",
+    body: String.raw`Suppose that \(W\subseteq V\subseteq U\) are open in \(Y\). Since
+\[
+\pi^{-1}(W)\subseteq\pi^{-1}(V)\subseteq\pi^{-1}(U),
+\]
+the restriction maps of \(\mathcal F\) define those of \(\pi_*\mathcal F\), and the presheaf axioms follow from those of \(\mathcal F\).
+
+If \(\{U_i\}\) is an open cover of \(U\), then \(\{\pi^{-1}(U_i)\}\) is an open cover of \(\pi^{-1}(U)\). Hence the identity and gluability axioms for \(\pi_*\mathcal F\) follow from those for \(\mathcal F\). Thus \(\pi_*\mathcal F\) is a sheaf whenever \(\mathcal F\) is.`
+  },
+  {
+    id: "2-2-2-i-pushforward-induces-a-map-on-stalks",
+    chapter: "2",
+    problem: "2.2.I",
+    author: "Anson",
+    title: "Pushforward Induces a Map on Stalks",
+    updated: "2026-08-28",
+    body: String.raw`For \([f,V]\in(\pi_*\mathcal F)_q\), where \(q\in V\subseteq Y\) and \(f\in\mathcal F(\pi^{-1}(V))\), the natural morphism is
+\[
+(\pi_*\mathcal F)_q\longrightarrow\mathcal F_p,
+\qquad
+[f,V]\longmapsto[f,\pi^{-1}(V)].
+\]`
+  },
+  {
+    id: "2-2-2-j-the-stalk-of-a-module-sheaf",
+    chapter: "2",
+    problem: "2.2.J",
+    author: "Anson",
+    title: "The Stalk of a Module Sheaf",
+    updated: "2026-08-28",
+    body: String.raw`For \([f,U]\in\mathcal O_{X,p}\) and \([a,V]\in\mathcal F_p\), define
+\[
+[f,U]\cdot[a,V]
+=
+\left[f|_{U\cap V}\,a|_{U\cap V},\,U\cap V\right].
+\]
+The module axioms follow from those on sections, so \(\mathcal F_p\) is an \(\mathcal O_{X,p}\)-module.`
   }
 ];
