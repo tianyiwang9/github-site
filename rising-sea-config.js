@@ -32,6 +32,7 @@ window.risingSeaConfig = {
     bwg: "\\bigwedge\\nolimits",
     coker: "\\operatorname{coker}",
     del: "\\partial",
+    exist: "\\exists",
     epsi: "\\varepsilon",
     gr: "\\operatorname{Gr}",
     id: "\\operatorname{id}",

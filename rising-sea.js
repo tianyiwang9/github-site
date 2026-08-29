@@ -327,8 +327,9 @@
   function getQuiverData(url) {
     try {
       const parsed = new URL(url);
-      const hashParams = new URLSearchParams(parsed.hash.replace(/^#/, ""));
-      return parsed.searchParams.get("q") || hashParams.get("q") || "";
+      const source = `${parsed.search}&${parsed.hash.replace(/^#/, "")}`;
+      const match = source.match(/[?&#]?q=([^&#]+)/);
+      return match ? decodeURIComponent(match[1]) : "";
     } catch (error) {
       return "";
     }
@@ -423,6 +424,91 @@
 
   function isQuiverCornerMarker(arrow) {
     return quiverStyleValue(arrow, ["style", "name"]) === "corner-inverse";
+  }
+
+  function texCellLabel(label) {
+    const text = String(label || "").trim();
+    return text ? `{${text}}` : "";
+  }
+
+  function texQuoteLabel(label) {
+    return String(label || "").replace(/"/g, "{\\char`\\\"}");
+  }
+
+  function quiverArrowLabelOption(arrow) {
+    if (isQuiverCornerMarker(arrow)) {
+      return `"\\ulcorner"{anchor=center, pos=0.125}`;
+    }
+
+    if (!arrow.label) return "";
+    return `"{${texQuoteLabel(arrow.label)}}"${arrow.labelSide === 2 ? "'" : ""}`;
+  }
+
+  function quiverCurveHeight(curve) {
+    const value = Number(curve || 0);
+    if (!value) return "";
+    return Number.isInteger(value * 6)
+      ? String(value * 6)
+      : String(Number((value * 6).toFixed(2)));
+  }
+
+  function quiverToTikzcd(url) {
+    const diagram = parseQuiverDiagram(url);
+    if (!diagram) return "";
+
+    const xs = diagram.objects.map((object) => object.x);
+    const ys = diagram.objects.map((object) => object.y);
+    const minX = Math.min(...xs);
+    const minY = Math.min(...ys);
+    const maxX = Math.max(...xs);
+    const maxY = Math.max(...ys);
+    const rowCount = maxY - minY + 1;
+    const colCount = maxX - minX + 1;
+    const cells = Array.from({ length: rowCount }, () => Array.from({ length: colCount }, () => ""));
+    const objectCells = new Map();
+
+    diagram.objects.forEach((object) => {
+      const row = object.y - minY + 1;
+      const col = object.x - minX + 1;
+      cells[row - 1][col - 1] = texCellLabel(object.label);
+      objectCells.set(object.index, { row, col });
+    });
+
+    const matrixRows = cells.map((row, index) => {
+      const suffix = index === cells.length - 1 ? "" : " \\\\";
+      return `\t${row.join(" & ")}${suffix}`;
+    });
+
+    const arrowRows = diagram.arrows
+      .map((arrow) => {
+        const from = objectCells.get(arrow.from);
+        const to = objectCells.get(arrow.to);
+        if (!from || !to) return "";
+
+        const options = [];
+        const labelOption = quiverArrowLabelOption(arrow);
+        if (labelOption) options.push(labelOption);
+        if (isQuiverCornerMarker(arrow)) options.push("draw=none");
+        if (isQuiverHook(arrow)) options.push("hook");
+
+        const curveHeight = quiverCurveHeight(arrow.options && arrow.options.curve);
+        if (curveHeight) options.push(`curve={height=${curveHeight}pt}`);
+        if (isQuiverDashed(arrow)) options.push("dashed");
+
+        options.push(`from=${from.row}-${from.col}`);
+        options.push(`to=${to.row}-${to.col}`);
+        return `\t\\arrow[${options.join(", ")}]`;
+      })
+      .filter(Boolean);
+
+    return [
+      "\\[",
+      "\\begin{tikzcd}[cramped]",
+      ...matrixRows,
+      ...arrowRows,
+      "\\end{tikzcd}",
+      "\\]"
+    ].join("\n");
   }
 
   function renderQuiverSvgBlock(url) {
@@ -1492,8 +1578,54 @@
     return source;
   }
 
+  function followingLinesContainTikzcd(lines, start) {
+    let sawMathWrapper = false;
+
+    for (let index = start; index < lines.length; index += 1) {
+      const trimmed = lines[index].trim();
+      if (!trimmed) continue;
+      if (/\\begin\{tikzcd\}/.test(trimmed)) return true;
+      if (/^\\\[/.test(trimmed)) {
+        sawMathWrapper = true;
+        continue;
+      }
+      if (sawMathWrapper && /^\\\]/.test(trimmed)) return false;
+      return false;
+    }
+
+    return false;
+  }
+
+  function texCommentForQuiverLine(line, url) {
+    const text = String(line || "").trim();
+    if (!text) return `% ${url}`;
+    return text.startsWith("%") ? line : `% ${text}`;
+  }
+
+  function expandQuiverLinksForTex(value) {
+    const lines = String(value || "").replace(/\r\n?/g, "\n").split("\n");
+    const output = [];
+
+    lines.forEach((line, index) => {
+      const url = extractQuiverUrl(line);
+      if (!url) {
+        output.push(line);
+        return;
+      }
+
+      output.push(texCommentForQuiverLine(line, url));
+      if (!followingLinesContainTikzcd(lines, index + 1)) {
+        const tikzcd = quiverToTikzcd(url);
+        if (tikzcd) output.push(tikzcd);
+      }
+    });
+
+    return output.join("\n");
+  }
+
   function markdownToTex(value) {
-    return trimTrailingWhitespace(stripMarkdownEmphasis(value).replace(/!\[[^\]]*\]\(([^)]+)\)/g, (match, src) => {
+    const source = expandQuiverLinksForTex(stripMarkdownEmphasis(value));
+    return trimTrailingWhitespace(source.replace(/!\[[^\]]*\]\(([^)]+)\)/g, (match, src) => {
       const imagePath = texImagePath(src);
       if (!imagePath || /^https?:\/\//i.test(imagePath)) {
         return `% External image omitted from TeX: ${src}`;
@@ -1543,6 +1675,7 @@
 \renewcommand{\td}{\tilde}
 \providecommand{\epsi}{}
 \renewcommand{\epsi}{\varepsilon}
+\providecommand{\exist}{\exists}
 \providecommand{\mf}{}
 \renewcommand{\mf}{\mathfrak}
 \providecommand{\bs}{}
