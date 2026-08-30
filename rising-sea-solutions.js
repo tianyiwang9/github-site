@@ -328,5 +328,25 @@ Universal property of the product implies $\phi\psi=\id_{X\times Y}$, similarly 
 Let me explain: Suppose we are given maps $\mu,\nu$. Note we have a map $\gamma\nu: W'\to X$, this gives a unique map $\rho: W'\to W$ because the lower square is Cartesian. Now we have map $\rho: W'\to W, \nu: W'\to V$, so this gives a unique map $\tau: W'\to U$ because the upper square is also Cartesian. 
 
 To verify the tower is indeed Cartesian, we need to show $\nu=\tau f$ (checked because upper square is Cartesian) and $\mu=\beta\alpha\tau$. Chasing through the construction shows that $\beta\alpha\tau=\beta\rho=\mu$, as desired.`
+  },
+  {
+    id: "1-1-2-s-diagonal-base-change-diagram-incomplete",
+    chapter: "1",
+    problem: "1.2.S",
+    author: "Tianyi",
+    title: "Diagonal Base Change Diagram (Incomplete!)",
+    updated: "2026-08-30",
+    body: String.raw`Let $f_1,f_2: X_1,X_2\to Y$ and $g: Y\to Z$. We first explain why we get a diagram
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJYXzFcXHRpbWVzX1kgWF8yIl0sWzEsMCwiWF8xXFx0aW1lc19aIFhfMiJdLFswLDEsIlkiXSxbMSwxLCJZXFx0aW1lc19aIFkiXSxbMCwyLCJcXGJldGEiLDJdLFswLDEsIlxcYWxwaGEiXSxbMSwzLCJcXGdhbW1hIl0sWzIsMywiXFxkZWx0YSIsMl1d
+
+The map $\beta$ simply comes from the fiber product diagram, The map $\delta$ comes from the fiber product diagram of $Y\times_Z $ where we take both maps $Y\to Y$ to be identity. The map $\gamma: X_1\times_Z X_2\to Y\times_Z Y$ comes from first mapping $X_1\times_Z X_2$ to $X_1$ and $X_2$ and then map to two copies of $Y$, which agrees when mapped to $Z$ via $g$. The map $\alpha$ exists because $X_1\times_Y X_2$ maps to $X_1,X_2$ then to $Y$ then to $Z$.
+
+To show that the diagram is Cartesian, assuming we are given $\mu,\nu$ as in the diagram below
+% https://q.uiver.app/#q=WzAsNSxbMSwxLCJYXzFcXHRpbWVzX1kgWF8yIl0sWzIsMSwiWF8xXFx0aW1lc19aIFhfMiJdLFsxLDIsIlkiXSxbMiwyLCJZXFx0aW1lc19aIFkiXSxbMCwwLCJXIl0sWzAsMiwiXFxiZXRhIiwyXSxbMCwxLCJcXGFscGhhIl0sWzEsMywiXFxnYW1tYSJdLFsyLDMsIlxcZGVsdGEiLDJdLFs0LDAsIlxccmhvIiwwLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV0sWzQsMiwiXFxtdSIsMix7ImN1cnZlIjoyfV0sWzQsMSwiXFxudSIsMCx7ImN1cnZlIjotMn1dXQ==
+
+The map $\rho$ is obtained as follows: We must map $W$ to $X_1,X_2$ via the data we are given and hope everything works out. We have maps
+https://q.uiver.app/#q=WzAsNCxbMCwwLCJXIl0sWzEsMSwiWF8xXFx0aW1lc19aIFhfMiJdLFsyLDEsIlhfMiJdLFsxLDIsIlhfMSJdLFswLDEsIlxcbnUiLDFdLFsxLDJdLFsxLDNdLFswLDNdLFswLDJdXQ==
+
+and now we need to check that these two maps agrees when mapped to $Y$, so induces a map $W\to X_1\times_Y X_2$, and check everything commutes in the previous diagram...`
   }
 ];
