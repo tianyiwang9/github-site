@@ -314,5 +314,19 @@ https://q.uiver.app/#q=WzAsNixbMiwyLCJYXFx0aW1lcyBZIl0sWzIsMywiWCJdLFszLDIsIlkiX
 
 Universal property of the product implies $\phi\psi=\id_{X\times Y}$, similarly universal property of fiber product implies $\psi\phi=\id_{X\times_Z Y}$.
 `
+  },
+  {
+    id: "1-1-2-q-towers-of-cartisian-diagrams-is-cartisia",
+    chapter: "1",
+    problem: "1.2.Q",
+    author: "Tianyi",
+    title: "Towers of Cartisian Diagrams is Cartisian",
+    updated: "2026-08-30",
+    body: String.raw`Here's the complete diagram:
+% https://q.uiver.app/#q=WzAsNyxbMSwxLCJVIl0sWzIsMSwiViJdLFsxLDIsIlciXSxbMiwyLCJYIl0sWzEsMywiWSJdLFsyLDMsIloiXSxbMCwwLCJXJyJdLFswLDEsImYiXSxbMiwzLCJnIl0sWzEsMywiXFxnYW1tYSJdLFswLDIsIlxcYWxwaGEiXSxbMiw0LCJcXGJldGEiXSxbMyw1LCJcXGRlbHRhIl0sWzQsNSwiaCJdLFs2LDQsIlxcbXUiLDIseyJjdXJ2ZSI6M31dLFs2LDEsIlxcbnUiLDAseyJjdXJ2ZSI6LTJ9XSxbNiwyLCJcXHJobyIsMSx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dLFs2LDAsIlxcZXhpc3QhXFx0YXUiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+
+Let me explain: Suppose we are given maps $\mu,\nu$. Note we have a map $\gamma\nu: W'\to X$, this gives a unique map $\rho: W'\to W$ because the lower square is Cartesian. Now we have map $\rho: W'\to W, \nu: W'\to V$, so this gives a unique map $\tau: W'\to U$ because the upper square is also Cartesian. 
+
+To verify the tower is indeed Cartesian, we need to show $\nu=\tau f$ (checked because upper square is Cartesian) and $\mu=\beta\alpha\tau$. Chasing through the construction shows that $\beta\alpha\tau=\beta\rho=\mu$, as desired.`
   }
 ];
