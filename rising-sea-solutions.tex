@@ -376,6 +376,60 @@ Let me explain: Suppose we are given maps $\mu,\nu$. Note we have a map $\gamma\
 
 To verify the tower is indeed Cartesian, we need to show $\nu=\tau f$ (checked because upper square is Cartesian) and $\mu=\beta\alpha\tau$. Chasing through the construction shows that $\beta\alpha\tau=\beta\rho=\mu$, as desired.
 
+\section{1 -- 1.2.S -- Diagonal Base Change Diagram (Incomplete!)}
+% id: 1-1-2-s-diagonal-base-change-diagram-incomplete
+% author: Tianyi
+% updated: 2026-08-30
+
+Let $f_1,f_2: X_1,X_2\to Y$ and $g: Y\to Z$. We first explain why we get a diagram
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJYXzFcXHRpbWVzX1kgWF8yIl0sWzEsMCwiWF8xXFx0aW1lc19aIFhfMiJdLFswLDEsIlkiXSxbMSwxLCJZXFx0aW1lc19aIFkiXSxbMCwyLCJcXGJldGEiLDJdLFswLDEsIlxcYWxwaGEiXSxbMSwzLCJcXGdhbW1hIl0sWzIsMywiXFxkZWx0YSIsMl1d
+\[
+\begin{tikzcd}[cramped]
+	{X_1\times_Y X_2} & {X_1\times_Z X_2} \\
+	{Y} & {Y\times_Z Y}
+	\arrow["{\beta}"', from=1-1, to=2-1]
+	\arrow["{\alpha}", from=1-1, to=1-2]
+	\arrow["{\gamma}", from=1-2, to=2-2]
+	\arrow["{\delta}"', from=2-1, to=2-2]
+\end{tikzcd}
+\]
+
+The map $\beta$ simply comes from the fiber product diagram, The map $\delta$ comes from the fiber product diagram of $Y\times_Z $ where we take both maps $Y\to Y$ to be identity. The map $\gamma: X_1\times_Z X_2\to Y\times_Z Y$ comes from first mapping $X_1\times_Z X_2$ to $X_1$ and $X_2$ and then map to two copies of $Y$, which agrees when mapped to $Z$ via $g$. The map $\alpha$ exists because $X_1\times_Y X_2$ maps to $X_1,X_2$ then to $Y$ then to $Z$.
+
+To show that the diagram is Cartesian, assuming we are given $\mu,\nu$ as in the diagram below
+% https://q.uiver.app/#q=WzAsNSxbMSwxLCJYXzFcXHRpbWVzX1kgWF8yIl0sWzIsMSwiWF8xXFx0aW1lc19aIFhfMiJdLFsxLDIsIlkiXSxbMiwyLCJZXFx0aW1lc19aIFkiXSxbMCwwLCJXIl0sWzAsMiwiXFxiZXRhIiwyXSxbMCwxLCJcXGFscGhhIl0sWzEsMywiXFxnYW1tYSJdLFsyLDMsIlxcZGVsdGEiLDJdLFs0LDAsIlxccmhvIiwwLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV0sWzQsMiwiXFxtdSIsMix7ImN1cnZlIjoyfV0sWzQsMSwiXFxudSIsMCx7ImN1cnZlIjotMn1dXQ==
+\[
+\begin{tikzcd}[cramped]
+	{W} &  &  \\
+	 & {X_1\times_Y X_2} & {X_1\times_Z X_2} \\
+	 & {Y} & {Y\times_Z Y}
+	\arrow["{\beta}"', from=2-2, to=3-2]
+	\arrow["{\alpha}", from=2-2, to=2-3]
+	\arrow["{\gamma}", from=2-3, to=3-3]
+	\arrow["{\delta}"', from=3-2, to=3-3]
+	\arrow["{\rho}", dashed, from=1-1, to=2-2]
+	\arrow["{\mu}"', curve={height=12pt}, from=1-1, to=3-2]
+	\arrow["{\nu}", curve={height=-12pt}, from=1-1, to=2-3]
+\end{tikzcd}
+\]
+
+The map $\rho$ is obtained as follows: We must map $W$ to $X_1,X_2$ via the data we are given and hope everything works out. We have maps
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJXIl0sWzEsMSwiWF8xXFx0aW1lc19aIFhfMiJdLFsyLDEsIlhfMiJdLFsxLDIsIlhfMSJdLFswLDEsIlxcbnUiLDFdLFsxLDJdLFsxLDNdLFswLDNdLFswLDJdXQ==
+\[
+\begin{tikzcd}[cramped]
+	{W} &  &  \\
+	 & {X_1\times_Z X_2} & {X_2} \\
+	 & {X_1} &
+	\arrow["{\nu}", from=1-1, to=2-2]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=2-2, to=3-2]
+	\arrow[from=1-1, to=3-2]
+	\arrow[from=1-1, to=2-3]
+\end{tikzcd}
+\]
+
+and now we need to check that these two maps agrees when mapped to $Y$, so induces a map $W\to X_1\times_Y X_2$, and check everything commutes in the previous diagram...
+
 \section{2 -- 2.1.B -- The Cotangent Space from Germs Vanishing at a Point}
 % id: 2-2-1-b-the-cotangent-space-from-germs-vanishing
 % author: Anson
