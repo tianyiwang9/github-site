@@ -345,6 +345,37 @@ The claim is that $\phi,\psi$ are inverses of each other hence establishes isomo
 
 Universal property of the product implies $\phi\psi=\id_{X\times Y}$, similarly universal property of fiber product implies $\psi\phi=\id_{X\times_Z Y}$.
 
+\section{1 -- 1.2.Q -- Towers of Cartisian Diagrams is Cartisian}
+% id: 1-1-2-q-towers-of-cartisian-diagrams-is-cartisia
+% author: Tianyi
+% updated: 2026-08-30
+
+Here's the complete diagram:
+% https://q.uiver.app/#q=WzAsNyxbMSwxLCJVIl0sWzIsMSwiViJdLFsxLDIsIlciXSxbMiwyLCJYIl0sWzEsMywiWSJdLFsyLDMsIloiXSxbMCwwLCJXJyJdLFswLDEsImYiXSxbMiwzLCJnIl0sWzEsMywiXFxnYW1tYSJdLFswLDIsIlxcYWxwaGEiXSxbMiw0LCJcXGJldGEiXSxbMyw1LCJcXGRlbHRhIl0sWzQsNSwiaCJdLFs2LDQsIlxcbXUiLDIseyJjdXJ2ZSI6M31dLFs2LDEsIlxcbnUiLDAseyJjdXJ2ZSI6LTJ9XSxbNiwyLCJcXHJobyIsMSx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dLFs2LDAsIlxcZXhpc3QhXFx0YXUiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+\[
+\begin{tikzcd}[cramped]
+	{W'} &  &  \\
+	 & {U} & {V} \\
+	 & {W} & {X} \\
+	 & {Y} & {Z}
+	\arrow["{f}", from=2-2, to=2-3]
+	\arrow["{g}", from=3-2, to=3-3]
+	\arrow["{\gamma}", from=2-3, to=3-3]
+	\arrow["{\alpha}", from=2-2, to=3-2]
+	\arrow["{\beta}", from=3-2, to=4-2]
+	\arrow["{\delta}", from=3-3, to=4-3]
+	\arrow["{h}", from=4-2, to=4-3]
+	\arrow["{\mu}"', curve={height=18pt}, from=1-1, to=4-2]
+	\arrow["{\nu}", curve={height=-12pt}, from=1-1, to=2-3]
+	\arrow["{\rho}", dashed, from=1-1, to=3-2]
+	\arrow["{\exist!\tau}", dashed, from=1-1, to=2-2]
+\end{tikzcd}
+\]
+
+Let me explain: Suppose we are given maps $\mu,\nu$. Note we have a map $\gamma\nu: W'\to X$, this gives a unique map $\rho: W'\to W$ because the lower square is Cartesian. Now we have map $\rho: W'\to W, \nu: W'\to V$, so this gives a unique map $\tau: W'\to U$ because the upper square is also Cartesian.
+
+To verify the tower is indeed Cartesian, we need to show $\nu=\tau f$ (checked because upper square is Cartesian) and $\mu=\beta\alpha\tau$. Chasing through the construction shows that $\beta\alpha\tau=\beta\rho=\mu$, as desired.
+
 \section{2 -- 2.1.B -- The Cotangent Space from Germs Vanishing at a Point}
 % id: 2-2-1-b-the-cotangent-space-from-germs-vanishing
 % author: Anson
