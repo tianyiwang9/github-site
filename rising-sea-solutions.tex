@@ -430,6 +430,27 @@ The map $\rho$ is obtained as follows: We must map $W$ to $X_1,X_2$ via the data
 
 and now we need to check that these two maps agrees when mapped to $Y$, so induces a map $W\to X_1\times_Y X_2$, and check everything commutes in the previous diagram...
 
+\section{1 -- 1.2.T -- Coproduct is Sets is Disjoint Union}
+% id: 1-1-2-t-coproduct-is-sets-is-disjoint-union
+% author: Tianyi
+% updated: 2026-08-30
+
+Recall that in $Sets$, elements in $X_1\coprod X_2$ are given by elements of the form $(x_1,1),(x_2,2)$ where $x_1\in X_1, x_2\in X_2$. Thus of course we have a diagram
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJXIl0sWzEsMSwiWF8xXFxjb3Byb2QgWF8yIl0sWzEsMiwiWF8xIl0sWzIsMSwiWF8yIl0sWzIsMV0sWzMsMV0sWzEsMCwiXFxleGlzdHMhXFxyaG8iLDEseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbMiwwLCJcXHBoaSJdLFszLDAsIlxccHNpIiwyXV0=
+\[
+\begin{tikzcd}[cramped]
+	{W} &  &  \\
+	 & {X_1\coprod X_2} & {X_2} \\
+	 & {X_1} &
+	\arrow[from=3-2, to=2-2]
+	\arrow[from=2-3, to=2-2]
+	\arrow["{\exists!\rho}", dashed, from=2-2, to=1-1]
+	\arrow["{\phi}", from=3-2, to=1-1]
+	\arrow["{\psi}"', from=2-3, to=1-1]
+\end{tikzcd}
+\]
+where $\rho(x_1,1)=\phi(x_1)$ and $\rho(x_2,2)=\psi(x_2).$
+
 \section{2 -- 2.1.B -- The Cotangent Space from Germs Vanishing at a Point}
 % id: 2-2-1-b-the-cotangent-space-from-germs-vanishing
 % author: Anson
