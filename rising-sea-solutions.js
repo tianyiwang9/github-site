@@ -348,5 +348,16 @@ The map $\rho$ is obtained as follows: We must map $W$ to $X_1,X_2$ via the data
 https://q.uiver.app/#q=WzAsNCxbMCwwLCJXIl0sWzEsMSwiWF8xXFx0aW1lc19aIFhfMiJdLFsyLDEsIlhfMiJdLFsxLDIsIlhfMSJdLFswLDEsIlxcbnUiLDFdLFsxLDJdLFsxLDNdLFswLDNdLFswLDJdXQ==
 
 and now we need to check that these two maps agrees when mapped to $Y$, so induces a map $W\to X_1\times_Y X_2$, and check everything commutes in the previous diagram...`
+  },
+  {
+    id: "1-1-2-t-coproduct-is-sets-is-disjoint-union",
+    chapter: "1",
+    problem: "1.2.T",
+    author: "Tianyi",
+    title: "Coproduct is Sets is Disjoint Union",
+    updated: "2026-08-30",
+    body: String.raw`Recall that in $Sets$, elements in $X_1\coprod X_2$ are given by elements of the form $(x_1,1),(x_2,2)$ where $x_1\in X_1, x_2\in X_2$. Thus of course we have a diagram
+https://q.uiver.app/#q=WzAsNCxbMCwwLCJXIl0sWzEsMSwiWF8xXFxjb3Byb2QgWF8yIl0sWzEsMiwiWF8xIl0sWzIsMSwiWF8yIl0sWzIsMV0sWzMsMV0sWzEsMCwiXFxleGlzdHMhXFxyaG8iLDEseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbMiwwLCJcXHBoaSJdLFszLDAsIlxccHNpIiwyXV0=
+where $\rho(x_1,1)=\phi(x_1)$ and $\rho(x_2,2)=\psi(x_2).$`
   }
 ];
