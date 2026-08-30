@@ -451,6 +451,29 @@ Recall that in $Sets$, elements in $X_1\coprod X_2$ are given by elements of the
 \]
 where $\rho(x_1,1)=\phi(x_1)$ and $\rho(x_2,2)=\psi(x_2).$
 
+\section{1 -- 1.2.U -- Tensor Product is Fibered Coproduct}
+% id: 1-1-2-u-tensor-product-is-fibered-coproduct
+% author: Tianyi
+% updated: 2026-08-30
+
+We have the following diagram
+% https://q.uiver.app/#q=WzAsNSxbMiwxLCJDIl0sWzEsMiwiQiJdLFsxLDEsIkJcXG90aW1lc19BIEMiXSxbMiwyLCJBIl0sWzAsMCwiUiJdLFszLDFdLFszLDBdLFswLDJdLFsxLDJdLFsxLDQsIlxcbXUiXSxbMCw0LCJcXG51IiwyXSxbMiw0LCJcXGV4aXN0IVxccmhvIiwxLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV1d
+\[
+\begin{tikzcd}[cramped]
+	{R} &  &  \\
+	 & {B\otimes_A C} & {C} \\
+	 & {B} & {A}
+	\arrow[from=3-3, to=3-2]
+	\arrow[from=3-3, to=2-3]
+	\arrow[from=2-3, to=2-2]
+	\arrow[from=3-2, to=2-2]
+	\arrow["{\mu}", from=3-2, to=1-1]
+	\arrow["{\nu}"', from=2-3, to=1-1]
+	\arrow["{\exist!\rho}", dashed, from=2-2, to=1-1]
+\end{tikzcd}
+\]
+where the map $\rho: B\ot_A C\to R$ is defined by $\rho(b\ot c)=\mu(b)\ot \nu(c)$ and extended linearly.
+
 \section{2 -- 2.1.B -- The Cotangent Space from Germs Vanishing at a Point}
 % id: 2-2-1-b-the-cotangent-space-from-germs-vanishing
 % author: Anson
