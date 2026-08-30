@@ -359,5 +359,16 @@ and now we need to check that these two maps agrees when mapped to $Y$, so induc
     body: String.raw`Recall that in $Sets$, elements in $X_1\coprod X_2$ are given by elements of the form $(x_1,1),(x_2,2)$ where $x_1\in X_1, x_2\in X_2$. Thus of course we have a diagram
 https://q.uiver.app/#q=WzAsNCxbMCwwLCJXIl0sWzEsMSwiWF8xXFxjb3Byb2QgWF8yIl0sWzEsMiwiWF8xIl0sWzIsMSwiWF8yIl0sWzIsMV0sWzMsMV0sWzEsMCwiXFxleGlzdHMhXFxyaG8iLDEseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbMiwwLCJcXHBoaSJdLFszLDAsIlxccHNpIiwyXV0=
 where $\rho(x_1,1)=\phi(x_1)$ and $\rho(x_2,2)=\psi(x_2).$`
+  },
+  {
+    id: "1-1-2-u-tensor-product-is-fibered-coproduct",
+    chapter: "1",
+    problem: "1.2.U",
+    author: "Tianyi",
+    title: "Tensor Product is Fibered Coproduct",
+    updated: "2026-08-30",
+    body: String.raw`We have the following diagram
+https://q.uiver.app/#q=WzAsNSxbMiwxLCJDIl0sWzEsMiwiQiJdLFsxLDEsIkJcXG90aW1lc19BIEMiXSxbMiwyLCJBIl0sWzAsMCwiUiJdLFszLDFdLFszLDBdLFswLDJdLFsxLDJdLFsxLDQsIlxcbXUiXSxbMCw0LCJcXG51IiwyXSxbMiw0LCJcXGV4aXN0IVxccmhvIiwxLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV1d
+where the map $\rho: B\ot_A C\to R$ is defined by $\rho(b\ot c)=\mu(b)\ot \nu(c)$ and extended linearly.`
   }
 ];
