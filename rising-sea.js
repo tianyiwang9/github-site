@@ -40,6 +40,7 @@
   const localSolutionsStorageKey = "rising-sea-local-solutions";
   const localTexStorageKey = "rising-sea-latest-tex";
   const remoteSolutionIds = new Set(solutions.map((solution) => solution.id));
+  const openChapterGroups = new Set();
   const texDisplayEnvironments = new Set([
     "align",
     "align*",
@@ -1222,9 +1223,11 @@
   }
 
   function solutionText(solution) {
+    const chapter = getChapterGroup(solution);
     return normalize([
       solution.chapter,
       solution.problem,
+      chapter.title,
       solution.title,
       solution.author,
       solution.body
@@ -1247,6 +1250,90 @@
     solutionCount.textContent = `${total} solution${total === 1 ? "" : "s"}`;
   }
 
+  function getChapterGroup(solution) {
+    const parts = parseProblemReference(solution);
+    const rawChapter = String(solution && solution.chapter || "").trim();
+
+    if (Number.isFinite(parts.chapter)) {
+      return {
+        key: `chapter-${parts.chapter}`,
+        label: String(parts.chapter),
+        title: `Chapter ${parts.chapter}`,
+        order: parts.chapter
+      };
+    }
+
+    const label = rawChapter || "Other";
+    return {
+      key: `other-${normalizeCompact(label) || "unknown"}`,
+      label,
+      title: label,
+      order: Number.MAX_SAFE_INTEGER
+    };
+  }
+
+  function getChapterGroups(entries) {
+    const groups = new Map();
+
+    sortSolutionsByProblem(entries).forEach((solution) => {
+      const chapter = getChapterGroup(solution);
+      if (!groups.has(chapter.key)) {
+        groups.set(chapter.key, {
+          ...chapter,
+          solutions: []
+        });
+      }
+      groups.get(chapter.key).solutions.push(solution);
+    });
+
+    return Array.from(groups.values()).sort((left, right) => {
+      const byOrder = compareNumbers(left.order, right.order);
+      if (byOrder) return byOrder;
+      return left.label.localeCompare(right.label, undefined, {
+        numeric: true,
+        sensitivity: "base"
+      });
+    });
+  }
+
+  function renderSolutionEntry(solution) {
+    const label = [solution.chapter, solution.problem].filter(Boolean).join(" · ");
+    const author = solution.author ? `By ${solution.author}` : "";
+    return `
+      <article class="solution-entry" id="${escapeHtml(solution.id)}">
+        <div class="solution-meta">
+          <span>${escapeHtml(label || "Solution")}</span>
+          ${author ? `<span>${escapeHtml(author)}</span>` : ""}
+          <span>${escapeHtml(solution.updated || "")}</span>
+        </div>
+        <h2>${renderTitle(solution.title || "Untitled solution")}</h2>
+        <div class="solution-body">${renderMarkdown(solution.body || "")}</div>
+        <div class="solution-actions">
+          <button type="button" class="secondary-button" data-edit-solution="${escapeHtml(solution.id)}">Edit solution</button>
+          <button type="button" class="secondary-button" data-delete-solution="${escapeHtml(solution.id)}">Delete solution</button>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderChapterGroup(group, query) {
+    const isOpen = query || openChapterGroups.has(group.key);
+    const count = group.solutions.length;
+    const summary = `${count} solution${count === 1 ? "" : "s"}`;
+
+    return `
+      <details class="chapter-group" data-chapter-group="${escapeHtml(group.key)}"${isOpen ? " open" : ""}>
+        <summary class="chapter-summary">
+          <span class="chapter-summary-title">${escapeHtml(group.title)}</span>
+          <span class="chapter-summary-count">${summary}</span>
+        </summary>
+        <div class="chapter-solutions">
+          ${group.solutions.map(renderSolutionEntry).join("")}
+        </div>
+      </details>
+    `;
+  }
+
   function setSolutions(nextSolutions) {
     solutions.splice(0, solutions.length, ...nextSolutions);
     renderSolutions();
@@ -1265,30 +1352,12 @@
     }
 
     if (empty) empty.hidden = true;
-    list.innerHTML = matches
-      .map((solution) => {
-        const label = [solution.chapter, solution.problem].filter(Boolean).join(" · ");
-        const author = solution.author ? `By ${solution.author}` : "";
-        return `
-          <article class="solution-entry" id="${escapeHtml(solution.id)}">
-            <div class="solution-meta">
-              <span>${escapeHtml(label || "Solution")}</span>
-              ${author ? `<span>${escapeHtml(author)}</span>` : ""}
-              <span>${escapeHtml(solution.updated || "")}</span>
-            </div>
-            <h2>${renderTitle(solution.title || "Untitled solution")}</h2>
-            <div class="solution-body">${renderMarkdown(solution.body || "")}</div>
-            <div class="solution-actions">
-              <button type="button" class="secondary-button" data-edit-solution="${escapeHtml(solution.id)}">Edit solution</button>
-              <button type="button" class="secondary-button" data-delete-solution="${escapeHtml(solution.id)}">Delete solution</button>
-            </div>
-          </article>
-        `;
-      })
+    const query = searchInput ? searchInput.value.trim() : "";
+    list.innerHTML = getChapterGroups(matches)
+      .map((group) => renderChapterGroup(group, query))
       .join("");
 
     if (searchStatus) {
-      const query = searchInput ? searchInput.value.trim() : "";
       searchStatus.textContent = query
         ? `${matches.length} matching solution${matches.length === 1 ? "" : "s"}`
         : `${matches.length} published solution${matches.length === 1 ? "" : "s"}`;
@@ -1434,7 +1503,10 @@
 
     window.setTimeout(() => {
       const target = document.getElementById(duplicate.id);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (!target) return;
+      const chapter = target.closest(".chapter-group");
+      if (chapter) chapter.open = true;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
   }
 
@@ -2293,9 +2365,29 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
     searchInput.addEventListener("keydown", (event) => {
       if (event.key !== "Enter") return;
       event.preventDefault();
+      const firstGroup = list && list.querySelector(".chapter-group");
+      if (firstGroup) firstGroup.open = true;
       const first = list && list.querySelector(".solution-entry");
       if (first) first.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+  }
+
+  function bindChapterGroups() {
+    if (!list) return;
+    list.addEventListener("toggle", (event) => {
+      const chapter = event.target.closest(".chapter-group");
+      if (!chapter) return;
+
+      const key = chapter.getAttribute("data-chapter-group");
+      if (!key) return;
+
+      if (chapter.open) {
+        openChapterGroups.add(key);
+        typesetMath();
+      } else {
+        openChapterGroups.delete(key);
+      }
+    }, true);
   }
 
   function bindSolutionActions() {
@@ -2342,6 +2434,7 @@ ${sections.length ? sections.join("\n") : "\\section*{No solutions yet}\n"}
 
   setSolutions(mergeSolutionLists(solutions, getLocalSolutions()));
   bindSearch();
+  bindChapterGroups();
   bindSolutionActions();
   bindCollaboratorRequest();
   bindEditor();
