@@ -336,18 +336,24 @@ To verify the tower is indeed Cartesian, we need to show $\nu=\tau f$ (checked b
     author: "Tianyi",
     title: "Diagonal Base Change Diagram (Incomplete!)",
     updated: "2026-08-30",
-    body: String.raw`Let $f_1,f_2: X_1,X_2\to Y$ and $g: Y\to Z$. We first explain why we get a diagram
-% https://q.uiver.app/#q=WzAsNCxbMCwwLCJYXzFcXHRpbWVzX1kgWF8yIl0sWzEsMCwiWF8xXFx0aW1lc19aIFhfMiJdLFswLDEsIlkiXSxbMSwxLCJZXFx0aW1lc19aIFkiXSxbMCwyLCJcXGJldGEiLDJdLFswLDEsIlxcYWxwaGEiXSxbMSwzLCJcXGdhbW1hIl0sWzIsMywiXFxkZWx0YSIsMl1d
+    body: String.raw`This is an example of how Yoneda lemma makes abstract things concrete. Yoneda lemma implies:
 
-The map $\beta$ simply comes from the fiber product diagram, The map $\delta$ comes from the fiber product diagram of $Y\times_Z $ where we take both maps $Y\to Y$ to be identity. The map $\gamma: X_1\times_Z X_2\to Y\times_Z Y$ comes from first mapping $X_1\times_Z X_2$ to $X_1$ and $X_2$ and then map to two copies of $Y$, which agrees when mapped to $Z$ via $g$. The map $\alpha$ exists because $X_1\times_Y X_2$ maps to $X_1,X_2$ then to $Y$ then to $Z$.
+$\textbf{Lemma}.$ A square in any category $\ms C$ is Cartesian iff applying $h_S=\Hom(S,-)$ of it gives a Cartesian square:
+https://q.uiver.app/#q=WzAsOCxbMCwwLCJBIl0sWzEsMCwiQiJdLFswLDEsIkMiXSxbMSwxLCJEIl0sWzMsMCwiaF9TKEEpIl0sWzQsMCwiaF9TKEIpIl0sWzMsMSwiaF9TKEMpIl0sWzQsMSwiaF9TKEQpIl0sWzAsMV0sWzAsMl0sWzIsM10sWzEsM10sWzQsNV0sWzUsN10sWzQsNl0sWzYsN11d
 
-To show that the diagram is Cartesian, assuming we are given $\mu,\nu$ as in the diagram below
-% https://q.uiver.app/#q=WzAsNSxbMSwxLCJYXzFcXHRpbWVzX1kgWF8yIl0sWzIsMSwiWF8xXFx0aW1lc19aIFhfMiJdLFsxLDIsIlkiXSxbMiwyLCJZXFx0aW1lc19aIFkiXSxbMCwwLCJXIl0sWzAsMiwiXFxiZXRhIiwyXSxbMCwxLCJcXGFscGhhIl0sWzEsMywiXFxnYW1tYSJdLFsyLDMsIlxcZGVsdGEiLDJdLFs0LDAsIlxccmhvIiwwLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV0sWzQsMiwiXFxtdSIsMix7ImN1cnZlIjoyfV0sWzQsMSwiXFxudSIsMCx7ImN1cnZlIjotMn1dXQ==
+Next we show
 
-The map $\rho$ is obtained as follows: We must map $W$ to $X_1,X_2$ via the data we are given and hope everything works out. We have maps
-https://q.uiver.app/#q=WzAsNCxbMCwwLCJXIl0sWzEsMSwiWF8xXFx0aW1lc19aIFhfMiJdLFsyLDEsIlhfMiJdLFsxLDIsIlhfMSJdLFswLDEsIlxcbnUiLDFdLFsxLDJdLFsxLDNdLFswLDNdLFswLDJdXQ==
+$\textbf{Lemma}.$ $\Hom(S,A\times_C B)=\Hom(S,A)\times_{\Hom(S,C)}\Hom(S,B)$.
 
-and now we need to check that these two maps agrees when mapped to $Y$, so induces a map $W\to X_1\times_Y X_2$, and check everything commutes in the previous diagram...`
+Proof: Note that $\Hom(S,A\times_C B)$ is the collection of data $(f:S\to A, g: S\to B)$ that agrees when maps to $C$ using $A\to C, B\to C$. But this is precisely the right hand side, where $Hom(S,A)\to \Hom(S,C)$ is by postcomposing $A\to C$, and similarly for $\Hom(S,B)\to \Hom(S,C)$. $\square$
+
+Finally, applying the results above, our problem is equivalent to showing that the square below is Cartesian:
+https://q.uiver.app/#q=WzAsNCxbMCwwLCJoKFhfMSlcXHRpbWVzX3toKFkpfWgoWF8yKSJdLFsxLDAsImgoWF8xKVxcdGltZXNfe2goWil9aChYXzIpIl0sWzAsMSwiaChZKSJdLFsxLDEsImgoWSlcXHRpbWVzX3toKFopfWgoWSkiXSxbMCwxXSxbMSwzXSxbMCwyXSxbMiwzXV0=
+
+Up to relabeling, we just need to show the diagram
+https://q.uiver.app/#q=WzAsNCxbMCwwLCJYXzFcXHRpbWVzX1kgWF8yIl0sWzEsMCwiWF8xXFx0aW1lc19aIFhfMiJdLFswLDEsIlkiXSxbMSwxLCJZXFx0aW1lc19aIFkiXSxbMCwxXSxbMSwzXSxbMCwyXSxbMiwzXV0=
+is Cartesian but now everything are sets, and we know what fiber product in set means. This is a routine exercise to check.
+`
   },
   {
     id: "1-1-2-t-coproduct-is-sets-is-disjoint-union",
