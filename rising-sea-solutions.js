@@ -26,7 +26,7 @@ where $\epsilon_v: V^\vee\to k$ is defined to be the delta mass at the funcional
     id: "1-1-1-b-automorphism-group",
     chapter: "1",
     problem: "1.1.B",
-    author: "",
+    author: "Tianyi",
     title: "Automorphism Group",
     updated: "2026-08-27",
     body: String.raw`Let $A$ be an object in a category $\ms C$. The invertible elements $\op{Aut}(A)\subset \op{Mor}(A,A)$ indeed forms a group because we have the identity $\op{id}_A: A\to A$, and every morphism is invertible by definition. Moreover associativity holds by definition of a category. Hence $\op{Aut}(A)$ is indeed a group.
