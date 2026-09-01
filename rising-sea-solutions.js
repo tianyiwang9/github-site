@@ -398,5 +398,18 @@ with the obvious projection $\pi_i$ to each $A_i$ is satisfies $\pi_k=F(m)\pi_j$
     title: "Colimit in $Sets$",
     updated: "2026-09-01",
     body: String.raw`The long equivalence relation in the quotient is to force the object to satisfy the coherence relation. The universal property of colimit follows from the universal property of coproduct.`
+  },
+  {
+    id: "1-1-4-c-tensor-hom-bijection",
+    chapter: "1",
+    problem: "1.4.C",
+    author: "Tianyi",
+    title: "Tensor Hom Bijection",
+    updated: "2026-09-01",
+    body: String.raw`We construct a bijection
+\[
+\Hom(M\ot N, P)\longleftrightarrow \Hom(M,\Hom(N,P))
+\]
+as follows: Given a map $M\ot N\to P$, composing with the natural map $M\times N\to M\ot N$ gives a bilinear map $M\times N\to P$, which is an element of $\Hom(M,\Hom(N,P))$.  Conversely, given an element in $\Hom(M,\Hom(N,P))$, i.e., a bilinear map $M\times N\to P$, universal property of tensor product gives a map $M\ot N\to P$. It is easy to verify that these two operations are inverses to each other.`
   }
 ];
