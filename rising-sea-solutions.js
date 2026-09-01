@@ -389,5 +389,14 @@ where the map $\rho: B\ot_A C\to R$ is defined by $\rho(b\ot c)=\mu(b)\ot \nu(c)
 \left\{(a_i)_{i\in \ms I}\in\prod_{i\in \ms I}A_i: F(m)(a_j)=a_k\; \forall m\in \op{Mor}_{\ms I}(j,k)\subset \op{Mor}(\ms I)\right\}
 \]
 with the obvious projection $\pi_i$ to each $A_i$ is satisfies $\pi_k=F(m)\pi_j$ for every $m:j\to k$ by definition, and the universal property of the limit is satisfied by the above essentially due to the universal property of the product $\prod_{i\in \ms I}A_i$.`
+  },
+  {
+    id: "1-1-3-e-colimit-in-sets",
+    chapter: "1",
+    problem: "1.3.E",
+    author: "Tianyi",
+    title: "Colimit in $Sets$",
+    updated: "2026-09-01",
+    body: String.raw`The long equivalence relation in the quotient is to force the object to satisfy the coherence relation. The universal property of colimit follows from the universal property of coproduct.`
   }
 ];
