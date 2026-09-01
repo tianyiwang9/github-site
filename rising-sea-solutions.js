@@ -334,7 +334,7 @@ To verify the tower is indeed Cartesian, we need to show $\nu=\tau f$ (checked b
     chapter: "1",
     problem: "1.2.S",
     author: "Tianyi",
-    title: "Diagonal Base Change Diagram (Incomplete!)",
+    title: "Diagonal Base Change Diagram",
     updated: "2026-08-30",
     body: String.raw`This is an example of how Yoneda lemma makes abstract things concrete. Yoneda lemma implies:
 
@@ -376,5 +376,18 @@ where $\rho(x_1,1)=\phi(x_1)$ and $\rho(x_2,2)=\psi(x_2).$`
     body: String.raw`We have the following diagram
 https://q.uiver.app/#q=WzAsNSxbMiwxLCJDIl0sWzEsMiwiQiJdLFsxLDEsIkJcXG90aW1lc19BIEMiXSxbMiwyLCJBIl0sWzAsMCwiUiJdLFszLDFdLFszLDBdLFswLDJdLFsxLDJdLFsxLDQsIlxcbXUiXSxbMCw0LCJcXG51IiwyXSxbMiw0LCJcXGV4aXN0IVxccmhvIiwxLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV1d
 where the map $\rho: B\ot_A C\to R$ is defined by $\rho(b\ot c)=\mu(b)\ot \nu(c)$ and extended linearly.`
+  },
+  {
+    id: "1-1-3-c-limits-in-sets",
+    chapter: "1",
+    problem: "1.3.C",
+    author: "Tianyi",
+    title: "Limits in $Sets$",
+    updated: "2026-08-31",
+    body: String.raw`The set
+\[
+\left\{(a_i)_{i\in \ms I}\in\prod_{i\in \ms I}A_i: F(m)(a_j)=a_k\; \forall m\in \op{Mor}_{\ms I}(j,k)\subset \op{Mor}(\ms I)\right\}
+\]
+with the obvious projection $\pi_i$ to each $A_i$ is satisfies $\pi_k=F(m)\pi_j$ for every $m:j\to k$ by definition, and the universal property of the limit is satisfied by the above essentially due to the universal property of the product $\prod_{i\in \ms I}A_i$.`
   }
 ];
