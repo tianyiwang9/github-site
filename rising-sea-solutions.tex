@@ -506,6 +506,39 @@ We construct a bijection
 \]
 as follows: Given a map $M\ot N\to P$, composing with the natural map $M\times N\to M\ot N$ gives a bilinear map $M\times N\to P$, which is an element of $\Hom(M,\Hom(N,P))$.  Conversely, given an element in $\Hom(M,\Hom(N,P))$, i.e., a bilinear map $M\times N\to P$, universal property of tensor product gives a map $M\ot N\to P$. It is easy to verify that these two operations are inverses to each other.
 
+\section{1 -- 1.4.D -- Tensor Hom Adjunction}
+% id: 1-1-4-d-tensor-hom-adjunction
+% author: Tianyi
+% updated: 2026-09-01
+
+We will only show one of the two commutative diagrams. Suppose we have a map $f:M\to M'$. We want to show the diagram
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXG9wZXJhdG9ybmFtZXtIb219KE0nXFxvdGltZXMgTiwgUCkiXSxbMSwwLCJcXG9wZXJhdG9ybmFtZXtIb219KE1cXG90aW1lcyBOLFApIl0sWzAsMSwiXFxvcGVyYXRvcm5hbWV7SG9tfShNJyxcXG9wZXJhdG9ybmFtZXtIb219KE4sUCkpIl0sWzEsMSwiXFxvcGVyYXRvcm5hbWV7SG9tfShNLFxcb3BlcmF0b3JuYW1le0hvbX0oTixQKSkiXSxbMCwxXSxbMSwzXSxbMCwyXSxbMiwzXV0=
+\[
+\begin{tikzcd}[cramped]
+	{\operatorname{Hom}(M'\otimes N, P)} & {\operatorname{Hom}(M\otimes N,P)} \\
+	{\operatorname{Hom}(M',\operatorname{Hom}(N,P))} & {\operatorname{Hom}(M,\operatorname{Hom}(N,P))}
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=2-1, to=2-2]
+\end{tikzcd}
+\]
+commutes, where all the maps are the obvious ones. Let us chase through the definition in 1.4.C: Starting from the upper left corner suppose we have a map $\alpha: M'\ot N\to P$. Then going right gives a map $M\ot N\to M'\ot N\to P$ induced by $f:M\to M'$. Going down gives a bilinear map
+\[M\times N\to M\ot N\to M'\ot N\to P.\]
+This map is given by
+\[
+(m,n)\mapsto m\ot n\mapsto f(m)\ot n\mapsto \alpha(f(m)\ot n).
+\]
+Now if we first go down we get a map $M'\times N\to M'\ot N\to P$, then go right gives a map
+\[
+M\times N\to M'\times N\to M'\ot N\to P
+\]
+given by
+\[
+(m,n)\mapsto (f(m),n)\mapsto f(m)\ot n\mapsto \alpha(f(m)\ot n)
+\]
+which evidently agrees with the previous map displayed above. So the diagram commutes. The commutativity of the other diagram follows from a similar argument.
+
 \section{2 -- 2.1.B -- The Cotangent Space from Germs Vanishing at a Point}
 % id: 2-2-1-b-the-cotangent-space-from-germs-vanishing
 % author: Anson
