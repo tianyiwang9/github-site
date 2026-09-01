@@ -437,5 +437,18 @@ given by
 \]
 which evidently agrees with the previous map displayed above. So the diagram commutes. The commutativity of the other diagram follows from a similar argument.
 `
+  },
+  {
+    id: "1-1-4-e-hom-a-n-ot-b-a-m-cong-hom-b-n-m-b",
+    chapter: "1",
+    problem: "1.4.E",
+    author: "Tianyi",
+    title: "$\\Hom_A(N\\ot_B A,M)\\cong \\Hom_B(N,M_B)$",
+    updated: "2026-09-01",
+    body: String.raw`We will only show that $\Hom_A(N\ot_B A,M)\cong \Hom_B(N,M_B)$ by constructing a bijection. I'll omit checking the naturality diagram...
+
+Let $\phi: B\to A$ be the given change of coefficient map. Start with a map $\alpha: N\ot_B A\to M$. We construct a map $\beta: N\to M_B$ as follows: Let $\beta: n\mapsto n\ot_B 1_A\mapsto \alpha(n\ot_B 1_A).$
+
+Conversely, given $\beta: N\to M_B$. We define $\alpha: N\ot_B A\to M$ as $\alpha: n\ot_B a\mapsto n\cdot\phi(a)\mapsto \beta(n\cdot \phi(a)).$ It is not hard to verify that these two operations are bijections.`
   }
 ];
