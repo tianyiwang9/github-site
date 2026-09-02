@@ -450,5 +450,28 @@ which evidently agrees with the previous map displayed above. So the diagram com
 Let $\phi: B\to A$ be the given change of coefficient map. Start with a map $\alpha: N\ot_B A\to M$. We construct a map $\beta: N\to M_B$ as follows: Let $\beta: n\mapsto n\ot_B 1_A\mapsto \alpha(n\ot_B 1_A).$
 
 Conversely, given $\beta: N\to M_B$. We define $\alpha: N\ot_B A\to M$ as $\alpha: n\ot_B a\mapsto n\cdot\phi(a)\mapsto \beta(n\cdot \phi(a)).$ It is not hard to verify that these two operations are bijections.`
+  },
+  {
+    id: "1-1-5-a-two-exact-sequences-of-a-complex",
+    chapter: "1",
+    problem: "1.5.A",
+    author: "Tianyi",
+    title: "Two Exact Sequences of a Complex",
+    updated: "2026-09-01",
+    body: String.raw`The first exact sequence
+\[
+0\to \im f^{i}\to A^{i+1}\to \op{coker}f^{i}\to 0
+\]
+is simply the inclusion followed by quotient. That is, $\op{coker}f^{i}\cong A^{i+1}/\im f^{i}$ in an Abelian category. To see this, let $\alpha:A\to B$ be a morphism in an Abelian category. The definition we propose for cokernel satisfies the universal property diagram
+https://q.uiver.app/#q=WzAsNCxbMSwxLCJCIl0sWzIsMSwiQSJdLFswLDEsIkIvXFxvcGVyYXRvcm5hbWV7aW19XFxhbHBoYSJdLFswLDAsIlciXSxbMSwwLCJcXGFscGhhIiwyXSxbMCwyXSxbMCwzXSxbMSwzLCIwIiwyLHsiY3VydmUiOjF9XSxbMSwyLCIwIiwwLHsiY3VydmUiOi0yfV0sWzIsMywiXFxleGlzdCEiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+Hence is uniquely isomorphic to $\op{coker}\alpha$ by the universal property of the cokernel. The second exact sequence
+\[
+0\to H^i(A^\bullet)\to \op{coker}f^{i-1}\to \im f^i\to 0
+\]
+is inclusion $\ker f^i/\im f^{i-1}\to A_i/\im f^{i-1}$ composed with quotient since
+\[
+\frac{\op{coker}f^{i-1}}{H^i(A^\bullet)}=\frac{A_i/\im f^{i-1}}{\ker f^i/\im f^{i-1}}\cong \frac{A_i}{\ker f^i}\cong \im f^i
+\]
+by the third and first isomorphism theorems.`
   }
 ];
