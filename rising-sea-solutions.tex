@@ -592,10 +592,20 @@ To show that $\sum_i (-1)^i\dim A^i=\sum_i (-1)^i h^i(A)$, we use the two exact 
 \[\dim A^i=\dim \ker f^i+\dim \im f^i=\dim \im f^{i-1}+h^i(A)+\dim \im f^i.\]
 Hence we obtain
 \begin{align*}
-\sum_i (-1)^i \dim A^i&=\sum_i (-1)^i h^i(A)+\sum_i (-1)^i [\dim \im f^i+\dim \im f^{i-1}]\\
-&=\sum_i (-1)^i h^i(A)
+\sum_i (-1)^i \dim A^i&=\sum_i (-1)^i h^i(A)+\sum_i (-1)^i [\dim \im f^i+\dim \im f^{i-1}]=\sum_i (-1)^i h^i(A).
 \end{align*}
 as the last sum cancels out due to a standard telescoping argument.
+
+\section{1 -- 1.5.E -- Homotopic Maps Gives Same Map on Homology}
+% id: 1-1-5-e-homotopic-maps-gives-same-map-on-homolog
+% author: Tianyi
+% updated: 2026-09-02
+
+Since $f-g=dw+wd$ on the level of chains, and since every element $[\alpha]\in H^*(A)$ is represented by a closed (i.e. $d\alpha=0$) representative $\alpha\in A^*$, on the level of homology we have
+\[
+(f_*-g_*)([\alpha])=[dw\alpha+wd\alpha]=0,
+\]
+where the first term $dw\alpha=0$ is because it is a boundary, and the second term is zero because $d\alpha=0$ since $\alpha$ is closed.
 
 \section{2 -- 2.1.B -- The Cotangent Space from Germs Vanishing at a Point}
 % id: 2-2-1-b-the-cotangent-space-from-germs-vanishing
