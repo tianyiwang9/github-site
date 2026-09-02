@@ -485,9 +485,22 @@ by the third and first isomorphism theorems.`
 \[\dim A^i=\dim \ker f^i+\dim \im f^i=\dim \im f^{i-1}+h^i(A)+\dim \im f^i.\]
 Hence we obtain
 \begin{align*}
-\sum_i (-1)^i \dim A^i&=\sum_i (-1)^i h^i(A)+\sum_i (-1)^i [\dim \im f^i+\dim \im f^{i-1}]\\
-&=\sum_i (-1)^i h^i(A)
+\sum_i (-1)^i \dim A^i&=\sum_i (-1)^i h^i(A)+\sum_i (-1)^i [\dim \im f^i+\dim \im f^{i-1}]=\sum_i (-1)^i h^i(A).
 \end{align*}
 as the last sum cancels out due to a standard telescoping argument.`
+  },
+  {
+    id: "1-1-5-e-homotopic-maps-gives-same-map-on-homolog",
+    chapter: "1",
+    problem: "1.5.E",
+    author: "Tianyi",
+    title: "Homotopic Maps Gives Same Map on Homology",
+    updated: "2026-09-02",
+    body: String.raw`Since $f-g=dw+wd$ on the level of chains, and since every element $[\alpha]\in H^*(A)$ is represented by a closed (i.e. $d\alpha=0$) representative $\alpha\in A^*$, on the level of homology we have
+\[
+(f_*-g_*)([\alpha])=[dw\alpha+wd\alpha]=0,
+\]
+where the first term $dw\alpha=0$ is because it is a boundary, and the second term is zero because $d\alpha=0$ since $\alpha$ is closed.
+`
   }
 ];
