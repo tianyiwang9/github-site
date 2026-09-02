@@ -550,6 +550,39 @@ Let $\phi: B\to A$ be the given change of coefficient map. Start with a map $\al
 
 Conversely, given $\beta: N\to M_B$. We define $\alpha: N\ot_B A\to M$ as $\alpha: n\ot_B a\mapsto n\cdot\phi(a)\mapsto \beta(n\cdot \phi(a)).$ It is not hard to verify that these two operations are bijections.
 
+\section{1 -- 1.5.A -- Two Exact Sequences of a Complex}
+% id: 1-1-5-a-two-exact-sequences-of-a-complex
+% author: Tianyi
+% updated: 2026-09-01
+
+The first exact sequence
+\[
+0\to \im f^{i}\to A^{i+1}\to \op{coker}f^{i}\to 0
+\]
+is simply the inclusion followed by quotient. That is, $\op{coker}f^{i}\cong A^{i+1}/\im f^{i}$ in an Abelian category. To see this, let $\alpha:A\to B$ be a morphism in an Abelian category. The definition we propose for cokernel satisfies the universal property diagram
+% https://q.uiver.app/#q=WzAsNCxbMSwxLCJCIl0sWzIsMSwiQSJdLFswLDEsIkIvXFxvcGVyYXRvcm5hbWV7aW19XFxhbHBoYSJdLFswLDAsIlciXSxbMSwwLCJcXGFscGhhIiwyXSxbMCwyXSxbMCwzXSxbMSwzLCIwIiwyLHsiY3VydmUiOjF9XSxbMSwyLCIwIiwwLHsiY3VydmUiOi0yfV0sWzIsMywiXFxleGlzdCEiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+\[
+\begin{tikzcd}[cramped]
+	{W} &  &  \\
+	{B/\operatorname{im}\alpha} & {B} & {A}
+	\arrow["{\alpha}"', from=2-3, to=2-2]
+	\arrow[from=2-2, to=2-1]
+	\arrow[from=2-2, to=1-1]
+	\arrow["{0}"', curve={height=6pt}, from=2-3, to=1-1]
+	\arrow["{0}", curve={height=-12pt}, from=2-3, to=2-1]
+	\arrow["{\exist!}", dashed, from=2-1, to=1-1]
+\end{tikzcd}
+\]
+Hence is uniquely isomorphic to $\op{coker}\alpha$ by the universal property of the cokernel. The second exact sequence
+\[
+0\to H^i(A^\bullet)\to \op{coker}f^{i-1}\to \im f^i\to 0
+\]
+is inclusion $\ker f^i/\im f^{i-1}\to A_i/\im f^{i-1}$ composed with quotient since
+\[
+\frac{\op{coker}f^{i-1}}{H^i(A^\bullet)}=\frac{A_i/\im f^{i-1}}{\ker f^i/\im f^{i-1}}\cong \frac{A_i}{\ker f^i}\cong \im f^i
+\]
+by the third and first isomorphism theorems.
+
 \section{2 -- 2.1.B -- The Cotangent Space from Germs Vanishing at a Point}
 % id: 2-2-1-b-the-cotangent-space-from-germs-vanishing
 % author: Anson
