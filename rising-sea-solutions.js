@@ -473,5 +473,21 @@ is inclusion $\ker f^i/\im f^{i-1}\to A_i/\im f^{i-1}$ composed with quotient si
 \frac{\op{coker}f^{i-1}}{H^i(A^\bullet)}=\frac{A_i/\im f^{i-1}}{\ker f^i/\im f^{i-1}}\cong \frac{A_i}{\ker f^i}\cong \im f^i
 \]
 by the third and first isomorphism theorems.`
+  },
+  {
+    id: "1-1-5-b-euler-characteristics-of-a-complex",
+    chapter: "1",
+    problem: "1.5.B",
+    author: "Tianyi",
+    title: "Euler Characteristics of a Complex",
+    updated: "2026-09-02",
+    body: String.raw`To show that $\sum_i (-1)^i\dim A^i=\sum_i (-1)^i h^i(A)$, we use the two exact sequences (1.5.6.3) in Vakil. This gives
+\[\dim A^i=\dim \ker f^i+\dim \im f^i=\dim \im f^{i-1}+h^i(A)+\dim \im f^i.\]
+Hence we obtain
+\begin{align*}
+\sum_i (-1)^i \dim A^i&=\sum_i (-1)^i h^i(A)+\sum_i (-1)^i [\dim \im f^i+\dim \im f^{i-1}]\\
+&=\sum_i (-1)^i h^i(A)
+\end{align*}
+as the last sum cancels out due to a standard telescoping argument.`
   }
 ];
