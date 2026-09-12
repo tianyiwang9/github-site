@@ -662,7 +662,7 @@ we have \(f\in\mathfrak m_0^2\). Therefore \(\ker\Phi=\mathfrak m_0^2\), and hen
 % author: Tianyi
 % updated: 2026-09-12
 
-Indeed, for every open set $U$ the functor assigns $\mc F(U)$, and for every inclusion $U\hookrightarrow{}V$ we have restriction map $\mc F(V)\to \mc F(U)$. The remaining properties are easy to verify
+Indeed, for every open set $U$ the functor assigns $\mc F(U)$, and for every inclusion $U\hookrightarrow{}V$ we have restriction map $\mc F(V)\to \mc F(U)$. The remaining properties are easy to verify.
 
 \section{2 -- 2.2.D -- Function Spaces Form Sheaves}
 % id: 2-2-2-d-function-spaces-form-sheaves
@@ -720,5 +720,12 @@ For \([f,U]\in\mathcal O_{X,p}\) and \([a,V]\in\mathcal F_p\), define
 \left[f|_{U\cap V}\,a|_{U\cap V},\,U\cap V\right].
 \]
 The module axioms follow from those on sections, so \(\mathcal F_p\) is an \(\mathcal O_{X,p}\)-module.
+
+\section{2 -- 2.3.A -- Morphisms of (Pre)Sheaves Induce Morphisms of Stalks}
+% id: 2-2-3-a-morphisms-of-pre-sheaves-induce-morphism
+% author: Tianyi
+% updated: 2026-09-12
+
+Suppose we have a map $\phi:\mc F\to \mc G$. Let $[f,U]\in \mc F_p$ where $p\in U\subset X$, let $\phi_U: \mc F(U)\to \mc G(U)$. Then we define the induced map $\mc F_p\to \mc G_p$ is given as $[f,U]\mapsto [\phi_U(f),U]\in \mc G_p$. Note that this is well-defined, for if we use another representative we can always pass to common intersection of the defining open sets.
 
 \end{document}
