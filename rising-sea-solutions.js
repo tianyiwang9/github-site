@@ -529,5 +529,18 @@ where the first term $dw\alpha=0$ is because it is a boundary, and the second te
     title: "Morphisms of (Pre)Sheaves Induce Morphisms of Stalks",
     updated: "2026-09-12",
     body: String.raw`Suppose we have a map $\phi:\mc F\to \mc G$. Let $[f,U]\in \mc F_p$ where $p\in U\subset X$, let $\phi_U: \mc F(U)\to \mc G(U)$. Then we define the induced map $\mc F_p\to \mc G_p$ is given as $[f,U]\mapsto [\phi_U(f),U]\in \mc G_p$. Note that this is well-defined, for if we use another representative we can always pass to common intersection of the defining open sets.`
+  },
+  {
+    id: "2-2-3-b-pushforward-is-functorial",
+    chapter: "2",
+    problem: "2.3.B",
+    author: "Tianyi",
+    title: "Pushforward is Functorial",
+    updated: "2026-09-12",
+    body: String.raw`Let $\pi: X\to Y$ be a continuous map. Suppose $\mc F$ is a sheaf on $X$, i.e., an object in $Sets_X$. 
+
+We first show that $\pi_*\mc F$ is a sheaf on $Y$. Gluability follows since if $\cup_{i\in I}U_i$ is an open cover of $Y$ then $\cup_{i\in I}\pi^{-1}(U_i)$ is an open cover of $X$ and we use gluability of $\mc F$ on $X$. Similarly identity axiom also holds.
+
+Next, suppose we have morphism $\phi: \mc F\to \mc G$ of sheaves on $X$. Then we get $\pi_*\mc F\to \pi_*\mc G$ given by $\mc F(\pi^{-1}U)\to \mc G(\pi^{-1}U)$ for every open set $U\subset Y$. Identity and compatibility of this morphism is easy to check, hence this is indeed a morphism of sheaves.`
   }
 ];
