@@ -511,5 +511,14 @@ where the first term $dw\alpha=0$ is because it is a boundary, and the second te
     title: "Germ is a Local Ring",
     updated: "2026-09-03",
     body: String.raw`We show $\mc O_p$ is local by showing $\mf m_p$ is the only maximal ideal. Let $(\varphi,U)$ be a representative of an element in $\mc O_p\setminus \mf m_p$, where $U$ is an open set containing $p$ on which $\varphi$ is nonzero (by continuity of $\varphi$). Then the image of $(\varphi^{-1},U)$ in $\mc O_p\setminus \mf m_p$ is an inverse of $(\varphi,U)$.`
+  },
+  {
+    id: "2-2-2-a-presheaf-is-a-contravariant-functor",
+    chapter: "2",
+    problem: "2.2.A",
+    author: "Tianyi",
+    title: "Presheaf is a Contravariant Functor",
+    updated: "2026-09-12",
+    body: String.raw`Indeed, for every open set $U$ the functor assigns $\mc F(U)$, and for every inclusion $U\hookrightarrow{}V$ we have restriction map $\mc F(V)\to \mc F(U)$. The remaining properties are easy to verify`
   }
 ];
