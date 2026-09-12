@@ -519,6 +519,15 @@ where the first term $dw\alpha=0$ is because it is a boundary, and the second te
     author: "Tianyi",
     title: "Presheaf is a Contravariant Functor",
     updated: "2026-09-12",
-    body: String.raw`Indeed, for every open set $U$ the functor assigns $\mc F(U)$, and for every inclusion $U\hookrightarrow{}V$ we have restriction map $\mc F(V)\to \mc F(U)$. The remaining properties are easy to verify`
+    body: String.raw`Indeed, for every open set $U$ the functor assigns $\mc F(U)$, and for every inclusion $U\hookrightarrow{}V$ we have restriction map $\mc F(V)\to \mc F(U)$. The remaining properties are easy to verify.`
+  },
+  {
+    id: "2-2-3-a-morphisms-of-pre-sheaves-induce-morphism",
+    chapter: "2",
+    problem: "2.3.A",
+    author: "Tianyi",
+    title: "Morphisms of (Pre)Sheaves Induce Morphisms of Stalks",
+    updated: "2026-09-12",
+    body: String.raw`Suppose we have a map $\phi:\mc F\to \mc G$. Let $[f,U]\in \mc F_p$ where $p\in U\subset X$, let $\phi_U: \mc F(U)\to \mc G(U)$. Then we define the induced map $\mc F_p\to \mc G_p$ is given as $[f,U]\mapsto [\phi_U(f),U]\in \mc G_p$. Note that this is well-defined, for if we use another representative we can always pass to common intersection of the defining open sets.`
   }
 ];
