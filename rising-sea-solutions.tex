@@ -770,4 +770,56 @@ Here, $\rho$'s are restriction maps. Hence it is not hard to verify that the she
 
 Next we show that it is in fact a sheaf. This is where we use $\mc F,\mc G$ are sheaves: To prove gluability: Let $U\hookrightarrow X$ be open and $\cup_{i\in I}U_i=U$ is an open cover of $U$. Let $\phi_i\in \op{Mor}(\mc F|_{U_i},\mc G|_{U_i})$ be compatible morphisms. Then for any $O\hookrightarrow U$ open, and for any $\alpha\in \mc F(O)$, since $\phi_i|_{O\cap U_i\cap U_j}(\alpha)=\phi_j|_{O\cap U_i\cap U_j}(\alpha)\in \mc G(O\cap U_i\cap U_j)$ for all $i,j\in I$, these glue to a unique section $\phi_O(\alpha)\in \mc G(O)$ since $\mc G$ is a sheaf. This defines $\phi_O$ uniquely, proving gluability. Identity axiom can be proved similarly.
 
+\section{2 -- 2.3.E -- Kernel Presheaf}
+% id: 2-2-3-e-kernel-presheaf
+% author: Tianyi
+% updated: 2026-09-13
+
+Let $\phi:\mc F\to \mc G$ be a morphism of presheaves. As suggested we define $\ker\phi: U\mapsto \ker\phi(U)$. To show that restriction maps are defined, we follow the hint and consider the below diagram:
+% https://q.uiver.app/#q=WzAsOCxbMCwwLCIwIl0sWzEsMCwiXFxrZXIgXFxwaGkoVikiXSxbMiwwLCJcXG1hdGhjYWx7Rn0oVikiXSxbMywwLCJcXG1hdGhjYWwgRyhWKSJdLFswLDEsIjAiXSxbMSwxLCJcXGtlciBcXHBoaShVKSJdLFsyLDEsIlxcbWF0aGNhbCBGKFUpIl0sWzMsMSwiXFxtYXRoY2FsIEcoVSkiXSxbMCwxXSxbMSwyXSxbMiwzLCJcXHBoaShWKSJdLFs2LDcsIlxccGhpKFUpIiwyXSxbNSw2XSxbNCw1XSxbMiw2LCJcXHJob197VixVfSIsMl0sWzMsNywiXFxyaG9fe1YsVX0iXSxbMSw1LCJcXGV4aXN0ISIsMix7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dXQ==
+\[
+\begin{tikzcd}[cramped]
+	{0} & {\ker \phi(V)} & {\mathcal{F}(V)} & {\mathcal G(V)} \\
+	{0} & {\ker \phi(U)} & {\mathcal F(U)} & {\mathcal G(U)}
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-2, to=1-3]
+	\arrow["{\phi(V)}", from=1-3, to=1-4]
+	\arrow["{\phi(U)}"', from=2-3, to=2-4]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=2-1, to=2-2]
+	\arrow["{\rho_{V,U}}"', from=1-3, to=2-3]
+	\arrow["{\rho_{V,U}}", from=1-4, to=2-4]
+	\arrow["{\exist!}"', dashed, from=1-2, to=2-2]
+\end{tikzcd}
+\]
+The map is constructed as follows: For every $\alpha\in \ker\phi(V)$, view $\alpha\in \ker \phi(V)\hookrightarrow \mc F(V)$. Since the rightmost square commutes and the rows are exact, $\phi(U)\circ \rho_{V,U}(\alpha)$, hence $\rho_{V,U}(\alpha)$ is in the image of the map $\ker\phi(U)\to \mc F(U)$, i.e., there exists some $\beta\in \ker\phi(U)$ that maps to $\rho_{V,U}(\alpha)$. Then define the morphism to be $\alpha\mapsto \beta$. It is a routine verification that this map is unique and the diagram commutes.
+
+To show the composition of restriction satisfies the desired property, let $U\hookrightarrow V\hookrightarrow W$ be inclusion of opens. We have the following diagram with commutative squares and exact rows:
+
+% https://q.uiver.app/#q=WzAsMTIsWzAsMSwiMCJdLFsxLDEsIlxca2VyIFxccGhpKFYpIl0sWzIsMSwiXFxtYXRoY2Fse0Z9KFYpIl0sWzMsMSwiXFxtYXRoY2FsIEcoVikiXSxbMCwyLCIwIl0sWzEsMiwiXFxrZXIgXFxwaGkoVSkiXSxbMiwyLCJcXG1hdGhjYWwgRihVKSJdLFszLDIsIlxcbWF0aGNhbCBHKFUpIl0sWzAsMCwiMCJdLFsxLDAsIlxca2VyXFxwaGkoVykiXSxbMiwwLCJcXG1hdGhjYWwgRihXKSJdLFszLDAsIlxcbWF0aGNhbCBHKFcpIl0sWzAsMV0sWzEsMl0sWzUsNl0sWzQsNV0sWzIsNiwiXFxyaG9fe1YsVX0iLDJdLFszLDcsIlxccmhvX3tWLFV9Il0sWzgsOV0sWzksMTBdLFsxMCwxMV0sWzksMV0sWzEwLDIsIlxccmhvX3tXLFZ9IiwyXSxbMTEsMywiXFxyaG9fe1csVn0iXSxbMSw1XSxbMiwzXSxbNiw3XV0=
+\[
+\begin{tikzcd}[cramped]
+	{0} & {\ker\phi(W)} & {\mathcal F(W)} & {\mathcal G(W)} \\
+	{0} & {\ker \phi(V)} & {\mathcal{F}(V)} & {\mathcal G(V)} \\
+	{0} & {\ker \phi(U)} & {\mathcal F(U)} & {\mathcal G(U)}
+	\arrow[from=2-1, to=2-2]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=3-2, to=3-3]
+	\arrow[from=3-1, to=3-2]
+	\arrow["{\rho_{V,U}}"', from=2-3, to=3-3]
+	\arrow["{\rho_{V,U}}", from=2-4, to=3-4]
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-2, to=1-3]
+	\arrow[from=1-3, to=1-4]
+	\arrow[from=1-2, to=2-2]
+	\arrow["{\rho_{W,V}}"', from=1-3, to=2-3]
+	\arrow["{\rho_{W,V}}", from=1-4, to=2-4]
+	\arrow[from=2-2, to=3-2]
+	\arrow[from=2-3, to=2-4]
+	\arrow[from=3-3, to=3-4]
+\end{tikzcd}
+\]
+
+Now the last two columns composes as $\rho_{W,U}$, hence the composition of the restriction maps of kernels must be the restriction map of kernel $\ker\phi(W)\to \ker\phi(U)$ by uniqueness of restriction maps.
+
 \end{document}
