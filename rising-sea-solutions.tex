@@ -829,4 +829,27 @@ Now the last two columns composes as $\rho_{W,U}$, hence the composition of the 
 
 If $\phi:\mc F\to \mc G$ is a morphism of sheaves, then $\ker\phi$ is a sheaf: We will verify gluability since identity follows similarly. Let $U=\cup_{i\in I}U_i$. Let $\alpha_i\in \ker\phi(U_i)$ be compatible sections. Then using $\ker\phi(U_i)\hookrightarrow \mc F(U_i)$ we get compatible sections $\alpha_i\in \mc F(U_i)$. Hence they glue to a unique section $\alpha\in \mc F(U)$ since $\mc F$ is a sheaf. We show that this is indeed an element of the kernel: Since $\phi(\alpha)\in \mc G(U)$ satisfies that $\phi(\alpha)|_{U_i}=\phi|_{U_i}(\alpha|_{U_i})=0\in \mc G(U_i)$, we conclude that $\phi(\alpha)=0$ since $\mc G$ is a sheaf. Hence $\alpha\in \ker \phi(U)$. It is clear by construction that $\alpha|_{U_i}=\alpha_i$.
 
+\section{2 -- 2.3.J -- Exponential Presheaf Sequence}
+% id: 2-2-3-j-exponential-presheaf-sequence
+% author: Tianyi
+% updated: 2026-09-13
+
+We first show that $0\to \underline{\Z}\to \mc O_X\to \mc F\to 0$ is an exact sequence of presheaves of Abelian groups. By definition, this means for every $U\subset X$ open the section of the sequence over $U$ is exact. By definition,
+    \[
+    \mc F(U):=\{f:U\to \C^*\text{ holomorphic}: \exists g: U\to \C\text{ holomorphic s.t.}\exp(2\pi i g)=f\}.
+    \]
+    Note that $\mc O_X(U)\to \mc F$ surjects because $g\mapsto f$ for any $f\in \mc F(U)$. Clearly $\underline{\Z}(U)\to \mc O_X(U)$ is an injection. Finally, we note that by standard results in complex analysis, a holomorphic function $g:U\to \C$ satisfies $\exp(2\pi i g)=0$ iff $g$ is integer valued, which shows exactness of the sequence at $\exp(2\pi i(-)):\mc O_X(U)\to \mc F$.
+
+The presheaf $\mc F$ is not a sheaf because it does not satisfy gluability axiom: For example, I claim that the function $f(z)=z$ defined on $\C^*$ does not admit a global holomorphic log.
+
+    For the sake of contradiction, let's assume $g$ is a globally defined holomorphic log of $f$. That is, $\exp(g(z))=z$. Differentiating gives $1=\exp(g(z))g'(z)=zg'(z)$, so $g'(z)=1/z$. But since $g$ is holomorphic, $\bar \del g=0$. Hence $dg=(\del+\bar\del)g=\del g=g'(z)dz$. Therefore around any closed loop $\gamma\subset \C^*$ we must have
+    \[
+    \int_\gamma g'(z)dz=\int_\gamma dg=\int_{\del \gamma}g=0
+    \]
+    by Stokes' theorem. However, if you take $\gamma$ to be the unit circle $C$ in $\C^*$ then
+    \[
+    \int_\gamma g'(z)dz=\int_C\frac{dz}{z}=\int_0^{2\pi}\frac{ie^{i\theta}d\theta}{e^{i\theta}}=2\pi i\neq 0.
+    \]
+    This is the desired contradiction.
+
 \end{document}
