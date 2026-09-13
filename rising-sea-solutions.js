@@ -579,5 +579,14 @@ To show the composition of restriction satisfies the desired property, let $U\ho
 https://q.uiver.app/#q=WzAsMTIsWzAsMSwiMCJdLFsxLDEsIlxca2VyIFxccGhpKFYpIl0sWzIsMSwiXFxtYXRoY2Fse0Z9KFYpIl0sWzMsMSwiXFxtYXRoY2FsIEcoVikiXSxbMCwyLCIwIl0sWzEsMiwiXFxrZXIgXFxwaGkoVSkiXSxbMiwyLCJcXG1hdGhjYWwgRihVKSJdLFszLDIsIlxcbWF0aGNhbCBHKFUpIl0sWzAsMCwiMCJdLFsxLDAsIlxca2VyXFxwaGkoVykiXSxbMiwwLCJcXG1hdGhjYWwgRihXKSJdLFszLDAsIlxcbWF0aGNhbCBHKFcpIl0sWzAsMV0sWzEsMl0sWzUsNl0sWzQsNV0sWzIsNiwiXFxyaG9fe1YsVX0iLDJdLFszLDcsIlxccmhvX3tWLFV9Il0sWzgsOV0sWzksMTBdLFsxMCwxMV0sWzksMV0sWzEwLDIsIlxccmhvX3tXLFZ9IiwyXSxbMTEsMywiXFxyaG9fe1csVn0iXSxbMSw1XSxbMiwzXSxbNiw3XV0=
 
 Now the last two columns composes as $\rho_{W,U}$, hence the composition of the restriction maps of kernels must be the restriction map of kernel $\ker\phi(W)\to \ker\phi(U)$ by uniqueness of restriction maps.`
+  },
+  {
+    id: "2-2-3-i-kernel-sheaf",
+    chapter: "2",
+    problem: "2.3.I",
+    author: "Tianyi",
+    title: "Kernel Sheaf",
+    updated: "2026-09-13",
+    body: String.raw`If $\phi:\mc F\to \mc G$ is a morphism of sheaves, then $\ker\phi$ is a sheaf: We will verify gluability since identity follows similarly. Let $U=\cup_{i\in I}U_i$. Let $\alpha_i\in \ker\phi(U_i)$ be compatible sections. Then using $\ker\phi(U_i)\hookrightarrow \mc F(U_i)$ we get compatible sections $\alpha_i\in \mc F(U_i)$. Hence they glue to a unique section $\alpha\in \mc F(U)$ since $\mc F$ is a sheaf. We show that this is indeed an element of the kernel: Since $\phi(\alpha)\in \mc G(U)$ satisfies that $\phi(\alpha)|_{U_i}=\phi|_{U_i}(\alpha|_{U_i})=0\in \mc G(U_i)$, we conclude that $\phi(\alpha)=0$ since $\mc G$ is a sheaf. Hence $\alpha\in \ker \phi(U)$. It is clear by construction that $\alpha|_{U_i}=\alpha_i$.`
   }
 ];
