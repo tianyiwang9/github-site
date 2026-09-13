@@ -737,6 +737,37 @@ Let $\pi: X\to Y$ be a continuous map. Suppose $\mc F$ is a sheaf on $X$, i.e., 
 
 We first show that $\pi_*\mc F$ is a sheaf on $Y$. Gluability follows since if $\cup_{i\in I}U_i$ is an open cover of $Y$ then $\cup_{i\in I}\pi^{-1}(U_i)$ is an open cover of $X$ and we use gluability of $\mc F$ on $X$. Similarly identity axiom also holds.
 
-Next, suppose we have morphism $\phi: \mc F\to \mc G$ of sheaves on $X$. Then we get $\pi_*\mc F\to \pi_*\mc G$ given by $\mc F(\pi^{-1}U)\to \mc G(\pi^{-1}U)$ for every open set $U\subset Y$. Identity and compatibility of this morphism is easy to check, hence this is indeed a morphism of sheaves.
+Next, suppose we have morphism $\phi: \mc F\to \mc G$ of sheaves on $X$. Then we get $\pi_*\mc F\to \pi_*\mc G$ given by $\mc F(\pi^{-1}U)\to \mc G(\pi^{-1}U)$ for every open set $U\subset Y$. It is easy to check that this is indeed a morphism of sheaves.
+
+\section{2 -- 2.3.C -- Sheaf  Hom}
+% id: 2-2-3-c-sheaf-hom
+% author: Tianyi
+% updated: 2026-09-13
+
+Let $\mc F,\mc G$ be two sheaves. We show that $\mc{Hom}(\mc F,\mc G)$ is a sheaf. By definition, for every open $U\hookrightarrow X$, the assignment is
+\[
+U\mapsto \op{Mor}(\mc F|_U,\mc G|_U).
+\]
+Given open containments $U\hookrightarrow V$, we have an evident restriction map $\op{Mor}(\mc F|_V,\mc G|_V)\to \op{Mor}(\mc F|_U,\mc G|_U)$ from the property of sheaf morphisms $\mc F|_V\to \mc G|_V$. These restrictions are compatible with each other, for if we have opens $U\hookrightarrow V\hookrightarrow W$, then for $O\subset W, O'\subset V, O''\subset U$ open, we have a commutative diagram
+% https://q.uiver.app/#q=WzAsNixbMCwwLCJcXG1hdGhjYWx7Rn0oTykiXSxbMSwwLCJcXG1hdGhjYWwgRyhPKSJdLFswLDEsIlxcbWF0aGNhbHtGfShPJykiXSxbMCwyLCJcXG1hdGhjYWx7Rn0oTycnKSJdLFsxLDEsIlxcbWF0aGNhbCBHKE8nKSJdLFsxLDIsIlxcbWF0aGNhbCBHKE8nJykiXSxbMCwxLCJcXHBoaV9PIl0sWzIsNCwiXFxwaGlfe08nfSJdLFszLDUsIlxccGhpX3tPJyd9Il0sWzAsMiwiXFxyaG9fe08sTyd9IiwyXSxbMiwzLCJcXHJob197TycsTycnfSIsMl0sWzEsNCwiXFxyaG9fe08sTyd9Il0sWzQsNSwiXFxyaG9fe08nLE8nJ30iXSxbMCwzLCJcXHJob197TyxPJyd9IiwyLHsiY3VydmUiOjV9XSxbMSw1LCJcXHJob197TyxPJyd9IiwwLHsiY3VydmUiOi01fV1d
+\[
+\begin{tikzcd}[cramped]
+	{\mathcal{F}(O)} & {\mathcal G(O)} \\
+	{\mathcal{F}(O')} & {\mathcal G(O')} \\
+	{\mathcal{F}(O'')} & {\mathcal G(O'')}
+	\arrow["{\phi_O}", from=1-1, to=1-2]
+	\arrow["{\phi_{O'}}", from=2-1, to=2-2]
+	\arrow["{\phi_{O''}}", from=3-1, to=3-2]
+	\arrow["{\rho_{O,O'}}"', from=1-1, to=2-1]
+	\arrow["{\rho_{O',O''}}"', from=2-1, to=3-1]
+	\arrow["{\rho_{O,O'}}", from=1-2, to=2-2]
+	\arrow["{\rho_{O',O''}}", from=2-2, to=3-2]
+	\arrow["{\rho_{O,O''}}"', curve={height=30pt}, from=1-1, to=3-1]
+	\arrow["{\rho_{O,O''}}", curve={height=-30pt}, from=1-2, to=3-2]
+\end{tikzcd}
+\]
+Here, $\rho$'s are restriction maps. Hence it is not hard to verify that the sheaf Hom is a presheaf.
+
+Next we show that it is in fact a sheaf. This is where we use $\mc F,\mc G$ are sheaves: To prove gluability: Let $U\hookrightarrow X$ be open and $\cup_{i\in I}U_i=U$ is an open cover of $U$. Let $\phi_i\in \op{Mor}(\mc F|_{U_i},\mc G|_{U_i})$ be compatible morphisms. Then for any $O\hookrightarrow U$ open, and for any $\alpha\in \mc F(O)$, since $\phi_i|_{O\cap U_i\cap U_j}(\alpha)=\phi_j|_{O\cap U_i\cap U_j}(\alpha)\in \mc G(O\cap U_i\cap U_j)$ for all $i,j\in I$, these glue to a unique section $\phi_O(\alpha)\in \mc G(O)$ since $\mc G$ is a sheaf. This defines $\phi_O$ uniquely, proving gluability. Identity axiom can be proved similarly.
 
 \end{document}
