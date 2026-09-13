@@ -562,5 +562,22 @@ Next we show that it is in fact a sheaf. This is where we use $\mc F,\mc G$ are 
 
 
  `
+  },
+  {
+    id: "2-2-3-e-kernel-presheaf",
+    chapter: "2",
+    problem: "2.3.E",
+    author: "Tianyi",
+    title: "Kernel Presheaf",
+    updated: "2026-09-13",
+    body: String.raw`Let $\phi:\mc F\to \mc G$ be a morphism of presheaves. As suggested we define $\ker\phi: U\mapsto \ker\phi(U)$. To show that restriction maps are defined, we follow the hint and consider the below diagram:
+https://q.uiver.app/#q=WzAsOCxbMCwwLCIwIl0sWzEsMCwiXFxrZXIgXFxwaGkoVikiXSxbMiwwLCJcXG1hdGhjYWx7Rn0oVikiXSxbMywwLCJcXG1hdGhjYWwgRyhWKSJdLFswLDEsIjAiXSxbMSwxLCJcXGtlciBcXHBoaShVKSJdLFsyLDEsIlxcbWF0aGNhbCBGKFUpIl0sWzMsMSwiXFxtYXRoY2FsIEcoVSkiXSxbMCwxXSxbMSwyXSxbMiwzLCJcXHBoaShWKSJdLFs2LDcsIlxccGhpKFUpIiwyXSxbNSw2XSxbNCw1XSxbMiw2LCJcXHJob197VixVfSIsMl0sWzMsNywiXFxyaG9fe1YsVX0iXSxbMSw1LCJcXGV4aXN0ISIsMix7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dXQ==
+The map is constructed as follows: For every $\alpha\in \ker\phi(V)$, view $\alpha\in \ker \phi(V)\hookrightarrow \mc F(V)$. Since the rightmost square commutes and the rows are exact, $\phi(U)\circ \rho_{V,U}(\alpha)$, hence $\rho_{V,U}(\alpha)$ is in the image of the map $\ker\phi(U)\to \mc F(U)$, i.e., there exists some $\beta\in \ker\phi(U)$ that maps to $\rho_{V,U}(\alpha)$. Then define the morphism to be $\alpha\mapsto \beta$. It is a routine verification that this map is unique and the diagram commutes. 
+
+To show the composition of restriction satisfies the desired property, let $U\hookrightarrow V\hookrightarrow W$ be inclusion of opens. We have the following diagram with commutative squares and exact rows:
+
+https://q.uiver.app/#q=WzAsMTIsWzAsMSwiMCJdLFsxLDEsIlxca2VyIFxccGhpKFYpIl0sWzIsMSwiXFxtYXRoY2Fse0Z9KFYpIl0sWzMsMSwiXFxtYXRoY2FsIEcoVikiXSxbMCwyLCIwIl0sWzEsMiwiXFxrZXIgXFxwaGkoVSkiXSxbMiwyLCJcXG1hdGhjYWwgRihVKSJdLFszLDIsIlxcbWF0aGNhbCBHKFUpIl0sWzAsMCwiMCJdLFsxLDAsIlxca2VyXFxwaGkoVykiXSxbMiwwLCJcXG1hdGhjYWwgRihXKSJdLFszLDAsIlxcbWF0aGNhbCBHKFcpIl0sWzAsMV0sWzEsMl0sWzUsNl0sWzQsNV0sWzIsNiwiXFxyaG9fe1YsVX0iLDJdLFszLDcsIlxccmhvX3tWLFV9Il0sWzgsOV0sWzksMTBdLFsxMCwxMV0sWzksMV0sWzEwLDIsIlxccmhvX3tXLFZ9IiwyXSxbMTEsMywiXFxyaG9fe1csVn0iXSxbMSw1XSxbMiwzXSxbNiw3XV0=
+
+Now the last two columns composes as $\rho_{W,U}$, hence the composition of the restriction maps of kernels must be the restriction map of kernel $\ker\phi(W)\to \ker\phi(U)$ by uniqueness of restriction maps.`
   }
 ];
