@@ -642,5 +642,20 @@ The presheaf $\mc F$ is not a sheaf because it does not satisfy gluability axiom
     body: String.raw`Indeed, let $\phi_1,\phi_2: \mc F\to \mc G$ be morphisms of presheaves and $\mc G$ is a sheaf, and these two maps induces the same maps on each stalk. The following diagram commutes by how we constructed morphism on stalks:
 https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXG1hdGhjYWwgRihVKSJdLFsxLDAsIlxcbWF0aGNhbCBHKFUpIl0sWzAsMSwiXFxwcm9kX3twXFxpbiBVfVxcbWF0aGNhbCBGX3AiXSxbMSwxLCJcXHByb2Rfe3BcXGluIFV9XFxtYXRoY2FsIEdfcCJdLFswLDFdLFswLDJdLFsxLDMsIiIsMCx7InN0eWxlIjp7InRhaWwiOnsibmFtZSI6Imhvb2siLCJzaWRlIjoiYm90dG9tIn19fV0sWzIsM11d
 Suppose $s\in \mc F(U)$. Then $(\phi_1(s)_p)=(\phi_2(s)_p)\in \prod_{p\in U}\mc G_p$, and we already showed the right vertical map is injective, so $\phi_1(s)=\phi_2(s)$, hence $\phi_1=\phi_2$ as desired.`
+  },
+  {
+    id: "2-2-4-d-isomorphisms-are-determined-by-stalks",
+    chapter: "2",
+    problem: "2.4.D",
+    author: "Tianyi",
+    title: "Isomorphisms are Determined by Stalks",
+    updated: "2026-09-13",
+    body: String.raw`Let $\phi:\mc F\to \mc G$ be a morphism of sheaves. We show that $\phi:\mc F\to \mc G$ is an isomorphism iff it induces isomorphisms on every stalk. First, if $\phi:\mc F\to \mc G$ is an isomorphism then clearly it induces isomorphism on each stalk. 
+
+Conversely, suppose $\phi:\mc F\to \mc G$ induces isomorphism on every stalk. Let $U\hookrightarrow X$ be any open set. Exercise 2.4.C already shows that $\phi(U):\mc F(U)\to \mc G(U)$ is injective, hence it remains to show that it is surjective. To this end, let $t\in \mc G(U)$ be a section with $(t_p)\in \prod_{p\in U}\mc G_p$ be the induced element on the stalks. We have a commutative diagram with vertical maps being injections:
+https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXG1hdGhjYWwgRihVKSJdLFsxLDAsIlxcbWF0aGNhbCBHKFUpIl0sWzAsMSwiXFxwcm9kX3twXFxpbiBVfVxcbWF0aGNhbCBGX3AiXSxbMSwxLCJcXHByb2Rfe3BcXGluIFV9XFxtYXRoY2FsIEdfcCJdLFswLDFdLFswLDJdLFsyLDNdLFsxLDNdXQ==
+Since $\prod_p \phi_p$ is an isomorphism, there exists $(s_p)\in \prod_p \mc F_p$ such that $\phi_p(s_p)=t_p$. What this means is that for every $p\in U$ there exists open sets $U_p\hookrightarrow U$, sections $\td s_p\in \mc F(U_p), \td t_p\in \mc G(U_p)$ such that one has $\phi(\td s_p)=\td t_p$.
+
+We now claim that $(s_p)$ are compatible germs, hence coming from a section $s\in \mc F(U)$ by Exercise 2.4.B, and it follows that $\phi(s)=t$, proving surjectivity of $\phi$, and we will be done. To see compatibility, we claim that for every $q\in U_p$ we have $(\td s_p)_q=s_q$. We argue by contradiction: Assume $q\in U_p$ but $(\td s_p)_q\neq s_q$. But on the other hand $(\td s_q)_q=s_q$. Note that $U_p\cap U_q\neq \emptyset$ and $\td t_p=\td t_q=t$ on the intersection $U_p\cap U_q$. However we have $\phi_q((\td s_p)_q)\neq \phi_q((\td s_q)_q)$. This means that in any neighborhood of $q$ we have $\phi(\td s_p)\neq \phi(\td s_q)$, which means $\td t_p\neq \td t_q$ on any neighborhood of $q$, which is the desired contradiction.`
   }
 ];
