@@ -613,5 +613,14 @@ The presheaf $\mc F$ is not a sheaf because it does not satisfy gluability axiom
     \int_\gamma g'(z)dz=\int_C\frac{dz}{z}=\int_0^{2\pi}\frac{ie^{i\theta}d\theta}{e^{i\theta}}=2\pi i\neq 0.
     \]
     This is the desired contradiction.`
+  },
+  {
+    id: "2-2-4-a-sections-are-determined-by-germs",
+    chapter: "2",
+    problem: "2.4.A",
+    author: "Tianyi",
+    title: "Sections are Determined by Germs",
+    updated: "2026-09-13",
+    body: String.raw`We show that the natural map $\mc F(U)\to \prod_{p\in U}\mc F_p$ defined by $s\mapsto (s_p)_{p\in U}$ is injective. Suppose we have two sections $s,t\in \mc F(U)$ such that $(s_p)=(t_p)$. Then for every $p$, we can find open sets $U_p\hookrightarrow U$ such that $s|_{U_p}=t|_{U_p}$. But note that $\{U_p\}_{p\in U}$ for an open cover of $U$. Hence by the identity axiom, we conclude that $s=t$.`
   }
 ];
