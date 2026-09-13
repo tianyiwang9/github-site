@@ -631,5 +631,16 @@ The presheaf $\mc F$ is not a sheaf because it does not satisfy gluability axiom
     title: "Compatible Germs Come From Sections",
     updated: "2026-09-13",
     body: String.raw`Let $(s_p)_{p\in U}\in \prod_{p\in U}\mc F_p$ be a compatible germ. Let $U_p$ be the open containing $p$ in $U$ such that there is some $\tilde s_p\in \mc F(U_p)$ such that the germ of $\tilde s_p$ at all $q\in U_p$ is $s_q$. Now suppose we have $\td s_{p'}\in \mc F(U_{p'})$, with $U_p\cap U_{p'}\neq \emptyset$ and $p''\in U_p\cap U_{p'}$ is an arbitrary point. Now since $\td s_p,\td s_{p'}$ agrees in a neighborhood of $p''$ and $p''\in U_p\cap U_{p'}$ is arbitrary, by the identity axiom of the sheaf $\mc F|_{U_p\cap U_{p'}}$, we see that $\td s_p, \td s_{p'}$ agrees on $U_p\cap U_{p'}$. Hence by gluability of the sheaf $\mc F|_U$ with open cover $\{U_p\}_{p\in U}$, we see that $(s_p)_{p\in U}\prod_{p\in U}\mc F_p$ must come from some section $s\in \mc F(U)$.`
+  },
+  {
+    id: "2-2-4-c-morphisms-are-determined-by-stalks",
+    chapter: "2",
+    problem: "2.4.C",
+    author: "Tianyi",
+    title: "Morphisms are Determined by Stalks",
+    updated: "2026-09-13",
+    body: String.raw`Indeed, let $\phi_1,\phi_2: \mc F\to \mc G$ be morphisms of presheaves and $\mc G$ is a sheaf, and these two maps induces the same maps on each stalk. The following diagram commutes by how we constructed morphism on stalks:
+https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXG1hdGhjYWwgRihVKSJdLFsxLDAsIlxcbWF0aGNhbCBHKFUpIl0sWzAsMSwiXFxwcm9kX3twXFxpbiBVfVxcbWF0aGNhbCBGX3AiXSxbMSwxLCJcXHByb2Rfe3BcXGluIFV9XFxtYXRoY2FsIEdfcCJdLFswLDFdLFswLDJdLFsxLDMsIiIsMCx7InN0eWxlIjp7InRhaWwiOnsibmFtZSI6Imhvb2siLCJzaWRlIjoiYm90dG9tIn19fV0sWzIsM11d
+Suppose $s\in \mc F(U)$. Then $(\phi_1(s)_p)=(\phi_2(s)_p)\in \prod_{p\in U}\mc G_p$, and we already showed the right vertical map is injective, so $\phi_1(s)=\phi_2(s)$, hence $\phi_1=\phi_2$ as desired.`
   }
 ];
