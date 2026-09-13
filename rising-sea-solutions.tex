@@ -859,4 +859,11 @@ The presheaf $\mc F$ is not a sheaf because it does not satisfy gluability axiom
 
 We show that the natural map $\mc F(U)\to \prod_{p\in U}\mc F_p$ defined by $s\mapsto (s_p)_{p\in U}$ is injective. Suppose we have two sections $s,t\in \mc F(U)$ such that $(s_p)=(t_p)$. Then for every $p$, we can find open sets $U_p\hookrightarrow U$ such that $s|_{U_p}=t|_{U_p}$. But note that $\{U_p\}_{p\in U}$ for an open cover of $U$. Hence by the identity axiom, we conclude that $s=t$.
 
+\section{2 -- 2.4.B -- Compatible Germs Come From Sections}
+% id: 2-2-4-b-compatible-germs-come-from-sections
+% author: Tianyi
+% updated: 2026-09-13
+
+Let $(s_p)_{p\in U}\in \prod_{p\in U}\mc F_p$ be a compatible germ. Let $U_p$ be the open containing $p$ in $U$ such that there is some $\tilde s_p\in \mc F(U_p)$ such that the germ of $\tilde s_p$ at all $q\in U_p$ is $s_q$. Now suppose we have $\td s_{p'}\in \mc F(U_{p'})$, with $U_p\cap U_{p'}\neq \emptyset$ and $p''\in U_p\cap U_{p'}$ is an arbitrary point. Now since $\td s_p,\td s_{p'}$ agrees in a neighborhood of $p''$ and $p''\in U_p\cap U_{p'}$ is arbitrary, by the identity axiom of the sheaf $\mc F|_{U_p\cap U_{p'}}$, we see that $\td s_p, \td s_{p'}$ agrees on $U_p\cap U_{p'}$. Hence by gluability of the sheaf $\mc F|_U$ with open cover $\{U_p\}_{p\in U}$, we see that $(s_p)_{p\in U}\prod_{p\in U}\mc F_p$ must come from some section $s\in \mc F(U)$.
+
 \end{document}
