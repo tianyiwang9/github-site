@@ -691,5 +691,14 @@ Hence we see by uniqueness that $(\psi\phi)^{\op{sh}}=\psi^{\op{sh}}\phi^{\op{sh
     title: "Sheafification is a Sheaf",
     updated: "2026-09-14",
     body: String.raw`Given the definition of $\mc F^{\op{sh}}$ with the tautological restriction map, it is easy to see that $\mc F^{\op{sh}}$ is a presheaf. Now let $U\hookrightarrow X$ be an open set and $U=\cup_{i\in I}U_i$ an open cover. To see the identity axiom: If $(f_p)_{p\in U_i}=(g_p)_{p\in U_i}$ for every $i\in I$, of course $(f_p)_{p\in U}=(g_p)_{p\in U}$. To see the gluability axiom: Suppose we have $(f^i_p)_{p\in U_i}$ for every $i\in I$ such that $f^i_p=f^j_p$ for all $p\in U_i\cap U_j$, then clearly these glue to a global $(f_p)_{p\in U}$ that restricts to $(f^i_p)_{p\in U_i}$ on each $U_i$ and this is in fact a compatible germ by construction, since its restriction to each element of the open cover is.`
+  },
+  {
+    id: "2-2-4-i-natural-map-to-sheafification",
+    chapter: "2",
+    problem: "2.4.I",
+    author: "Tianyi",
+    title: "Natural Map to Sheafification",
+    updated: "2026-09-14",
+    body: String.raw`There is a natural map $\op{sh}:\mc F\to \mc F^{\op{sh}}$ of presheaves: For every $U\hookrightarrow X$ open, define $\op{sh}(U): s\mapsto (s_p)_{p\in U}$ for $s\in \mc F(U)$.`
   }
 ];
