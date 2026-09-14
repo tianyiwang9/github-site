@@ -982,4 +982,11 @@ Given the definition of $\mc F^{\op{sh}}$ with the tautological restriction map,
 
 There is a natural map $\op{sh}:\mc F\to \mc F^{\op{sh}}$ of presheaves: For every $U\hookrightarrow X$ open, define $\op{sh}(U): s\mapsto (s_p)_{p\in U}$ for $s\in \mc F(U)$.
 
+\section{2 -- 2.4.J -- Sheafification Satiesfies Universal Property}
+% id: 2-2-4-j-sheafification-satiesfies-universal-prop
+% author: Tianyi
+% updated: 2026-09-14
+
+Let $\phi: \mc F\to \mc G$ be a morphism from a presheaf to a sheaf. Let $U\hookrightarrow X$ be an open set with $s\in \mc F(U)$. We define $\phi^{\op{sh}}(U): \mc F^{\op{sh}}(U)\to \mc G(U)$ as follows: Let $(s_p)_{p\in U}=\op{sh}(s)\in \mc F^{\op{sh}}(U)$. Then $(t_p)_{p\in U}:=(\phi_p(s_p))_{p\in U}\in \prod_{p\in U}\mc G_p$ is a compatible germ: Indeed, for every $p\in U$ there exists $U_p$ and section $\td s_p\in \mc F(U_p)$ such that $(\td s_p)_q=s_q$ for all $q\in U_p$. Hence by possibly shrinking $U_p$, we see that $\td t_p:=\phi(U_p)(\td s_p)$ is a lift of $(t_p)_{p\in U}\in \prod_{p\in U}\mc G_p$. Thus by Exercise 2.4.B, there is a section $t\in \mc G(U)$ whose image under $\mc G(U)\to \prod_{p\in U}\mc G_p$ is precisely $(t_p)_{p\in U}$. Then the unique sheafified map is $\phi^{\op{sh}}(U):s\mapsto t.$
+
 \end{document}
