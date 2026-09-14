@@ -908,4 +908,38 @@ Since $\prod_p \phi_p$ is an isomorphism, there exists $(s_p)\in \prod_p \mc F_p
 
 We now claim that $(s_p)$ are compatible germs, hence coming from a section $s\in \mc F(U)$ by Exercise 2.4.B, and it follows that $\phi(s)=t$, proving surjectivity of $\phi$, and we will be done. To see compatibility, we claim that for every $q\in U_p$ we have $(\td s_p)_q=s_q$. We argue by contradiction: Assume $q\in U_p$ but $(\td s_p)_q\neq s_q$. But on the other hand $(\td s_q)_q=s_q$. Note that $U_p\cap U_q\neq \emptyset$ and $\td t_p=\td t_q=t$ on the intersection $U_p\cap U_q$. However we have $\phi_q((\td s_p)_q)\neq \phi_q((\td s_q)_q)$. This means that in any neighborhood of $q$ we have $\phi(\td s_p)\neq \phi(\td s_q)$, which means $\td t_p\neq \td t_q$ on any neighborhood of $q$, which is the desired contradiction.
 
+\section{2 -- 2.4.F -- Sheafification is Unique}
+% id: 2-2-4-f-sheafification-is-unique
+% author: Tianyi
+% updated: 2026-09-13
+
+Suppose $\op{sh}':\mc F\to \mc F^{\op{sh'}}$ is another sheafification, then universal property gives two morphisms $\alpha,\beta$ between two sheafifications:
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXG1hdGhjYWwgRiJdLFsxLDAsIlxcbWF0aGNhbCBGXntcXG9wZXJhdG9ybmFtZXtzaH19Il0sWzAsMSwiXFxtYXRoY2FsIEZee1xcb3BlcmF0b3JuYW1le3NoJ319Il0sWzAsMl0sWzAsMV0sWzEsMiwiXFxiZXRhIiwwLHsib2Zmc2V0IjotMSwic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV0sWzIsMSwiXFxhbHBoYSIsMCx7Im9mZnNldCI6LTEsInN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dXQ==
+\[
+\begin{tikzcd}[cramped]
+	{\mathcal F} & {\mathcal F^{\operatorname{sh}}} \\
+	{\mathcal F^{\operatorname{sh'}}} &
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-1, to=1-2]
+	\arrow["{\beta}", dashed, from=1-2, to=2-1]
+	\arrow["{\alpha}", dashed, from=2-1, to=1-2]
+\end{tikzcd}
+\]
+We claim $\alpha\beta=\id_{\mc F^{\op{sh}}}$. Indeed, commutativity of the diagram implies $\alpha\circ \op{sh'}=\op{sh}$. Hence we have the below diagram
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXG1hdGhjYWwgRiJdLFsyLDAsIlxcbWF0aGNhbCBGXntcXG9wZXJhdG9ybmFtZXtzaH19Il0sWzEsMSwiXFxtYXRoY2FsIEZee1xcb3BlcmF0b3JuYW1le3NoJ319Il0sWzEsMiwiXFxtYXRoY2FsIEZee1xcb3BlcmF0b3JuYW1le3NofX0iXSxbMCwyLCJcXG9wZXJhdG9ybmFtZXtzaCd9IiwyXSxbMCwxLCJcXG9wZXJhdG9ybmFtZXtzaH0iXSxbMSwyLCJcXGJldGEiXSxbMiwzLCJcXGFscGhhIl0sWzAsMywiXFxvcGVyYXRvcm5hbWV7c2h9IiwyLHsiY3VydmUiOjJ9XSxbMSwzLCJcXG9wZXJhdG9ybmFtZXtpZH0iLDAseyJjdXJ2ZSI6LTJ9XV0=
+\[
+\begin{tikzcd}[cramped]
+	{\mathcal F} &  & {\mathcal F^{\operatorname{sh}}} \\
+	 & {\mathcal F^{\operatorname{sh'}}} &  \\
+	 & {\mathcal F^{\operatorname{sh}}} &
+	\arrow["{\operatorname{sh'}}"', from=1-1, to=2-2]
+	\arrow["{\operatorname{sh}}", from=1-1, to=1-3]
+	\arrow["{\beta}", from=1-3, to=2-2]
+	\arrow["{\alpha}", from=2-2, to=3-2]
+	\arrow["{\operatorname{sh}}"', curve={height=12pt}, from=1-1, to=3-2]
+	\arrow["{\operatorname{id}}", curve={height=-12pt}, from=1-3, to=3-2]
+\end{tikzcd}
+\]
+and the claim follows from uniqueness of the factorization. Similarly one can show $\beta\alpha=\id_{\mc F^{\op{sh'}}}$ as well. If $\mc F$ is a sheaf, then $\id: \mc F\to \mc F$ itself satisfies the said universal property of sheafification, hence $\mc F^{\op{sh}}=\mc F$ follows from uniqueness shown above.
+
 \end{document}
