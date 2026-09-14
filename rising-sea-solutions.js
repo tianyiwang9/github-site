@@ -709,5 +709,15 @@ Hence we see by uniqueness that $(\psi\phi)^{\op{sh}}=\psi^{\op{sh}}\phi^{\op{sh
     title: "Sheafification Satiesfies Universal Property",
     updated: "2026-09-14",
     body: String.raw`Let $\phi: \mc F\to \mc G$ be a morphism from a presheaf to a sheaf. Let $U\hookrightarrow X$ be an open set with $s\in \mc F(U)$. We define $\phi^{\op{sh}}(U): \mc F^{\op{sh}}(U)\to \mc G(U)$ as follows: Let $(s_p)_{p\in U}=\op{sh}(s)\in \mc F^{\op{sh}}(U)$. Then $(t_p)_{p\in U}:=(\phi_p(s_p))_{p\in U}\in \prod_{p\in U}\mc G_p$ is a compatible germ: Indeed, for every $p\in U$ there exists $U_p$ and section $\td s_p\in \mc F(U_p)$ such that $(\td s_p)_q=s_q$ for all $q\in U_p$. Hence by possibly shrinking $U_p$, we see that $\td t_p:=\phi(U_p)(\td s_p)$ is a lift of $(t_p)_{p\in U}\in \prod_{p\in U}\mc G_p$. Thus by Exercise 2.4.B, there is a section $t\in \mc G(U)$ whose image under $\mc G(U)\to \prod_{p\in U}\mc G_p$ is precisely $(t_p)_{p\in U}$. Then the unique sheafified map is $\phi^{\op{sh}}(U):s\mapsto t.$`
+  },
+  {
+    id: "2-2-4-k-sheafification-is-left-adjoint-to-forget",
+    chapter: "2",
+    problem: "2.4.K",
+    author: "Tianyi",
+    title: "Sheafification is Left Adjoint to Forgetful",
+    updated: "2026-09-14",
+    body: String.raw`We want to prove there is a correspondence $$\op{Mor}_{\op{PSh}}(\mc F,\mc G^{o})\xrightarrow{\sim}\op{Mor}_{\op{Sh}}(\mc F^{\op{sh}},\mc G)$$
+where $\mc G^o$ simply denote the presheaf $\mc G$ when we forget the sheaf structure. Indeed, this bijection is simply $\phi\mapsto \phi^{\op{sh}}$. Naturality of this correspondence is simply the functoriality of sheafification, namely $(\phi\psi)^{\op{sh}}=\phi^{\op{sh}}\psi^{\op{sh}}.$`
   }
 ];
