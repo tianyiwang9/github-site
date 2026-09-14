@@ -682,5 +682,14 @@ and the claim follows from uniqueness of the factorization. Similarly one can sh
 We note that this is functorial: If we have $\psi: \mc G\to \mc H$, then we have the following commutative diagram (in the category of presheaves):
 https://q.uiver.app/#q=WzAsNixbMCwwLCJcXG1hdGhjYWwgRiJdLFswLDEsIlxcbWF0aGNhbCBHIl0sWzAsMiwiXFxtYXRoY2FsIEgiXSxbMSwwLCJcXG1hdGhjYWwgRl57XFxvcGVyYXRvcm5hbWV7c2h9fSJdLFsxLDEsIlxcbWF0aGNhbCBHXntcXG9wZXJhdG9ybmFtZXtzaH19Il0sWzEsMiwiXFxtYXRoY2FsIEhee1xcb3BlcmF0b3JuYW1le3NofX0iXSxbMCwzXSxbMSw0XSxbMiw1XSxbMCwxLCJcXHBoaSJdLFsxLDIsIlxccHNpIl0sWzMsNCwiXFxwaGkgXntcXG9wZXJhdG9ybmFtZXtzaH19IiwyXSxbNCw1LCJcXHBzaSBee1xcb3BlcmF0b3JuYW1le3NofX0iLDJdLFswLDIsIlxccHNpXFxwaGkiLDIseyJjdXJ2ZSI6Mn1dLFszLDUsIlxccHNpIF57XFxvcGVyYXRvcm5hbWV7c2h9fSBcXHBoaV57XFxvcGVyYXRvcm5hbWV7c2h9fSIsMCx7ImN1cnZlIjotMn1dXQ==
 Hence we see by uniqueness that $(\psi\phi)^{\op{sh}}=\psi^{\op{sh}}\phi^{\op{sh}}$.`
+  },
+  {
+    id: "2-2-4-h-sheafification-is-a-sheaf",
+    chapter: "2",
+    problem: "2.4.H",
+    author: "Tianyi",
+    title: "Sheafification is a Sheaf",
+    updated: "2026-09-14",
+    body: String.raw`Given the definition of $\mc F^{\op{sh}}$ with the tautological restriction map, it is easy to see that $\mc F^{\op{sh}}$ is a presheaf. Now let $U\hookrightarrow X$ be an open set and $U=\cup_{i\in I}U_i$ an open cover. To see the identity axiom: If $(f_p)_{p\in U_i}=(g_p)_{p\in U_i}$ for every $i\in I$, of course $(f_p)_{p\in U}=(g_p)_{p\in U}$. To see the gluability axiom: Suppose we have $(f^i_p)_{p\in U_i}$ for every $i\in I$ such that $f^i_p=f^j_p$ for all $p\in U_i\cap U_j$, then clearly these glue to a global $(f_p)_{p\in U}$ that restricts to $(f^i_p)_{p\in U_i}$ on each $U_i$ and this is in fact a compatible germ by construction, since its restriction to each element of the open cover is.`
   }
 ];
