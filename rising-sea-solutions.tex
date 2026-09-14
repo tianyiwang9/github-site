@@ -942,4 +942,30 @@ We claim $\alpha\beta=\id_{\mc F^{\op{sh}}}$. Indeed, commutativity of the diagr
 \]
 and the claim follows from uniqueness of the factorization. Similarly one can show $\beta\alpha=\id_{\mc F^{\op{sh'}}}$ as well. If $\mc F$ is a sheaf, then $\id: \mc F\to \mc F$ itself satisfies the said universal property of sheafification, hence $\mc F^{\op{sh}}=\mc F$ follows from uniqueness shown above.
 
+\section{2 -- 2.4.G -- Sheafification is a Functor}
+% id: 2-2-4-g-sheafification-is-a-functor
+% author: Tianyi
+% updated: 2026-09-13
+
+Let $\phi: \mc F\to \mc G$ be a map of presheaves. Then composition with sheafification gives a map $\mc F\to \mc G\to \mc G^{\op{sh}}.$ Now by the universal property of sheafification $\mc F^{\op{sh}}$ we get a map $\phi^{\op{sh}}:\mc F^{\op {sh}}\to \mc G^{\op{sh}}$.
+We note that this is functorial: If we have $\psi: \mc G\to \mc H$, then we have the following commutative diagram (in the category of presheaves):
+% https://q.uiver.app/#q=WzAsNixbMCwwLCJcXG1hdGhjYWwgRiJdLFswLDEsIlxcbWF0aGNhbCBHIl0sWzAsMiwiXFxtYXRoY2FsIEgiXSxbMSwwLCJcXG1hdGhjYWwgRl57XFxvcGVyYXRvcm5hbWV7c2h9fSJdLFsxLDEsIlxcbWF0aGNhbCBHXntcXG9wZXJhdG9ybmFtZXtzaH19Il0sWzEsMiwiXFxtYXRoY2FsIEhee1xcb3BlcmF0b3JuYW1le3NofX0iXSxbMCwzXSxbMSw0XSxbMiw1XSxbMCwxLCJcXHBoaSJdLFsxLDIsIlxccHNpIl0sWzMsNCwiXFxwaGkgXntcXG9wZXJhdG9ybmFtZXtzaH19IiwyXSxbNCw1LCJcXHBzaSBee1xcb3BlcmF0b3JuYW1le3NofX0iLDJdLFswLDIsIlxccHNpXFxwaGkiLDIseyJjdXJ2ZSI6Mn1dLFszLDUsIlxccHNpIF57XFxvcGVyYXRvcm5hbWV7c2h9fSBcXHBoaV57XFxvcGVyYXRvcm5hbWV7c2h9fSIsMCx7ImN1cnZlIjotMn1dXQ==
+\[
+\begin{tikzcd}[cramped]
+	{\mathcal F} & {\mathcal F^{\operatorname{sh}}} \\
+	{\mathcal G} & {\mathcal G^{\operatorname{sh}}} \\
+	{\mathcal H} & {\mathcal H^{\operatorname{sh}}}
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=2-1, to=2-2]
+	\arrow[from=3-1, to=3-2]
+	\arrow["{\phi}", from=1-1, to=2-1]
+	\arrow["{\psi}", from=2-1, to=3-1]
+	\arrow["{\phi ^{\operatorname{sh}}}"', from=1-2, to=2-2]
+	\arrow["{\psi ^{\operatorname{sh}}}"', from=2-2, to=3-2]
+	\arrow["{\psi\phi}"', curve={height=12pt}, from=1-1, to=3-1]
+	\arrow["{\psi ^{\operatorname{sh}} \phi^{\operatorname{sh}}}", curve={height=-12pt}, from=1-2, to=3-2]
+\end{tikzcd}
+\]
+Hence we see by uniqueness that $(\psi\phi)^{\op{sh}}=\psi^{\op{sh}}\phi^{\op{sh}}$.
+
 \end{document}
