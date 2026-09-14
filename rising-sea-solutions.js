@@ -670,5 +670,17 @@ https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXG1hdGhjYWwgRiJdLFsxLDAsIlxcbWF0aGNhbCBGX
 We claim $\alpha\beta=\id_{\mc F^{\op{sh}}}$. Indeed, commutativity of the diagram implies $\alpha\circ \op{sh'}=\op{sh}$. Hence we have the below diagram
 https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXG1hdGhjYWwgRiJdLFsyLDAsIlxcbWF0aGNhbCBGXntcXG9wZXJhdG9ybmFtZXtzaH19Il0sWzEsMSwiXFxtYXRoY2FsIEZee1xcb3BlcmF0b3JuYW1le3NoJ319Il0sWzEsMiwiXFxtYXRoY2FsIEZee1xcb3BlcmF0b3JuYW1le3NofX0iXSxbMCwyLCJcXG9wZXJhdG9ybmFtZXtzaCd9IiwyXSxbMCwxLCJcXG9wZXJhdG9ybmFtZXtzaH0iXSxbMSwyLCJcXGJldGEiXSxbMiwzLCJcXGFscGhhIl0sWzAsMywiXFxvcGVyYXRvcm5hbWV7c2h9IiwyLHsiY3VydmUiOjJ9XSxbMSwzLCJcXG9wZXJhdG9ybmFtZXtpZH0iLDAseyJjdXJ2ZSI6LTJ9XV0=
 and the claim follows from uniqueness of the factorization. Similarly one can show $\beta\alpha=\id_{\mc F^{\op{sh'}}}$ as well. If $\mc F$ is a sheaf, then $\id: \mc F\to \mc F$ itself satisfies the said universal property of sheafification, hence $\mc F^{\op{sh}}=\mc F$ follows from uniqueness shown above. `
+  },
+  {
+    id: "2-2-4-g-sheafification-is-a-functor",
+    chapter: "2",
+    problem: "2.4.G",
+    author: "Tianyi",
+    title: "Sheafification is a Functor",
+    updated: "2026-09-13",
+    body: String.raw`Let $\phi: \mc F\to \mc G$ be a map of presheaves. Then composition with sheafification gives a map $\mc F\to \mc G\to \mc G^{\op{sh}}.$ Now by the universal property of sheafification $\mc F^{\op{sh}}$ we get a map $\phi^{\op{sh}}:\mc F^{\op {sh}}\to \mc G^{\op{sh}}$.
+We note that this is functorial: If we have $\psi: \mc G\to \mc H$, then we have the following commutative diagram (in the category of presheaves):
+https://q.uiver.app/#q=WzAsNixbMCwwLCJcXG1hdGhjYWwgRiJdLFswLDEsIlxcbWF0aGNhbCBHIl0sWzAsMiwiXFxtYXRoY2FsIEgiXSxbMSwwLCJcXG1hdGhjYWwgRl57XFxvcGVyYXRvcm5hbWV7c2h9fSJdLFsxLDEsIlxcbWF0aGNhbCBHXntcXG9wZXJhdG9ybmFtZXtzaH19Il0sWzEsMiwiXFxtYXRoY2FsIEhee1xcb3BlcmF0b3JuYW1le3NofX0iXSxbMCwzXSxbMSw0XSxbMiw1XSxbMCwxLCJcXHBoaSJdLFsxLDIsIlxccHNpIl0sWzMsNCwiXFxwaGkgXntcXG9wZXJhdG9ybmFtZXtzaH19IiwyXSxbNCw1LCJcXHBzaSBee1xcb3BlcmF0b3JuYW1le3NofX0iLDJdLFswLDIsIlxccHNpXFxwaGkiLDIseyJjdXJ2ZSI6Mn1dLFszLDUsIlxccHNpIF57XFxvcGVyYXRvcm5hbWV7c2h9fSBcXHBoaV57XFxvcGVyYXRvcm5hbWV7c2h9fSIsMCx7ImN1cnZlIjotMn1dXQ==
+Hence we see by uniqueness that $(\psi\phi)^{\op{sh}}=\psi^{\op{sh}}\phi^{\op{sh}}$.`
   }
 ];
