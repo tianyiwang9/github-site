@@ -755,5 +755,14 @@ Hence we see by uniqueness that $(\psi\phi)^{\op{sh}}=\psi^{\op{sh}}\phi^{\op{sh
     updated: "2026-09-14",
     body: String.raw`We want to prove there is a correspondence $$\op{Mor}_{\op{PSh}}(\mc F,\mc G^{o})\xrightarrow{\sim}\op{Mor}_{\op{Sh}}(\mc F^{\op{sh}},\mc G)$$
 where $\mc G^o$ simply denote the presheaf $\mc G$ when we forget the sheaf structure. Indeed, this bijection is simply $\phi\mapsto \phi^{\op{sh}}$. Naturality of this correspondence is simply the functoriality of sheafification, namely $(\phi\psi)^{\op{sh}}=\phi^{\op{sh}}\psi^{\op{sh}}.$`
+  },
+  {
+    id: "2-2-4-o-mc-o-x-is-a-quotient-sheaf",
+    chapter: "2",
+    problem: "2.4.O",
+    author: "Tianyi",
+    title: "$\\mc O_X^*$ is a Quotient Sheaf",
+    updated: "2026-09-15",
+    body: String.raw`By definition given before to show $\mc O_X^*$ is a quotient sheaf of $\mc O_X$ we only need to show $\exp:\mc O_X\to \mc O_X^*$ is surjective on stalks. Indeed, since $X=\C$, any nonvanishing holomorphic function $f\in \mc O_X^*(U)$ defined over any contractible neighborhood $U$ admits a holomorphic logarithm $\log f\in \mc O_X(U)$, and $\exp\log f=f.$ Hence $\exp:\mc O_X\to \mc O_X^*$ is surjective on stalks.`
   }
 ];
