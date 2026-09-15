@@ -336,23 +336,59 @@ To verify the tower is indeed Cartesian, we need to show $\nu=\tau f$ (checked b
     author: "Tianyi",
     title: "Diagonal Base Change Diagram",
     updated: "2026-08-30",
-    body: String.raw`This is an example of how Yoneda lemma makes abstract things concrete. Yoneda lemma implies:
+    body: String.raw`We first need two preliminary results:
 
-$\textbf{Lemma}.$ A square in any category $\ms C$ is Cartesian iff applying $h_S=\Hom(S,-)$ of it gives a Cartesian square:
-https://q.uiver.app/#q=WzAsOCxbMCwwLCJBIl0sWzEsMCwiQiJdLFswLDEsIkMiXSxbMSwxLCJEIl0sWzMsMCwiaF9TKEEpIl0sWzQsMCwiaF9TKEIpIl0sWzMsMSwiaF9TKEMpIl0sWzQsMSwiaF9TKEQpIl0sWzAsMV0sWzAsMl0sWzIsM10sWzEsM10sWzQsNV0sWzUsN10sWzQsNl0sWzYsN11d
+$\textbf{Lemma 1.}$ Let $A,B,C$ be objects in a category $\mc C$, and let $S$ be an arbitrary object in $\mc C$ as well. Then we have $$\Hom(S,A\times_C B)=\Hom(S,A)\times_{\Hom(S,C)}\Hom(S,B).$$
 
-Next we show
+$\textbf{Proof:}$ Note that $\Hom(S,A\times_C B)$ is the collection of data $(f:S\to A, g: S\to B)$ that agrees when maps to $C$ using $A\to C, B\to C$. But this is precisely the right hand side, where $\Hom(S,A)\to \Hom(S,C)$ is by postcomposing $A\to C$, and similarly for $\Hom(S,B)\to \Hom(S,C)$. Q.E.D.
 
-$\textbf{Lemma}.$ $\Hom(S,A\times_C B)=\Hom(S,A)\times_{\Hom(S,C)}\Hom(S,B)$.
 
-Proof: Note that $\Hom(S,A\times_C B)$ is the collection of data $(f:S\to A, g: S\to B)$ that agrees when maps to $C$ using $A\to C, B\to C$. But this is precisely the right hand side, where $Hom(S,A)\to \Hom(S,C)$ is by postcomposing $A\to C$, and similarly for $\Hom(S,B)\to \Hom(S,C)$. $\square$
+$\textbf{Lemma 2. }$A commutative square $\square$ in a Category $\mc C$ is Cartesian iff for every object $S\in \mc C$ the square $\Hom(S,\square)$ is Cartesian.
+ 
 
-Finally, applying the results above, our problem is equivalent to showing that the square below is Cartesian:
-https://q.uiver.app/#q=WzAsNCxbMCwwLCJoKFhfMSlcXHRpbWVzX3toKFkpfWgoWF8yKSJdLFsxLDAsImgoWF8xKVxcdGltZXNfe2goWil9aChYXzIpIl0sWzAsMSwiaChZKSJdLFsxLDEsImgoWSlcXHRpbWVzX3toKFopfWgoWSkiXSxbMCwxXSxbMSwzXSxbMCwyXSxbMiwzXV0=
+$\textbf{Proof: }$If $\square$ is Cartesian, then $\Hom(S,\square)$ is Cartesian by the previous lemma. Hence it suffices to consider the converse. Suppose we have a commutative square
+        % https://q.uiver.app/#q=WzAsNCxbMCwwLCJBIl0sWzEsMCwiQiJdLFswLDEsIkMiXSxbMSwxLCJEIl0sWzAsMSwiXFxiZXRhIl0sWzAsMiwiXFxhbHBoYSIsMl0sWzIsMywiXFxtdSIsMl0sWzEsMywiXFxudSJdXQ==
+        \[\begin{tikzcd}[cramped]
+        	A & B \\
+        	C & D
+        	\arrow["\beta", from=1-1, to=1-2]
+        	\arrow["\alpha"', from=1-1, to=2-1]
+        	\arrow["\nu", from=1-2, to=2-2]
+        	\arrow["\mu"', from=2-1, to=2-2]
+        \end{tikzcd}\]
+        such that for every object $S\in \mc C$, the square
+        % https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXG9wZXJhdG9ybmFtZXtIb219KFMsQSkiXSxbMSwwLCJcXG9wZXJhdG9ybmFtZXtIb219KFMsQikiXSxbMCwxLCJcXG9wZXJhdG9ybmFtZXtIb219KFMsQykiXSxbMSwxLCJcXG9wZXJhdG9ybmFtZXtIb219KFMsRCkiXSxbMCwxLCJcXGJldGFcXGNpcmMiXSxbMCwyLCJcXGFscGhhXFxjaXJjIiwyXSxbMiwzLCJcXG11XFxjaXJjIiwyXSxbMSwzLCJcXG51XFxjaXJjIl1d
+        \[\begin{tikzcd}[cramped]
+        	{\operatorname{Hom}(S,A)} & {\operatorname{Hom}(S,B)} \\
+        	{\operatorname{Hom}(S,C)} & {\operatorname{Hom}(S,D)}
+        	\arrow["{\beta\circ}", from=1-1, to=1-2]
+        	\arrow["{\alpha\circ}"', from=1-1, to=2-1]
+        	\arrow["{\nu\circ}", from=1-2, to=2-2]
+        	\arrow["{\mu\circ}"', from=2-1, to=2-2]
+        \end{tikzcd}\]
+        is Cartesian. Then we claim that the original square is Cartesian. Indeed, for any object $S\in \mc C$ with maps $f:S\to C, g:S\to B$ with $\mu\circ  f=\nu\circ g:S\to D$, by assumption there is a map $\rho: S\to A$ such that $\nu\circ\beta\circ \rho=\mu\circ\alpha\circ \rho$. Furthermore, by the previous identification $\Hom(S,A)=\Hom(S,C)\times_{\Hom(S,D)}\Hom(S,B)$, this condition is equivalent to $g=\beta\circ \rho, f=\alpha\circ \rho$. Hence the original square is indeed Cartesian. Q.E.D.
 
-Up to relabeling, we just need to show the diagram
-https://q.uiver.app/#q=WzAsNCxbMCwwLCJYXzFcXHRpbWVzX1kgWF8yIl0sWzEsMCwiWF8xXFx0aW1lc19aIFhfMiJdLFswLDEsIlkiXSxbMSwxLCJZXFx0aW1lc19aIFkiXSxbMCwxXSxbMSwzXSxbMCwyXSxbMiwzXV0=
-is Cartesian but now everything are sets, and we know what fiber product in set means. This is a routine exercise to check.
+
+Using the two results above, we see that up to relabeling, we just need to show the diagram
+    % https://q.uiver.app/#q=WzAsNCxbMCwwLCJYXzFcXHRpbWVzX1kgWF8yIl0sWzEsMCwiWF8xXFx0aW1lc19aIFhfMiJdLFswLDEsIlkiXSxbMSwxLCJZXFx0aW1lc19aIFkiXSxbMCwxXSxbMSwzXSxbMCwyXSxbMiwzXV0=
+    \[\begin{tikzcd}[cramped]
+    	{X_1\times_Y X_2} & {X_1\times_Z X_2} \\
+    	Y & {Y\times_Z Y}
+    	\arrow[from=1-1, to=1-2]
+    	\arrow[from=1-1, to=2-1]
+    	\arrow[from=1-2, to=2-2]
+    	\arrow[from=2-1, to=2-2]
+    \end{tikzcd}\]
+    is Cartesian but now everything are sets, and we know what fiber product in set means. This is a routine exercise to check: Let our given morphisms be $\pi_1:X_1\to Y,\pi_2:X_2\to Y, \mu: Y\to Z$. Then the maps are
+    \begin{align*}
+        X_1\times_Y X_2\to Y&\qquad (x_1,x_2)\mapsto \pi_1(x_1)=\pi_2(x_2)\\
+        Y\to Y\times_Z Y&\qquad y\mapsto (y,y)\\
+        X_1\times_Y X_2\to X_1\times_Z X_2&\qquad (x_1,x_2)\mapsto (x_1,x_2)\\
+        X_1\times_Z X_2\to Y\times_Z Y&\qquad (x_1,x_2)\mapsto (\pi_1(x_1),\pi_2(x_2)).
+    \end{align*}
+    It is immediate to check the diagram commutes, because $\pi_1(x_1)=\pi_2(x_2)$ by assumption, since $(x_1,x_2)\in X_1\times_Y X_2$.
+\end{enumerate}
+
 `
   },
   {
