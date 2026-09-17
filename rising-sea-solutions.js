@@ -829,5 +829,32 @@ which is 3-dimensional over $\C=\Gamma(\P^1,\mc O)$, while
 \Gamma(\P^1,\mc O(1)\ot^{\operatorname{pre}}\mc O(1))=\C[x,y]_1\ot_{\C}\C[x,y]_1=\C\bk{x,y}\ot_{\C}\C\bk{x,y}
 \]
 which is 4-dimensional over $\C=\Gamma(\P^1,\mc O)$. Hence we have a dimensional mismatch if we do not sheafify the tensor.`
+  },
+  {
+    id: "2-2-7-b-pi-1-pi-are-adjoint",
+    chapter: "2",
+    problem: "2.7.B",
+    author: "Tianyi",
+    title: "$\\pi^{-1},\\pi_*$ are Adjoint",
+    updated: "2026-09-17",
+    body: String.raw`Let $\pi:X\to Y$ be a continuous map and $\mc F$ a sheaf on $X$, $\mc G$ a sheaf on $Y$. We will show there exists a bijection
+\[
+\Hom_X(\pi^{-1}\mc G,\mc F)\xrightarrow{\sim}\Hom_Y(\mc G,\pi_*\mc F).
+\]
+As the hint suggests, we show that both sides agree with the construction of $\Hom_{YX}(\mc G,\mc F)$. 
+
+First let us look at the LHS: A morphism $\phi: \pi^{-1}\mc G\to \mc F$ is the data $\phi_U: \op{colim}_{V\supset \pi(U)}\mc G(V)\to \mc F(U)$ for all open $U\subset X$. With this data, for any open $V\subset X$ containing $U$ and for any $U$, we get natural maps
+\[
+\phi_{VU}:\mc G(V)\to \op{colim}_{V\supset \pi(U)}\mc G(V)\xrightarrow{\phi_U}\mc F(U)
+\]
+where the first map is the quotient map. Conversely, suppose we have maps $\phi_{VU}:\mc G(V)\to \mc F(U)$ for all $V\supset \pi(U)$ and for a fixed $U$, the universal property gives a map $\phi_U: \op{colim}_{V\supset \pi(U)}\mc G(V)\to \mc F(U).$ It is easy to check these are inverses, hence $\Hom_{X}(\pi^{-1}\mc G,\mc F)\simeq \Hom_{YX}(\mc G,\mc F)$.
+
+Now the RHS: A morphism $\psi: \mc G\to \pi_*\mc F$ is the data $\psi_{U'}:\mc G(U')\to \mc F(\pi^{-1}U')$ for every open $U'\subset Y$. From here suppose we have open $V\supset \pi(U)$, then clearly $U\subset \pi^{-1}(V)$. Hence we get maps
+\[
+\phi_{VU}: \mc G(V)\xrightarrow{\psi_V}\mc F(\pi^{-1}V)\xrightarrow{\op{res}}\mc F(U).
+\]
+Conversely, given $\phi_{VU}$'s then $\psi_{U'}=\phi_{U',\pi^{-1}(U')}$. It is easy to check these are bijections, so we have $\Hom_Y(\mc G,\pi_*\mc F)\simeq \Hom_{YX}(\mc G,\mc F)$.
+
+It is not hard to see that the correspondence is functorial (omitted).`
   }
 ];
