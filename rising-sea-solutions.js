@@ -869,5 +869,20 @@ It is not hard to see that the correspondence is functorial (omitted).`
 \mc F(U):=\{(f_p)\in \prod_{p\in U}\mc F_p: (f_p) \text{ satisfies property }(\dagger)\}.
 \]
 The restriction map is the usual restriction of germs. This recovers the sheaf $\mc F$ completely.`
+  },
+  {
+    id: "2-2-5-b-sheaf-of-base-is-isomorphic-to-original-",
+    chapter: "2",
+    problem: "2.5.B",
+    author: "Tianyi",
+    title: "Sheaf of Base is Isomorphic to Original Sheaf on Base",
+    updated: "2026-09-18",
+    body: String.raw`Let $\mc F$ be defined via its sheaf of base $F$ as in Vakil, which says $\mc F(U)$ is the germs over $U$ satisfying property $(\dagger)$ in the previous problem. We show that for any base element $B\in \mc B$ we have an isomorphism $F(B)\to \mc F(B)$. The map is given by $s\mapsto (s_p)_{p\in B}$.
+
+Clearly this map is injective, for if $(s_p)=(t_p)$ for two sections $s,t\in F(B)$, then for all $p\in B$ there exists a base $B_p\subset B$ containing $p$ with $s|_{B_p}=t|_{B_p}$. Since $B=\cup_{p\in B}B_p$, using identity axiom of $F$ gives $s=t$ in $F(B)$. 
+
+Now we show this map is surjective. Let $(f_p)\in \prod_{p\in B}F_p$ such that it satisfies $(\dagger)$. Let $s_p\in F(B_p)$ be local lifts of this germ. Then I claim that $s_p\in F(B_p)$ and $s_q\in F(B_q)$ agrees on any basic open set contained in $B_p\cap B_q$, for all $p,q\in B$ with $B_p\cap B_q\neq\emptyset$. Indeed, suppose not: Say $B^*\subset B_p\cap B_q$ is a basic open set with $s_p|_{B^*}\neq s_q|_{B^*}$. Then for every $x\in B^*$, by definition $(s_p)_x=(s_q)_x=f_x\in F_x$. So there exists basic open $B_x^*\in \mc B$ such that $s_p|_{B_x^*}=s_q|_{B_x^*}$. Now $B^*=\cup_{x\in B^*}B_x^*$. Hence by identity axiom $s_p|_{B^*}=s_q|_{B^*}$, which is the desired contradiction.
+
+Hence we have established that the sections $\{s_p\in F(B_p): p\in B\}$ agrees on overlaps. Since $B=\cup_{p\in B}B_p$, gluability axiom of $F$ implies they glue to a section $s\in F(B)$ mapping to $(f_p)\in \mc F(B)$, proving surjectivity.`
   }
 ];
