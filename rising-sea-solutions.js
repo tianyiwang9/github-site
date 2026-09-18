@@ -856,5 +856,18 @@ Now the RHS: A morphism $\psi: \mc G\to \pi_*\mc F$ is the data $\psi_{U'}:\mc G
 Conversely, given $\phi_{VU}$'s then $\psi_{U'}=\phi_{U',\pi^{-1}(U')}$. It is easy to check these are bijections, so we have $\Hom_Y(\mc G,\pi_*\mc F)\simeq \Hom_{YX}(\mc G,\mc F)$.
 
 It is not hard to see that the correspondence is functorial (omitted).`
+  },
+  {
+    id: "2-2-5-a-recover-a-sheaf-from-sheaf-of-base",
+    chapter: "2",
+    problem: "2.5.A",
+    author: "Tianyi",
+    title: "Recover a Sheaf from Sheaf of Base",
+    updated: "2026-09-18",
+    body: String.raw`Suppose we know $\mc F(B_i)$ for every base $B_i\in \mc B$ and restrictions $\rho_{ij}:\mc F(B_i)\to \mc F(B_j)$ for every $B_j\hookrightarrow B_i$ inclusion of elements in $\mc B$. This also means we know all stalks $\mc F_p$ for $p\in X$. To recover $\mc F$, we can identify $\mc F$ with its sheafification. Therefore, we motivated to make the following definition: A germ $(f_p)\in \prod_{p\in U}\mc F_p$ satisfies property $(\dagger)$ if for all $p\in U$, there exist a basis element $B_p\in \mc B$ containing $p$, and a section $s\in \mc F(B_p)$ such that $s_q=f_q$ for all $q\in B_p$. We then define
+\[
+\mc F(U):=\{(f_p)\in \prod_{p\in U}\mc F_p: (f_p) \text{ satisfies property }(\dagger)\}.
+\]
+The restriction map is the usual restriction of germs. This recovers the sheaf $\mc F$ completely.`
   }
 ];
