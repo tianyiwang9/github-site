@@ -1005,6 +1005,17 @@ where $\mc G^o$ simply denote the presheaf $\mc G$ when we forget the sheaf stru
 
 By definition given before to show $\mc O_X^*$ is a quotient sheaf of $\mc O_X$ we only need to show $\exp:\mc O_X\to \mc O_X^*$ is surjective on stalks. Indeed, since $X=\C$, any nonvanishing holomorphic function $f\in \mc O_X^*(U)$ defined over any contractible neighborhood $U$ admits a holomorphic logarithm $\log f\in \mc O_X(U)$, and $\exp\log f=f.$ Hence $\exp:\mc O_X\to \mc O_X^*$ is surjective on stalks.
 
+\section{2 -- 2.5.A -- Recover a Sheaf from Sheaf of Base}
+% id: 2-2-5-a-recover-a-sheaf-from-sheaf-of-base
+% author: Tianyi
+% updated: 2026-09-18
+
+Suppose we know $\mc F(B_i)$ for every base $B_i\in \mc B$ and restrictions $\rho_{ij}:\mc F(B_i)\to \mc F(B_j)$ for every $B_j\hookrightarrow B_i$ inclusion of elements in $\mc B$. This also means we know all stalks $\mc F_p$ for $p\in X$. To recover $\mc F$, we can identify $\mc F$ with its sheafification. Therefore, we motivated to make the following definition: A germ $(f_p)\in \prod_{p\in U}\mc F_p$ satisfies property $(\dagger)$ if for all $p\in U$, there exist a basis element $B_p\in \mc B$ containing $p$, and a section $s\in \mc F(B_p)$ such that $s_q=f_q$ for all $q\in B_p$. We then define
+\[
+\mc F(U):=\{(f_p)\in \prod_{p\in U}\mc F_p: (f_p) \text{ satisfies property }(\dagger)\}.
+\]
+The restriction map is the usual restriction of germs. This recovers the sheaf $\mc F$ completely.
+
 \section{2 -- 2.6.K -- Tensor Products of $\mc O_X$-modules}
 % id: 2-2-6-k-tensor-products-of-mc-o-x-modules
 % author: Tianyi
