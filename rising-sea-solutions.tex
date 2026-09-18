@@ -1029,6 +1029,15 @@ Now we show this map is surjective. Let $(f_p)\in \prod_{p\in B}F_p$ such that i
 
 Hence we have established that the sections $\{s_p\in F(B_p): p\in B\}$ agrees on overlaps. Since $B=\cup_{p\in B}B_p$, gluability axiom of $F$ implies they glue to a section $s\in F(B)$ mapping to $(f_p)\in \mc F(B)$, proving surjectivity.
 
+\section{2 -- 2.5.C -- Morphism of Sheaves Corresponds to Morphisms of Sheaves on a Base}
+% id: 2-2-5-c-morphism-of-sheaves-corresponds-to-morph
+% author: Tianyi
+% updated: 2026-09-18
+
+(a) Let $\phi: \mc F\to \mc G$ be a morphism of sheaf. Since we have data $\phi_i: \mc F(B_i)\to \mc G(B_i)$, we know all induced maps on stalks $\phi_p: \mc F_p\to \mc G_p$. To recover $\phi$ we again identify $\mc F$ with germs satisfying the property $(\dagger)$. Then for every open $U\subset X$ we simply define $\phi:\mc F(U)\to \mc G(U)$ via $\phi: (f_p)\mapsto (\phi_p(f_p))$. Note that since $(f_p)$ satisfies $(\dagger)$, it is not hard to see $(\phi_p(f_p))$ also satisfies $(\dagger)$, hence indeed lands in $\mc G(U)$.
+
+(b) Suppose we have morphism of base $\phi: F\to G.$ Again we define $\phi_U: \mc F(U)\to \mc G(U)$ by identifying sheaves of sections over $U$ as germs over $U$ satisfying $(\dagger)$, and define $\phi_U: (f_p)\mapsto (\phi_p(f_p))$.
+
 \section{2 -- 2.6.K -- Tensor Products of $\mc O_X$-modules}
 % id: 2-2-6-k-tensor-products-of-mc-o-x-modules
 % author: Tianyi
