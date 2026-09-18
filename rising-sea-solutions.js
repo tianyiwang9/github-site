@@ -884,5 +884,16 @@ Clearly this map is injective, for if $(s_p)=(t_p)$ for two sections $s,t\in F(B
 Now we show this map is surjective. Let $(f_p)\in \prod_{p\in B}F_p$ such that it satisfies $(\dagger)$. Let $s_p\in F(B_p)$ be local lifts of this germ. Then I claim that $s_p\in F(B_p)$ and $s_q\in F(B_q)$ agrees on any basic open set contained in $B_p\cap B_q$, for all $p,q\in B$ with $B_p\cap B_q\neq\emptyset$. Indeed, suppose not: Say $B^*\subset B_p\cap B_q$ is a basic open set with $s_p|_{B^*}\neq s_q|_{B^*}$. Then for every $x\in B^*$, by definition $(s_p)_x=(s_q)_x=f_x\in F_x$. So there exists basic open $B_x^*\in \mc B$ such that $s_p|_{B_x^*}=s_q|_{B_x^*}$. Now $B^*=\cup_{x\in B^*}B_x^*$. Hence by identity axiom $s_p|_{B^*}=s_q|_{B^*}$, which is the desired contradiction.
 
 Hence we have established that the sections $\{s_p\in F(B_p): p\in B\}$ agrees on overlaps. Since $B=\cup_{p\in B}B_p$, gluability axiom of $F$ implies they glue to a section $s\in F(B)$ mapping to $(f_p)\in \mc F(B)$, proving surjectivity.`
+  },
+  {
+    id: "2-2-5-c-morphism-of-sheaves-corresponds-to-morph",
+    chapter: "2",
+    problem: "2.5.C",
+    author: "Tianyi",
+    title: "Morphism of Sheaves Corresponds to Morphisms of Sheaves on a Base",
+    updated: "2026-09-18",
+    body: String.raw`(a) Let $\phi: \mc F\to \mc G$ be a morphism of sheaf. Since we have data $\phi_i: \mc F(B_i)\to \mc G(B_i)$, we know all induced maps on stalks $\phi_p: \mc F_p\to \mc G_p$. To recover $\phi$ we again identify $\mc F$ with germs satisfying the property $(\dagger)$. Then for every open $U\subset X$ we simply define $\phi:\mc F(U)\to \mc G(U)$ via $\phi: (f_p)\mapsto (\phi_p(f_p))$. Note that since $(f_p)$ satisfies $(\dagger)$, it is not hard to see $(\phi_p(f_p))$ also satisfies $(\dagger)$, hence indeed lands in $\mc G(U)$.
+
+(b) Suppose we have morphism of base $\phi: F\to G.$ Again we define $\phi_U: \mc F(U)\to \mc G(U)$ by identifying sheaves of sections over $U$ as germs over $U$ satisfying $(\dagger)$, and define $\phi_U: (f_p)\mapsto (\phi_p(f_p))$.`
   }
 ];
