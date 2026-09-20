@@ -913,7 +913,11 @@ $\alpha$ is injective: Suppose $\alpha(s)=0$ for $s\in \mc F(U)$. Then since we 
 
 $\ker\beta\subset \im \alpha$: Suppose $\beta(g)=0$ for some $g\in \mc G(U)$. Then by stalk exactness for every $p$ we have open $U_p$ containing $p$ and sections $f_p\in \mc F(U_p)$ such that $\alpha|_{U_p}(f_p)=g|_{U_p}$. Note that on $U_p\cap U_q$, both $f_p|_{U_p\cap U_q}$ and $f_q|_{U_p\cap U_q}$ map to $g|_{U_p\cap U_q}$ via $\alpha$. Since we have stalk exactness, by possibly shrinking open sets $U_p$'s, we can assume $\alpha(f_p|_{U_p\cap U_q}-f_q|_{U_p\cap U_q})=0$. Hence we conclude that $\{f_p:p\in U\}$ agrees on overlaps, hence glue to a unique $f\in \mc F(U)$ which maps to $g\in \mc G(U)$ via $\alpha$.
 
-$\im\alpha\subset \ker\beta$: Suppose $g=\alpha(f)\in \mc G(U)$. Then note that by exactness on stalks we have $[\beta(g)]=0\in \mc H_p$ for every $p\in X$. Hence we can choose opens $U_p$ containing each $p$ such that $\beta(g)|_{U_p}=0$. Thus $\beta(g)=0$ by gluability of $\mc H$.`
+$\im\alpha\subset \ker\beta$: Suppose $g=\alpha(f)\in \mc G(U)$. Then note that by exactness on stalks we have $[\beta(g)]=0\in \mc H_p$ for every $p\in X$. Hence we can choose opens $U_p$ containing each $p$ such that $\beta(g)|_{U_p}=0$. Thus $\beta(g)=0$ by gluability of $\mc H$.
+
+Note that we do not have the full exactness: For example, if we take the exponential sequence
+\[0\to \underline{\Z}\to \mc O_X\to \mc O_X^*\to 0,\]
+then the map $\exp:\mc O_X(X)\to \mc O_X^*(X)$ is not surjective globally since even in the case where $X=\C$ not every function admits a global holomorphic logarithm.`
   },
   {
     id: "2-2-6-h-pushforward-is-left-exact",
