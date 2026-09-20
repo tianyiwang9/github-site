@@ -1055,6 +1055,52 @@ $\ker\beta\subset \im \alpha$: Suppose $\beta(g)=0$ for some $g\in \mc G(U)$. Th
 
 $\im\alpha\subset \ker\beta$: Suppose $g=\alpha(f)\in \mc G(U)$. Then note that by exactness on stalks we have $[\beta(g)]=0\in \mc H_p$ for every $p\in X$. Hence we can choose opens $U_p$ containing each $p$ such that $\beta(g)|_{U_p}=0$. Thus $\beta(g)=0$ by gluability of $\mc H$.
 
+\section{2 -- 2.6.H -- Pushforward is Left Exact}
+% id: 2-2-6-h-pushforward-is-left-exact
+% author: Tianyi
+% updated: 2026-09-20
+
+Given exact sequence $0\to \mc F\to \mc G\to \mc H$ and continuous map $\pi: X\to Y$, we show that $0\to \pi_*\mc F\to \pi_*\mc G\to \pi_*\mc H$ is exact by showing exactness on stalks. Since open sets in $X$ with inclusions form a filtered system, colimit preserves exactness (we will prove this in the end). Hence it suffices to show that for every $U\subset Y$ open we have an exact sequence of abelian groups
+\[
+0\to \pi_*\mc F(U)\to \pi_*\mc G(U)\to \pi_*\mc H(U).
+\]
+But this follows from 2.6.G, namely the functor $\Gamma(\pi^{-1}U,-)$ is left exact.
+
+$\textbf{Lemma. }$Homology commutes with limits: If $\{C_\alpha, f_{\alpha\beta}\}$ is a filtered system of chain complexes, with the maps $f_{\alpha\beta}:C_\alpha\to C_\beta$ chain maps, then $H_n(\lim C_\alpha)=\lim H_n(C_\alpha).$
+
+Proof: Let $[x]$ denote the equivalence class in the homology group $H_*$ and let $\operatorname{cl}{x}$ denote the equivalence class in the limit $\lim$. For a chain $C_\alpha$ given by
+$$
+\cdots\to C^\alpha_{i+1}\xrightarrow{\del^\alpha _{i+1}}C^\alpha_i\xrightarrow{\del^\alpha _{i}}C^\alpha_{i-1}\to\cdots
+$$
+we have the induced chain complex of limits $\lim C_\alpha$ given by
+$$
+\cdots\to \lim C^\alpha_{i+1}\xrightarrow{\lim\del^\alpha _{i+1}}\lim C^\alpha_i\xrightarrow{\lim \del^\alpha _{i}}\lim C^\alpha_{i-1}\to\cdots
+$$
+where $\lim \del^\alpha_i(\operatorname{cl}{x_\beta})=\operatorname{cl}{\del^\beta_i x_\beta}$ for $x_\beta\in C_i^\beta$ for some $\beta$.
+For simplicity we will just write everything as $\del$ instead of $\del^\alpha_i$, and write $f_{\alpha\beta}$ instead of $f_{\alpha\beta,i}$, since the input can specify what the map really is. Now for $[x_\alpha]\in H_n(C_\alpha)$, i.e., $\del x_\alpha=0$, we have $\operatorname{cl}{[x_\alpha]}\in \lim H_n(C_\alpha)$. Now we claim that the map
+\begin{align*}
+    \psi : \lim H_n(C_\alpha) &\to H_n(\lim C_\alpha)\\
+    \operatorname{cl}{[x_\alpha]}&\mapsto [\operatorname{cl}{x_\alpha}]
+\end{align*}
+is an isomorphism. Clearly $\psi$ is a homomorphism. It remains to check 3 things:
+
+$\psi$ is well-defined: If $\operatorname{cl}{[x_\alpha]}=\operatorname{cl}{[x_\beta]}$, then there exists $\gamma\geq \alpha,\beta$ and $x\in C^\gamma_{n+1}$ such that $f_{\alpha\gamma}(x_\alpha)-f_{\beta\gamma}(x_\beta)=\del x.$ Then we see that
+    $$
+    [\operatorname{cl}{x_\alpha}]=[\operatorname{cl}{f_{\alpha\gamma}(x_\alpha)}]=[\operatorname{cl}{f_{\beta\gamma}(x_\beta)+\del x}]=[\operatorname{cl}{f_{\beta\gamma}(x_\beta)}]+[\del \operatorname{cl}{x}]=[\operatorname{cl}{x_\beta}]\in H_n(\lim C_\alpha).
+    $$
+Hence $\psi$ is well-defined.
+
+ $\psi$ is injective: Assume $\psi(\operatorname{cl}{[x_\alpha]})=[\operatorname{cl}{x_\alpha}]=0.$ Then $\operatorname{cl}{x_\alpha}=\del \operatorname{cl}{x}=\operatorname{cl}{\del x}$ for some $x\in C^\beta_{n+1}$. Then there exists $\gamma\geq \alpha,\beta$ such that $f_{\alpha\gamma}(x_\alpha)=f_{\beta\gamma}(\del x)=\del f_{\beta\gamma}(x)$. Thus $[f_{\alpha\gamma}(x_\alpha)]=0$. Hence $\operatorname{cl}{[x_\alpha]}=\operatorname{cl}{f_{\alpha\gamma}[x_\alpha]}=\operatorname{cl}{[f_{\alpha\gamma}(x_\alpha)]}=0.$ Thus $\psi$ is injective.
+
+$\psi$ is surjective: Let $[\operatorname{cl}{x_\alpha}]\in H_n(\lim C_\alpha)$ where $\operatorname{cl}{x_\alpha}$ represents an element of $\lim C_\alpha$. Then $0=\del \operatorname{cl}{x_\alpha}=\operatorname{cl}{\del x_\alpha}$. Hence there exists $\beta\geq \alpha$ such that $0=f_{\alpha\beta}(\del x_\alpha)=\del f_{\alpha\beta}(x_\alpha).$ Then we see that
+    $$
+    \psi(\operatorname{cl}{[f_{\alpha\beta}(x_\alpha)]})=[\operatorname{cl}{f_{\alpha\beta}(x_\alpha)}]=[\operatorname{cl}{x_\alpha}].
+    $$
+    Hence $\psi$ is surjective.
+
+
+Therefore $\psi$ is indeed an isomorphism, concluding the proof.
+
 \section{2 -- 2.6.K -- Tensor Products of $\mc O_X$-modules}
 % id: 2-2-6-k-tensor-products-of-mc-o-x-modules
 % author: Tianyi
