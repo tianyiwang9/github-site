@@ -895,5 +895,24 @@ Hence we have established that the sections $\{s_p\in F(B_p): p\in B\}$ agrees o
     body: String.raw`(a) Let $\phi: \mc F\to \mc G$ be a morphism of sheaf. Since we have data $\phi_i: \mc F(B_i)\to \mc G(B_i)$, we know all induced maps on stalks $\phi_p: \mc F_p\to \mc G_p$. To recover $\phi$ we again identify $\mc F$ with germs satisfying the property $(\dagger)$. Then for every open $U\subset X$ we simply define $\phi:\mc F(U)\to \mc G(U)$ via $\phi: (f_p)\mapsto (\phi_p(f_p))$. Note that since $(f_p)$ satisfies $(\dagger)$, it is not hard to see $(\phi_p(f_p))$ also satisfies $(\dagger)$, hence indeed lands in $\mc G(U)$.
 
 (b) Suppose we have morphism of base $\phi: F\to G.$ Again we define $\phi_U: \mc F(U)\to \mc G(U)$ by identifying sheaves of sections over $U$ as germs over $U$ satisfying $(\dagger)$, and define $\phi_U: (f_p)\mapsto (\phi_p(f_p))$.`
+  },
+  {
+    id: "2-2-6g-section-functor-is-left-exact",
+    chapter: "2",
+    problem: "2.6G",
+    author: "Tianyi",
+    title: "Section Functor is Left Exact",
+    updated: "2026-09-20",
+    body: String.raw`Let $0\to \mc F\xrightarrow{\alpha}\mc G\xrightarrow{\beta} \mc H$ be an exact sequence of sheaves. We show that the functor $\Gamma(U,-)$ is exact for every $U\subset X$ open. That is, we need to show that
+\[
+0\to \mc F(U)\xrightarrow{\alpha}\mc G(U)\xrightarrow{\beta} \mc H(U)
+\]
+is an exact sequence. We check this directly:
+
+$\alpha$ is injective: Suppose $\alpha(s)=0$ for $s\in \mc F(U)$. Then since we have the exact sequence on every stalk, for every $p\in U$ there is an open $U_p$ containing $p$ such that $s|_{U_p}=0$. Hence $s=0$ by gluability of $\mc F$.
+
+$\ker\beta\subset \im \alpha$: Suppose $\beta(g)=0$ for some $g\in \mc G(U)$. Then by stalk exactness for every $p$ we have open $U_p$ containing $p$ and sections $f_p\in \mc F(U_p)$ such that $\alpha|_{U_p}(f_p)=g|_{U_p}$. Note that on $U_p\cap U_q$, both $f_p|_{U_p\cap U_q}$ and $f_q|_{U_p\cap U_q}$ map to $g|_{U_p\cap U_q}$ via $\alpha$. Since we have stalk exactness, by possibly shrinking open sets $U_p$'s, we can assume $\alpha(f_p|_{U_p\cap U_q}-f_q|_{U_p\cap U_q})=0$. Hence we conclude that $\{f_p:p\in U\}$ agrees on overlaps, hence glue to a unique $f\in \mc F(U)$ which maps to $g\in \mc G(U)$ via $\alpha$.
+
+$\im\alpha\subset \ker\beta$: Suppose $g=\alpha(f)\in \mc G(U)$. Then note that by exactness on stalks we have $[\beta(g)]=0\in \mc H_p$ for every $p\in X$. Hence we can choose opens $U_p$ containing each $p$ such that $\beta(g)|_{U_p}=0$. Thus $\beta(g)=0$ by gluability of $\mc H$.`
   }
 ];
