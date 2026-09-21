@@ -1105,6 +1105,31 @@ $\psi$ is surjective: Let $[\operatorname{cl}{x_\alpha}]\in H_n(\lim C_\alpha)$ 
 
 Therefore $\psi$ is indeed an isomorphism, concluding the proof.
 
+\section{2 -- 2.6.I -- Hom Sheaf is Left Exact}
+% id: 2-2-6-i-hom-sheaf-is-left-exact
+% author: Tianyi
+% updated: 2026-09-21
+
+We show that $\mc{Hom}(\mc F,-)$ is left exact only (the other variable is left exact by similar argument). Let $0\to \mc A\xrightarrow{\alpha}\mc B\xrightarrow{\beta}\mc C$ be an exact sequence of sheaves. Then note that by Exercise 2.6.G, for every open $U\subset X$ the sequence
+\[
+0\to \mc A(U)\xrightarrow{\alpha_U}\mc B(U)\xrightarrow{\beta_U}\mc C(U)
+\]
+is exact. Now we will show that the sequence
+\[
+0\to \mc{Hom}(\mc F,\mc A)\xrightarrow{\alpha^*}\mc{Hom}(\mc F,\mc B)\xrightarrow{\beta^*}\mc{Hom}(\mc F,\mc C)
+\]
+is exact.
+
+$\alpha^*$ is injective: Suppose $\phi\in \mc{Hom}(\mc F,\mc A)$ is such that $\alpha^*\phi=0\in \mc{Hom}(\mc F,\mc B)$. Then this means for every open $U$ we have $\alpha\phi=0\in \mc{Hom}(\mc F|_U,\mc B|_U)$. Hence for every $V\subset U$ open we have $\alpha_V\phi_V: \mc F(V)\to \mc B(V)$ is identically the zero map. By exactness of $\Hom(\mc F(V),\mc A(V))\to \Hom(\mc F(V),\mc B(V))$, we conclude that $\phi_V=0$. Hence $\phi=0$. This shows that $\alpha^*$ is injective.
+
+$\ker\beta^*\subset \im \alpha^*$: Suppose $\psi\in \mc{Hom}(\mc F,\mc B)$ is such that $\beta^*\psi=0$. Then for every open $\beta\psi=0\in \mc{Hom}(\mc F|_U,\mc B|_U)$. So for every open $V\subset U$ we have $\beta_V\psi_V=0\in \Hom(\mc F(V),\mc C(V))$. By exactness of $\Hom(\mc F(V),\mc B(V))\to \Hom(\mc F(V),\mc C(V))$, there exists $\phi_V\in \Hom(\mc F(V),\mc A(V))$ such that $\psi_V=\alpha_V\phi_V$. We need to check that these $\phi_V$'s are compatible. Namely, if $W\subset V$ is an open, we must have $\psi_V|_W=\psi_W$. Indeed, since $\psi_V=\alpha_V\phi_V, \psi_W=\alpha_W\phi_W, \psi_V|_W=\psi_W, \alpha_V|_W=\alpha_W$, we have that $\alpha_W\phi_W=\psi_W=\alpha_W(\phi_V|_W)$. Since $\alpha_W$ is injective by Hom exactness, we must have $\phi_V|_W=\phi_W$. Thus $\{\phi_V: V\text{ open in }X\}$ glues to a morphism $\phi\in \mc{Hom}(\mc F,\mc A)$ such that $\alpha^*\phi=\psi$.
+
+$\im \alpha^*\subset \ker \beta^*$: Let $\phi\in \mc{Hom}(\mc F,\mc A)$. Now $\beta^*\alpha^*\phi\in \mc{Hom}(\mc F,\mc C)$ over each open $U$ is given by
+\[
+\mc F(U)\xrightarrow{\phi_U}\mc A(U)\xrightarrow{\alpha_U}\mc B(U)\xrightarrow{\beta_U}\mc C(U)
+\]
+which is zero since $\beta_U\alpha_U=0$ by Hom exactness. Therefore $\beta^*\alpha^*=0$, or in other words $\im \alpha^*\subset \ker \beta^*$, as desired.
+
 \section{2 -- 2.6.K -- Tensor Products of $\mc O_X$-modules}
 % id: 2-2-6-k-tensor-products-of-mc-o-x-modules
 % author: Tianyi
